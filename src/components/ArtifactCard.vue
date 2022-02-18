@@ -105,7 +105,7 @@ const starImgSrc = './assets/stars.png'
             </div>
             <div class="affix-full" v-else>
                 <div class="md-an">已满级{{ affnum.md }}</div>
-                <div class="tot-an">总分{{ affnum.md }}</div>
+                <div class="tot-an">总分{{ affnum.tot }}</div>
             </div>
         </div>
         <div class="select-box" @click="select" />
