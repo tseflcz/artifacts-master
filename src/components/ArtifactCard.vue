@@ -103,7 +103,10 @@ const starImgSrc = './assets/stars.png'
                 <div class="md-an">期望{{ affnum.md }}</div>
                 <div class="tot-an">总分{{ affnum.tot }}</div>
             </div>
-            <div class="full-an" v-else>已满级，{{ affnum.md }}词条</div>
+            <div class="affix-full" v-else>
+                <div class="md-an">已满级{{ affnum.md }}</div>
+                <div class="tot-an">总分{{ affnum.md }}</div>
+            </div>
         </div>
         <div class="select-box" @click="select" />
         <div class="edit-box" @click="emit('edit')">
@@ -227,7 +230,7 @@ const starImgSrc = './assets/stars.png'
                 width: 33.3%;
             }
         }
-        .full-an {
+        .affix-full {
             position: absolute;
             left: 0;
             bottom: 0;
@@ -236,7 +239,15 @@ const starImgSrc = './assets/stars.png'
             color: white;
             text-align: center;
             line-height: 20px;
-            background: #66c238;
+            display: flex;
+            .md-an {
+                background: #2a82e4;
+                width: 50%;
+            }
+            .tot-an {
+                background: #66c238;
+                width: 50%;
+            }
         }
     }
     .select-box {
