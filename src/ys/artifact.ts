@@ -95,6 +95,7 @@ export class Artifact implements IArtifact {
             Ac.delete(a.key)
             sum_w += w[a.key]
         }
+        /*
         if (this.minors.length == 3) {
             // avg
             let dn = 0, nm = 0 //    
@@ -126,7 +127,7 @@ export class Artifact implements IArtifact {
             astar_key = argmin(w, A) as string
             this.data.affnum.min = this.data.affnum.cur + n * w[astar_key] * 0.7 
         }
-        
+        */
         //mainAffix depend minorAffix score
         let n = Math.ceil((20 - this.level) / 4) // n.o. upgrades
         if (this.minors.length == 3) {
@@ -209,6 +210,79 @@ export class Artifact implements IArtifact {
                     this.data.affnum.md=this.data.score['critical']+this.data.score['elementalMastery']+this.data.score['recharge']
                 }
             }
+
+        //current
+        this.data.score={'life':0,'attack':0,'defend':0,'critical':0,'elementalMastery':0,'recharge':0}
+        for (let a of this.minors) {
+        switch (a.key) {
+            case "atkp":
+                this.data.score['attack'] += w[a.key] * (a.value / data.minorStat[a.key].v)
+                break
+            case "atk":
+                this.data.score['attack'] += w[a.key] * (a.value / data.minorStat[a.key].v)
+                break
+            case "hpp":
+                this.data.score['life'] += w[a.key] * (a.value / data.minorStat[a.key].v)
+                break
+            case "hp":
+                this.data.score['life'] += w[a.key] * (a.value / data.minorStat[a.key].v)
+                break
+            case "defp":
+                this.data.score['defend'] += w[a.key] * (a.value / data.minorStat[a.key].v)
+                break
+            case "def":
+                this.data.score['defend'] += w[a.key] * (a.value / data.minorStat[a.key].v)
+                break
+            case "em":
+                this.data.score['elementalMastery'] += w[a.key] * (a.value / data.minorStat[a.key].v)
+                break
+            case "er":
+                this.data.score['recharge'] += w[a.key] * (a.value / data.minorStat[a.key].v)
+                break
+            case "cr":
+                this.data.score['critical'] += w[a.key] * (a.value / data.minorStat[a.key].v)
+                break
+            case "cd":
+                this.data.score['critical'] += w[a.key] * (a.value / data.minorStat[a.key].v)
+                break
+        }
+    }
+    maintag = this.main.key
+    switch(maintag){
+        case 'atkp':
+            this.data.affnum.cur=this.data.score['critical']+this.data.score['attack']+this.data.score['elementalMastery']+this.data.score['recharge']
+            break
+        case 'defp':
+            this.data.affnum.cur=this.data.score['critical']+this.data.score['defend']+this.data.score['elementalMastery']+this.data.score['recharge']+w['defprop']*this.data.score['attack']
+            break
+        case 'hpp':
+            this.data.affnum.cur=this.data.score['critical']+this.data.score['life']+this.data.score['elementalMastery']+this.data.score['recharge']+w['hpprop']*this.data.score['attack']
+            break
+        default:
+            let temp = Object.keys(this.data.score).sort((a,b) => this.data.score[b]-this.data.score[a])
+            for(var key in temp){ 
+                if(temp[key]=='attack' || temp[key]=='defend' || temp[key]=='life'){
+                    maintag=temp[key]
+                    break
+                }
+            }
+            if (this.data.score[maintag]!=0){
+                switch(maintag){
+                case 'attack':
+                    this.data.affnum.cur=this.data.score['critical']+this.data.score['attack']+this.data.score['elementalMastery']+this.data.score['recharge']
+                    break 
+                case 'defend':
+                    this.data.affnum.cur=this.data.score['critical']+this.data.score['defend']+this.data.score['elementalMastery']+this.data.score['recharge']+w['defprop']*this.data.score['attack']
+                    break 
+                case 'life':
+                    this.data.affnum.cur=this.data.score['critical']+this.data.score['life']+this.data.score['elementalMastery']+this.data.score['recharge']+w['hpprop']*this.data.score['attack'] 
+                    break 
+                }
+            }      
+            else{
+                this.data.affnum.cur=this.data.score['critical']+this.data.score['elementalMastery']+this.data.score['recharge']
+            }
+    }
         //total score
         this.data.affnum.tot = this.data.affnum.md + w['main'] * data.mainWeight[this.slot][this.main.key].p / data.mainWeight[this.slot][this.main.key].v
     }
