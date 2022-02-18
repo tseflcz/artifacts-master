@@ -46,13 +46,17 @@ const minors = computed(() => {
     return ret;
 })
 const affnum = computed(() => {
-    let a = props.artifact.data.affnum
+    let a = props.artifact.data
     return {
-        cur: a.cur.toFixed(1),
-        avg: a.avg.toFixed(1),
-        max: a.max.toFixed(1),
-        md:  a.md.toFixed(1),
-        tot: a.tot.toFixed(1),
+        cur: a.affnum.cur.toFixed(2),
+        md:  a.affnum.md.toFixed(2),
+        tot: a.affnum.tot.toFixed(2),
+        atk: a.score.attack.toFixed(1),
+        hp: a.score.life.toFixed(1),
+        def: a.score.defend.toFixed(1),
+        er: a.score.recharge.toFixed(1),
+        em: a.score.elementalMastery.toFixed(1),
+        crit: a.score.critical.toFixed(1),
     }
 })
 const lockImgSrc = computed(() => {
@@ -85,8 +89,8 @@ const starImgSrc = './assets/stars.png'
         <div class="body">
             <div class="body-head">
                 <span class="level">{{ level }}</span>
-                <span class="md-an">{{ affnum.md }}</span>
-                <span class="tot-an">{{ affnum.tot }}</span>
+                <span class="score">{{ affnum.atk}}攻 | {{ affnum.hp}}生 | {{ affnum.def}}防<br/>
+                {{ affnum.crit}}暴 | {{ affnum.er}}充 | {{ affnum.em}}精</span>
                 <div class="lock-img-container">
                     <img :src="lockImgSrc" @click="emit('flipLock')" />
                 </div>
@@ -96,8 +100,8 @@ const starImgSrc = './assets/stars.png'
             </div>
             <div class="affix-numbers" v-if="artifact.level < 20">
                 <div class="cur-an">当前{{ affnum.cur }}</div>
-                <div class="avg-an">期望{{ affnum.avg }}</div>
-                <div class="max-an">最大{{ affnum.max }}</div>
+                <div class="md-an">期望{{ affnum.md }}</div>
+                <div class="tot-an">总分{{ affnum.tot }}</div>
             </div>
             <div class="full-an" v-else>已满级，{{ affnum.cur }}词条</div>
         </div>
@@ -181,15 +185,9 @@ const starImgSrc = './assets/stars.png'
                 @extend %tag;
                 background-color: #333;
             }
-            .md-an {
-                @extend %tag;
-                background-color: #2a82e4;
-                margin-left: 5px;
-            }
-            .tot-an {
-                @extend %tag;
-                background-color: #66c238;
-                margin-left: 5px;
+            .score {
+                padding: 0px 5px;
+                color: #2a82e4;
             }
             .lock-img-container {
                 flex: 1;
@@ -220,12 +218,12 @@ const starImgSrc = './assets/stars.png'
                 background: #a6a6a6;
                 width: 33.3%;
             }
-            .avg-an {
+            .md-an {
                 background: #2a82e4;
                 width: 33.3%;
             }
-            .max-an {
-                background: #ff5733;
+            .tot-an {
+                background: #66c238;
                 width: 33.3%;
             }
         }
