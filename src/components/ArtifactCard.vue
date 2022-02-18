@@ -103,7 +103,7 @@ const starImgSrc = './assets/stars.png'
                 <div class="md-an">期望{{ affnum.md }}</div>
                 <div class="tot-an">总分{{ affnum.tot }}</div>
             </div>
-            <div class="full-an" v-else>已满级，{{ affnum.cur }}词条</div>
+            <div class="full-an" v-else>已满级，{{ affnum.md }}词条</div>
         </div>
         <div class="select-box" @click="select" />
         <div class="edit-box" @click="emit('edit')">
