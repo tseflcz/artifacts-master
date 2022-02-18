@@ -23,7 +23,7 @@
                         :key="key"
                         :label=affixName(key)
                     >
-                        <el-input v-model="affixWeight[key]" style="width:52px"/>
+                        <el-input v-model.number="affixWeight[key]" style="width:52px"/>
                     </el-form-item>
                 </el-form>
                 <!-- 
