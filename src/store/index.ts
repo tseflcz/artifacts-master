@@ -152,27 +152,6 @@ export const store = createStore<IState>({
             }
             return mains
         },
-        filterScore() {
-            let ret = [
-                {
-                    key: "tot",
-                    value: "总分",
-                    tip: "",
-                },
-                {
-                    key: "md",
-                    value: "期望",
-                    tip: "",
-                },
-                {
-                    key: "cur",
-                    value: "当前",
-                    tip: "",
-                },
-
-            ];
-            return ret;
-        },
     },
     mutations: {
         useWeightJson(state, payload) {
