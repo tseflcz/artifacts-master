@@ -59,7 +59,7 @@ const affnum = computed(() => {
     return {
         cur: a.data.affnum.cur.toFixed(2),
         md:  a.data.affnum.md.toFixed(2),
-        ma:  a.data.affnum.ma.toFixed(2),
+        ma:  (a.data.affnum.ma+a.data.affnum.se).toFixed(2),
         tot: a.data.affnum.tot.toFixed(2),
         atk: a.data.score.attack.toFixed(1),
         hp: a.data.score.life.toFixed(1),
