@@ -290,9 +290,33 @@ export class Artifact implements IArtifact {
         //total score
         this.data.affnum.ma = this.data.affnum.ma + w['main'] * data.mainWeight[this.slot][this.main.key].p / data.mainWeight[this.slot][this.main.key].v
         if(this.main.key!='atk' && this.main.key!='hp'){
-            this.data.affnum.se = w['set'] * data.setweight[this.set][this.main.key]
-            if(this.data.affnum.se<0){
-                this.data.affnum.se = this.data.affnum.se * w['set']
+            if(data.setweight[this.set][this.main.key]<0){
+                this.data.affnum.se = 0.5 * w['set'] * data.setweight[this.set][this.main.key]
+            }else{
+                this.data.affnum.se = w['set'] * data.setweight[this.set][this.main.key]
+            }
+        }else{switch(maintag){
+            case 'attack':
+                if(data.setweight[this.set]['atkp']<0){
+                    this.data.affnum.se = 0.5 * w['set'] * data.setweight[this.set]['atkp']
+                }else{
+                    this.data.affnum.se = w['set'] * data.setweight[this.set]['atkp']
+                }
+                break
+            case 'defend':
+                if(data.setweight[this.set]['defp']<0){
+                    this.data.affnum.se = 0.5 * w['set'] * data.setweight[this.set]['defp']
+                }else{
+                    this.data.affnum.se = w['set'] * data.setweight[this.set]['defp']
+                }
+                break 
+            case 'life':
+                if(data.setweight[this.set]['hpp']<0){
+                    this.data.affnum.se = 0.5 * w['set'] * data.setweight[this.set]['hpp']
+                }else{
+                    this.data.affnum.se = w['set'] * data.setweight[this.set]['hpp']
+                }
+                break 
             }
         }
         this.data.affnum.tot = this.data.affnum.md + this.data.affnum.ma + this.data.affnum.se
