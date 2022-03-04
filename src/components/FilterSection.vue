@@ -85,6 +85,14 @@ const deselectAll = (filterProKey: string) => {
                     @update:model-value="setFilter('lvRange', $event)"
                 />
             </div>
+            <div class="filter">
+                <span class="filter-name">评分：</span>
+                <range-slider
+                    class="filter-ctrl"
+                    :model-value="store.state.filter.score"
+                    @update:model-value="setFilter('score', $event)"
+                />
+            </div>
         </div>
         <div class="section-content" v-show="store.state.useFilterPro">
             <section-title title="套装">
@@ -162,12 +170,6 @@ const deselectAll = (filterProKey: string) => {
                     :label="s.key"
                 >{{ s.value }}</el-checkbox>
             </el-checkbox-group>
-            <section-title title="等级" />
-            <range-slider
-                class="filter-ctrl"
-                :model-value="store.state.filterPro.lvRange"
-                @update:model-value="setFilterPro('lvRange', $event)"
-            />
             <div class="filter">
                 <span class="filter-name">等级：</span>
                 <range-slider

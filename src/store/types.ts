@@ -16,6 +16,7 @@ export interface IState {
         location: string
         lock: string
         lvRange: number[]
+        score: number[]
     }
     filterPro: {
         set: string[]

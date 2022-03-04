@@ -36,6 +36,7 @@ export const store = createStore<IState>({
                 location: 'all', // 'all' is a temporary workaround, fix it later
                 lock: '', // '', 'true', 'false'
                 lvRange: [0, 20],
+                score: [0,20]
             },
             filterPro: {
                 set,
@@ -230,6 +231,10 @@ export const store = createStore<IState>({
                     ret = ret.filter(a => (
                         state.filter.lvRange[0] <= a.level &&
                         a.level <= state.filter.lvRange[1]
+                    ));
+                    ret = ret.filter((a) => (
+                        state.filter.score[0] <= a.data.affnum[state.sortBy] &&
+                        a.data.affnum[state.sortBy] <= state.filter.score[1]
                     ));
                 } else { // filter pro
                     ret = ret.filter(a => state.filterPro.set.includes(a.set));
