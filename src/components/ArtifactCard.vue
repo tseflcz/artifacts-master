@@ -1,25 +1,37 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed } from 'vue'
 import { Edit } from '@element-plus/icons-vue'
-import { Artifact } from '../ys/artifact';
+import { Affix, Artifact } from '../ys/artifact';
 import chs from '../ys/locale/chs'
+import data from '../ys/data';
+import { useStore } from '../store';
 const props = defineProps<{
     artifact: Artifact,
     selected?: boolean
     selectMode?: boolean
+    disabled?: boolean
 }>()
 const emit = defineEmits<{
     (e: 'flipSelect', shiftKey: boolean): void,
     (e: 'flipLock'): void,
     (e: 'edit'): void
 }>()
+const store = useStore()
 const pieceName = computed(() => {
-    let name = chs.set[props.artifact.set].name
-    let slot = chs.slot[props.artifact.slot][2] // "花","羽"...
-    return `${name} · ${slot}`
+    if (props.artifact.set in chs.set && props.artifact.slot in chs.slot) {
+        let name = chs.set[props.artifact.set].name
+        let slot = chs.slot[props.artifact.slot][2] // "花","羽"...
+        return `${name} · ${slot}`
+    } else {
+        return '未知'
+    }
 })
 const pieceImgSrc = computed(() => {
-    return `./assets/artifacts/${props.artifact.set}/${props.artifact.slot}.png`
+     if (props.artifact.set in chs.set) {
+        return `./assets/artifacts/${props.artifact.set}/${props.artifact.slot}.png`
+    } else {
+        return ''
+    }
 })
 const affixName = (key: string) => {
     let name: string = chs.affix[key]
@@ -29,9 +41,15 @@ const affixName = (key: string) => {
     return name
 }
 const main = computed(() => {
-    return {
-        name: affixName(props.artifact.main.key),
-        value: props.artifact.main.valueString()
+    if (props.artifact.main.key in data.mainStat) {
+        let key = props.artifact.main.key,
+            value = data.mainStat[props.artifact.main.key][props.artifact.level]
+        return {
+            name: chs.affix[key],
+            value: new Affix({ key, value }).valueString()
+        }
+    } else {
+        return { name: '未知', value: 0 }
     }
 })
 const level = computed(() => {
@@ -41,7 +59,10 @@ const minors = computed(() => {
     let ret = []
     for (let a of props.artifact.minors) {
         let name = affixName(a.key)
-        ret.push(`· ${name}+${a.valueString()}`);
+        ret.push({
+            text: `· ${name}+${a.valueString()}`,
+            style: `opacity: ${store.state.weight[a.key] > 0 ? 1 : 0.5};`
+        });
     }
     return ret;
 })
@@ -60,7 +81,7 @@ const affnum = computed(() => {
     }
 })
 const lockImgSrc = computed(() => {
-    return props.artifact.data.lock ? './assets/lock.png' : './assets/unlock.png'
+    return props.artifact.lock ? './assets/lock.png' : './assets/unlock.png'
 })
 const artifactCardClass = computed(() => ({
     'artifact-card': true,
@@ -71,6 +92,18 @@ const select = (evt: MouseEvent) => {
     emit('flipSelect', evt.shiftKey)
 }
 const starImgSrc = './assets/stars.png'
+const charSrc = computed<string>(() => {
+    if (props.artifact.location in chs.character) {
+        return `./assets/char_sides/${props.artifact.location}.png`
+    } else {
+        return ''
+    }
+})
+const flipLock = () => {
+    if (!props.disabled) {
+        emit('flipLock')
+    }
+}
 </script>
 
 <template>
@@ -92,11 +125,11 @@ const starImgSrc = './assets/stars.png'
                 <span class="score">{{ affnum.atk}}攻 | {{ affnum.hp}}生 | {{ affnum.def}}防<br/>
                 {{ affnum.crit}}暴 | {{ affnum.er}}充 | {{ affnum.em}}精</span>
                 <div class="lock-img-container">
-                    <img :src="lockImgSrc" @click="emit('flipLock')" />
+                     <img :src="lockImgSrc" @click="flipLock" :class="disabled ? 'disabled' : ''" />
                 </div>
             </div>
             <div class="minor-affixes">
-                <div class="minor-affix" v-for="a in minors">{{ a }}</div>
+                 <div class="minor-affix" v-for="a in minors" :style="a.style">{{ a.text }}</div>
             </div>
             <div class="affix-numbers" v-if="artifact.level < 20">
                 <div class="cur-an">当前{{ affnum.cur }}</div>
@@ -108,8 +141,11 @@ const starImgSrc = './assets/stars.png'
                 <div class="tot-an">总分{{ affnum.tot }}</div>
             </div>
         </div>
-        <div class="select-box" @click="select" />
-        <div class="edit-box" @click="emit('edit')">
+       <div class="location" v-show="charSrc">
+            <img :src="charSrc" />
+        </div>
+        <div class="select-box" @click="select" v-show="!disabled" />
+        <div class="edit-box" @click="emit('edit')" v-show="!disabled">
             <el-icon :size="16">
                 <edit />
             </el-icon>
@@ -136,7 +172,6 @@ const starImgSrc = './assets/stars.png'
     font-size: 12px;
     font-weight: bold;
     border-radius: 3px;
-    overflow: hidden;
     position: relative;
     word-break: keep-all;
     .head {
@@ -182,7 +217,7 @@ const starImgSrc = './assets/stars.png'
         flex-direction: column;
         .body-head {
             display: flex;
-            padding: 10px 12px;
+            padding: 8px 12px;
             align-items: center;
             .level {
                 @extend %tag;
@@ -200,6 +235,9 @@ const starImgSrc = './assets/stars.png'
                     width: 20px;
                     height: 20px;
                     cursor: pointer;
+                    &.disabled {
+                        cursor: default;
+                    }
                 }
             }
         }
@@ -250,10 +288,26 @@ const starImgSrc = './assets/stars.png'
             }
         }
     }
+    .location {
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    background-color: #333d51e0;
+    border: 2px solid #e9e5dc;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    img {
+        height: 44px;
+        }
+    }
     .select-box {
         position: absolute;
-        right: 10px;
-        top: 10px;
+        left: -5px;
+        top: -5px;
         width: 20px;
         height: 20px;
         border-radius: 3px;

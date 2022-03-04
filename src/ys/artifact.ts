@@ -30,6 +30,7 @@ interface IArtifact {
     rarity: number
     level: number
     lock: boolean
+    location: string
     main: Affix
     minors: Affix[]
     data: {
@@ -57,6 +58,7 @@ export class Artifact implements IArtifact {
     rarity = 0
     level = 0
     lock = false
+    location = ''
     main = new Affix()
     minors: Affix[] = []
     data = {
@@ -67,12 +69,12 @@ export class Artifact implements IArtifact {
     }
     constructor(obj?: any) {
         if (obj) {
-            obj = JSON.parse(JSON.stringify(obj))
             this.set = obj.set
             this.slot = obj.slot
             this.rarity = obj.rarity
             this.level = obj.level
             this.lock = obj.lock
+            this.location = obj.location
             this.main = new Affix(obj.main)
             for (let o of obj.minors) {
                 this.minors.push(new Affix(o))
