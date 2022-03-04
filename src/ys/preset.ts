@@ -61,26 +61,26 @@ export default <IPreset>{
         { key: "Zhongli", element: "geo", presets: [4, 5, 6] },
     ],
     presets: [
-        { hp: 0, atk: 0, def: 0, hpp: 0, atkp: 1, defp: 0, em: 0, er: 1, cr: 0, cd: 0 }, //  0: 攻充
-        { hp: 0, atk: 0, def: 0, hpp: 0, atkp: 1, defp: 0, em: 0, er: 1, cr: 1, cd: 1 }, //  1: 攻充双暴
-        { hp: 0, atk: 0, def: 0, hpp: 0, atkp: 1, defp: 0, em: 1, er: 1, cr: 1, cd: 1 }, //  2: 攻充精双暴
-        { hp: 0, atk: 0, def: 0, hpp: 0, atkp: 1, defp: 0, em: 0, er: 0, cr: 0, cd: 1 }, //  3: 攻击爆伤
-        { hp: 0, atk: 0, def: 0, hpp: 0, atkp: 1, defp: 0, em: 0, er: 0, cr: 1, cd: 1 }, //  4: 攻双暴
-        { hp: 0, atk: 0, def: 0, hpp: 1, atkp: 1, defp: 0, em: 0, er: 1, cr: 1, cd: 1 }, //  5: 攻生充双暴
-        { hp: 0, atk: 0, def: 0, hpp: 1, atkp: 1, defp: 0, em: 0, er: 0, cr: 1, cd: 1 }, //  6: 攻生双暴
-        { hp: 0, atk: 0, def: 0, hpp: 1, atkp: .5, defp: 0, em: 1, er: 0, cr: 1, cd: 1 }, //  7: 攻生精双暴
-        { hp: 0, atk: 0, def: 0, hpp: 0, atkp: 1, defp: 0, em: 1, er: 0, cr: 1, cd: 1 }, //  8: 攻精双暴
-        { hp: 0, atk: 0, def: 0, hpp: 0, atkp: 1, defp: 0, em: 1, er: 1, cr: 1, cd: 1 }, //  9: 攻精充双暴
-        { hp: 0, atk: 0, def: 0, hpp: 0, atkp: .5, defp: 1, em: 0, er: 0, cr: 1, cd: 1 }, // 10: 攻防双暴
-        { hp: 0, atk: 0, def: 0, hpp: 0, atkp: .5, defp: 1, em: 0, er: 1, cr: 1, cd: 1 }, // 11: 攻防充双暴
-        { hp: 0, atk: 0, def: 0, hpp: 1, atkp: 0, defp: 0, em: 0, er: 1, cr: 0, cd: 0 }, // 12: 生充
-        { hp: 0, atk: 0, def: 0, hpp: 1, atkp: 1, defp: 0, em: 0, er: 1, cr: 0, cd: 0 }, // 13: 生攻充
-        { hp: 0, atk: 0, def: 0, hpp: 1, atkp: 1, defp: 0, em: 1, er: 1, cr: 0, cd: 0 }, // 14: 生攻精充
-        { hp: 0, atk: 0, def: 0, hpp: 1, atkp: 0, defp: 0, em: 1, er: 0, cr: 1, cd: 1 }, // 15: 生精双暴
-        { hp: 0, atk: 0, def: 0, hpp: 1, atkp: 0, defp: 0, em: 1, er: 0, cr: 0, cd: 1 }, // 16: 生精爆伤
+        { hp: 0, atk: 0.5, def: 0, hpp: 0, atkp: 1, defp: 0, em: 0, er: 1, cr: 0, cd: 0 }, //  0: 攻充
+        { hp: 0, atk: 0.5, def: 0, hpp: 0, atkp: 1, defp: 0, em: 0, er: 1, cr: 1, cd: 1 }, //  1: 攻充双暴
+        { hp: 0, atk: 0.5, def: 0, hpp: 0, atkp: 1, defp: 0, em: 1, er: 1, cr: 1, cd: 1 }, //  2: 攻充精双暴
+        { hp: 0, atk: 0.5, def: 0, hpp: 0, atkp: 1, defp: 0, em: 0, er: 0, cr: 0, cd: 1 }, //  3: 攻击爆伤
+        { hp: 0, atk: 0.5, def: 0, hpp: 0, atkp: 1, defp: 0, em: 0, er: 0, cr: 1, cd: 1 }, //  4: 攻双暴
+        { hp: 0.3, atk: 0.3, def: 0, hpp: 1, atkp: 0.5, defp: 0, em: 0, er: 1, cr: 1, cd: 1 }, //  5: 攻生充双暴
+        { hp: 0.3, atk: 0.3, def: 0, hpp: 1, atkp: 0.5, defp: 0, em: 0, er: 0, cr: 1, cd: 1 }, //  6: 攻生双暴
+        { hp: 0.3, atk: 0.5, def: 0, hpp: 1, atkp: 0.5, defp: 0, em: 1, er: 0, cr: 1, cd: 1 }, //  7: 攻生精双暴
+        { hp: 0, atk: 0.5, def: 0, hpp: 0, atkp: 1, defp: 0, em: 1, er: 0, cr: 1, cd: 1 }, //  8: 攻精双暴
+        { hp: 0, atk: 0.5, def: 0, hpp: 0, atkp: 1, defp: 0, em: 1, er: 1, cr: 1, cd: 1 }, //  9: 攻精充双暴
+        { hp: 0, atk: 0.3, def: 0.3, hpp: 0, atkp: 0.5, defp: 1, em: 0, er: 0, cr: 1, cd: 1 }, // 10: 攻防双暴
+        { hp: 0, atk: 0.3, def: 0.3, hpp: 0, atkp: 0.5, defp: 1, em: 0, er: 1, cr: 1, cd: 1 }, // 11: 攻防充双暴
+        { hp: 0.3, atk: 0, def: 0, hpp: 1, atkp: 0, defp: 0, em: 0, er: 1, cr: 0, cd: 0 }, // 12: 生充
+        { hp: 0.3, atk: 0.3, def: 0, hpp: 1, atkp: 0.5, defp: 0, em: 0, er: 1, cr: 0, cd: 0 }, // 13: 生攻充
+        { hp: 0.3, atk: 0.3, def: 0, hpp: 1, atkp: 0.5, defp: 0, em: 1, er: 1, cr: 0, cd: 0 }, // 14: 生攻精充
+        { hp: 0.3, atk: 0, def: 0, hpp: 1, atkp: 0, defp: 0, em: 1, er: 0, cr: 1, cd: 1 }, // 15: 生精双暴
+        { hp: 0.3, atk: 0, def: 0, hpp: 1, atkp: 0, defp: 0, em: 1, er: 0, cr: 0, cd: 1 }, // 16: 生精爆伤
         { hp: 0, atk: 0, def: 0, hpp: 0, atkp: 0, defp: 0, em: 1, er: 0, cr: 0, cd: 0 }, // 17: 精
         { hp: 0, atk: 0, def: 0, hpp: 0, atkp: 0, defp: 0, em: 1, er: 1, cr: 0, cd: 0 }, // 18: 精充
-        { hp: 0, atk: 0, def: 0, hpp: 0, atkp: 0, defp: 1, em: 0, er: 1, cr: 0, cd: 0 }, // 19: 防充
-        { hp: 0, atk: 0, def: 0, hpp: 0, atkp: 0, defp: 1, em: 0, er: 0, cr: 1, cd: 1 }, // 20: 防双暴
+        { hp: 0, atk: 0, def: 0.3, hpp: 0, atkp: 0, defp: 1, em: 0, er: 1, cr: 0, cd: 0 }, // 19: 防充
+        { hp: 0, atk: 0, def: 0.3, hpp: 0, atkp: 0, defp: 1, em: 0, er: 0, cr: 1, cd: 1 }, // 20: 防双暴
     ]
 }
