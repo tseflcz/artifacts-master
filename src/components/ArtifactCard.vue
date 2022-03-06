@@ -162,6 +162,11 @@ const flipLock = () => {
     background-color: black;
     color: white;
 }
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
 .artifact-card {
     user-select: none;
     box-shadow: 0 0 2px 0 #0007;

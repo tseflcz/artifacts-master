@@ -48,7 +48,9 @@ export const store = createStore<IState>({
                 score: [0,20]
                 
             },
+            filterBatch: [],
             useFilterPro: false,
+            useFilterBatch: -1,  // -1 notwork, 0~length-1 select one
             weight: {
                 hp: 0.3,
                 atk: 0.5,
@@ -204,6 +206,9 @@ export const store = createStore<IState>({
         },
         usePreset(state, payload) {
                 state.weight = payload.weight
+        },
+        filterBatchIndex(state, payload) {
+            state.useFilterBatch = payload
         }
     },
     actions: {
@@ -212,12 +217,50 @@ export const store = createStore<IState>({
             state.artifacts = payload.artifacts
             dispatch('updFilteredArtifacts')
         },
+        setLockByFilterBatch({ state }) {
+            // TODO two different lock, which is right?
+
+            let newLock = [];
+            for (let i = 0; i < state.artifacts.length; i ++ )
+                newLock.push(state.artifacts[i].lock);
+            if (state.filterBatch.length === 0) {
+                ElNotification({
+                    type: 'error',
+                    title: '一条规则都没有！',
+                })
+                return;
+            }
+            for (let i = 0; i < state.filterBatch.length; i ++ ) {
+                let filter = state.filterBatch[i].filter;
+                // let ruleResult = [];
+                if (state.filterBatch[i].lock == 'disabled')
+                    continue
+                for (let j = 0; j < state.artifacts.length; j ++ )
+                    if (filter.filter(state.artifacts[j])) {
+                        // ruleResult.push(JSON.parse(JSON.stringify(state.artifacts[j])));
+                        newLock[j] = state.filterBatch[i].lock == 'lock';
+                    }
+                // console.log(state.filterBatch[i], ruleResult);
+            }
+            for (let i = 0; i < state.artifacts.length; i ++ )
+                state.artifacts[i].lock = newLock[i];
+            ElNotification({
+                type: 'success',
+                title: '批量规则应用成功',
+            })
+        },
         updFilteredArtifacts({ state }) {
             state.loading = true
             setTimeout(() => {
                 let ret = state.artifacts
-                // filter
-                if (!state.useFilterPro) { // basic filter
+                if (state.useFilterBatch != -1) {  // use specified filterbatch
+                    let filter = state.filterBatch[state.useFilterBatch].filter;
+                    ret = ret.filter(a => filter.filter(a));
+                }
+                // else if (state.useFilterBatch == -1) {  // use all filterbatch
+                //     console.log('filterBatch all')
+                // }
+                else if (!state.useFilterPro) { // basic filter
                     if (state.filter.set)
                     ret = ret.filter(a => a.set == state.filter.set);
                     if (state.filter.slot)

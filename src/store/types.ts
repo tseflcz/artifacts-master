@@ -1,4 +1,5 @@
 import { Artifact } from '../ys/artifact'
+import { FilterBatchOne } from '../ys/artifactFilter'
 
 export interface IOption {
     key: string
@@ -27,7 +28,9 @@ export interface IState {
         lvRange: number[]
         score: number[]
     }
+    filterBatch: FilterBatchOne[]
     useFilterPro: boolean
+    useFilterBatch: number
     weight: {
         [key: string]: number
     },
