@@ -34,9 +34,7 @@ function __ (s: string) {
 import { SubFilterEquation, SubFilter, ArtifactFilter } from '../ys/artifactFilter'
 export default defineComponent({
     props: {
-        filter: {
-            type: Object as PropType<ArtifactFilter>,
-        },
+        filter: ArtifactFilter,
         show: Boolean,
         title: String,
     },
@@ -126,7 +124,7 @@ export default defineComponent({
 })
 </script>
 <template>
-    <el-dialog :title="title.length ? title : '新规则'" width="800px" :model-value="show" @update:model-value="$emit('update:show', $event)">
+    <el-dialog :title="title?.length ? title : '新规则'" width="800px" :model-value="show" @update:model-value="$emit('update:show', $event)">
         <article class="artifact-edit-panel">
             <el-select v-model="filter.main" multiple :placeholder="__('主词条')" style="width: 100%;">
                 <el-option v-for="(item, a) in ArtifactParamTypes" :key="a" :label="chs.affix[item]" :value="item">

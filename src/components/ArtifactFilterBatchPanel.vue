@@ -45,6 +45,7 @@ export default defineComponent({
             this.store.state.filterBatch.splice(index, 1);
             if (this.store.state.useFilterBatch >= index)
                 this.store.commit('filterBatchIndex', -1);
+            return true;
         },
         getFilterBatchJSON(event: Event) {
             const trigger = event.target as Element;
