@@ -2,7 +2,6 @@
 import { defineComponent, PropType } from 'vue'
 import { DeleteFilled } from '@element-plus/icons-vue'
 import chs from '../ys/locale/chs'
-import clipboard from 'clipboard'
 
 let ArtifactParamTypes : string[] = [];
 let ArtifactSubParamTypes : string[] = [];
@@ -22,7 +21,7 @@ function updateNames() {
         ArtifactSetNames.push(key);
     for (let key in chs.character)
         CharacterNames.push(key);
-    console.log(CharacterNames)
+    //console.log(CharacterNames)
 }
 
 updateNames();
@@ -92,9 +91,9 @@ export default defineComponent({
         },
         showJSON(event: Event) {
             const trigger = event.target as Element;
-            console.log(trigger);
-            clipboard.copy(JSON.stringify(this.filter), {container: trigger});
-            console.log(JSON.stringify(this.filter));
+            //console.log(trigger);
+            navigator.clipboard.writeText(JSON.stringify(this.filter));
+            //console.log(JSON.stringify(this.filter));
             ElNotification({
                 type: 'success',
                 title: __('导出过滤规则成功'),
@@ -270,7 +269,7 @@ export default defineComponent({
                 <el-button @click="doSave">{{ __('关闭') }}</el-button>
             </span>
         </template>
-        <el-dialog class="inputsavedialog" :title="__('输入保存数据')" width="400px" :model-value="showLoadPanel" @update:model-value="showLoadPanel = false;">
+        <el-dialog :title="__('输入保存数据')" width="400px" :model-value="showLoadPanel" @update:model-value="showLoadPanel = false;">
             <textarea v-model="saveInput" style="width: 100%; height: 100px;"></textarea>
             <template #footer>
                 <span class="dialog-footer">

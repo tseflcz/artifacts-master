@@ -1,8 +1,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { CircleCheckFilled, Plus, EditPen, DeleteFilled } from '@element-plus/icons-vue'
-import clipboard from 'clipboard'
-import ArtifactFilterPanel from './ArtifactFilterPanel.vue'
 import { SubFilterEquation, SubFilter, ArtifactFilter, FilterBatchOne } from '../ys/artifactFilter'
 import chs from '../ys/locale/chs'
 import { useStore } from '../store';
@@ -49,8 +47,8 @@ export default defineComponent({
         },
         getFilterBatchJSON(event: Event) {
             const trigger = event.target as Element;
-            console.log(trigger);
-            clipboard.copy(JSON.stringify(this.store.state.filterBatch), {container: trigger});
+            //console.log(trigger);
+            navigator.clipboard.writeText(JSON.stringify(this.store.state.filterBatch));
             ElNotification({
                 type: 'success',
                 title: __('导出批量过滤规则成功'),
@@ -120,7 +118,7 @@ export default defineComponent({
 })
 </script>
 <template>
-    <el-dialog class="inputsavedialog" :title="__('批量过滤规则')" width="70%" :model-value="show" @update:model-value="$emit('update:show', $event)">
+    <el-dialog :title="__('批量过滤规则')" width="70%" :model-value="show" @update:model-value="$emit('update:show', $event)">
         {{ __('可以设置多条过滤规则，每条规则有加锁、解锁、跳过三种状态，跳过状态下在批量执行过滤规则时会跳过该规则。') }}<br/>
         {{ __('批量执行加锁解锁时，规则会从上到下依次执行，匹配多个规则时，位于后面的规则效果会覆盖前面的规则。') }}<br/>
         {{ __('每个规则左侧为指定匹配上的圣遗物加锁还是解锁、编辑规则、启用规则。中间过滤规则注释可选，用于描述规则实际意义。右侧删除该规则。') }}

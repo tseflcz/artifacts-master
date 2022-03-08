@@ -54,11 +54,11 @@ export class ArtifactFilter {
     includeSubCount: number = 0
     excludeSub: SubFilter[] = []
     excludeSubCount: number = 0
-    private filterOne<T>(input: T, filter: T[]): boolean {
+    filterOne<T>(input: T, filter: T[]): boolean {
         if (filter.length === 0) return true
         return filter.indexOf(input) !== -1
     }
-    private filterSub(input: Affix[], filters: SubFilter[], targetCount: number, empty: boolean): boolean {
+    filterSub(input: Affix[], filters: SubFilter[], targetCount: number, empty: boolean): boolean {
         if (filters.length === 0) return empty
         let matchCount = 0
         for (const filter of filters) matchCount += filter.filter(input)
