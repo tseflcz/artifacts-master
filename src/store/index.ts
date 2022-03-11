@@ -280,10 +280,12 @@ export const store = createStore<IState>({
                         state.filter.lvRange[0] <= a.level &&
                         a.level <= state.filter.lvRange[1]
                     ));
-                    ret = ret.filter((a) => (
-                        state.filter.score[0] <= a.data.affnum[state.sortBy] &&
-                        a.data.affnum[state.sortBy] <= state.filter.score[1]
-                    ));
+                    if (state.sortBy) {
+                        ret = ret.filter((a) => (
+                            state.filter.score[0] <= a.data.affnum[state.sortBy] &&
+                            a.data.affnum[state.sortBy] <= state.filter.score[1]
+                        ));
+                    }
                 }
                 // weight
                 let weight = state.weight
