@@ -80,7 +80,7 @@ export default defineComponent({
                     title: __('导入批量过滤规则失败'),
                     message: __('请检查批量规则是否为合法JSON格式'),
                 })
-                throw e;
+                console.log(e);
             }
         },
         filterBatchStart() {

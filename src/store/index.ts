@@ -253,14 +253,19 @@ export const store = createStore<IState>({
             state.loading = true
             setTimeout(() => {
                 let ret = state.artifacts
-                if (state.useFilterBatch != -1) {  // use specified filterbatch
+                if (state.useFilterPro && state.useFilterBatch == -1) {
+                    ElNotification({
+                        type: 'warning',
+                        title: '未选择过滤器',
+                        message: '显示全部圣遗物。如果要进行过滤请选择过滤器。'
+                    })
+                }
+                else if (state.useFilterPro) {
+                    // use specified filterbatch
                     let filter = state.filterBatch[state.useFilterBatch].filter;
                     ret = ret.filter(a => filter.filter(a));
                 }
-                // else if (state.useFilterBatch == -1) {  // use all filterbatch
-                //     console.log('filterBatch all')
-                // }
-                else if (!state.useFilterPro) { // basic filter
+                else { // basic filter
                     if (state.filter.set)
                     ret = ret.filter(a => a.set == state.filter.set);
                     if (state.filter.slot)
@@ -278,20 +283,6 @@ export const store = createStore<IState>({
                     ret = ret.filter((a) => (
                         state.filter.score[0] <= a.data.affnum[state.sortBy] &&
                         a.data.affnum[state.sortBy] <= state.filter.score[1]
-                    ));
-                } else { // filter pro
-                    ret = ret.filter(a => state.filterPro.set.includes(a.set));
-                    ret = ret.filter(a => state.filterPro.slot.includes(a.slot));
-                    ret = ret.filter(a => state.filterPro.main.includes(a.main.key));
-                    ret = ret.filter(a => state.filterPro.location.includes(a.location))
-                    ret = ret.filter(a => state.filterPro.lock.includes(a.lock.toString()))
-                    ret = ret.filter(a => (
-                        state.filterPro.lvRange[0] <= a.level &&
-                        a.level <= state.filterPro.lvRange[1]
-                    ));
-                    ret = ret.filter((a) => (
-                        state.filterPro.score[0] <= a.data.affnum[state.sortBy] &&
-                        a.data.affnum[state.sortBy] <= state.filterPro.score[1]
                     ));
                 }
                 // weight

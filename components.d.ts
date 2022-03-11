@@ -29,6 +29,7 @@ declare module 'vue' {
     ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSelect: typeof import('element-plus/es')['ElSelect']
+    ElSlider: typeof import('element-plus/es')['ElSlider']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     FilterSection: typeof import('./src/components/FilterSection.vue')['default']
     ImportSection: typeof import('./src/components/ImportSection.vue')['default']

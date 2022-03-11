@@ -129,7 +129,7 @@ const flipLock = () => {
                 </div>
             </div>
             <div class="minor-affixes">
-                 <div class="minor-affix" v-for="a in minors" :style="a.style">{{ a.text }}</div>
+                 <div class="minor-affix" v-for="(a, index) in minors" :key="index" :style="a.style">{{ a.text }}</div>
             </div>
             <div class="affix-numbers" v-if="artifact.level < 20">
                 <div class="cur-an">当前{{ affnum.cur }}</div>

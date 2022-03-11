@@ -30,10 +30,13 @@ function __ (s: string) {
     return s;
 }
 
-import { SubFilterEquation, SubFilter, ArtifactFilter } from '../ys/artifactFilter'
+import { scoreFilterNames, SubFilterEquation, SubFilter, ArtifactFilter } from '../ys/artifactFilter'
 export default defineComponent({
     props: {
-        filter: ArtifactFilter,
+        filter: {
+            type: ArtifactFilter,
+            default: new ArtifactFilter()
+        },
         show: Boolean,
         title: String,
     },
@@ -42,17 +45,17 @@ export default defineComponent({
         let availableSubFilterEquations: any[] = []
         for (let i in SubFilterEquation)
             if (isNaN(Number(i))) availableSubFilterEquations.push({ value: SubFilterEquation[i], label: i })
-        const filter = this.filter || new ArtifactFilter()
         let showLoadPanel = false;
         let saveInput = '';
         return {
+            ArtifactFilter,
             ArtifactParamTypes,
             ArtifactSubParamTypes,
             ArtifactSetNames,
             ArtifactPositionNames,
+            scoreFilterNames,
             CharacterNames,
             availableSubFilterEquations,
-            filter,
             showLoadPanel,
             saveInput,
             chs
@@ -114,6 +117,7 @@ export default defineComponent({
                     title: __('导入过滤规则失败'),
                     message: __('请检查规则是否为合法JSON格式'),
                 })
+                console.log(e)
             }
         }
     },
@@ -136,7 +140,7 @@ export default defineComponent({
             <el-select v-model="filter.set" multiple :placeholder="__('套装')" style="width: 50%;">
                 <el-option v-for="(item, a) in ArtifactSetNames" :key="a" :label="chs.set[item].name" :value="item"> </el-option>
             </el-select>
-            <el-select v-model="filter.level" multiple :placeholder="__('等级')" style="width: 20%;">
+            <!-- <el-select v-model="filter.level" multiple :placeholder="__('等级')" style="width: 20%;">
                 <el-option
                     v-for="(item, a) in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]"
                     :key="a"
@@ -144,21 +148,46 @@ export default defineComponent({
                     :value="item"
                 >
                 </el-option>
-            </el-select>
-            <el-select v-model="filter.stars" multiple :placeholder="__('星级')" style="width: 20%;">
+            </el-select> -->
+            <!-- <el-select v-model="filter.stars" multiple :placeholder="__('星级')" style="width: 20%;">
                 <el-option v-for="(item, a) in [1, 2, 3, 4, 5]" :key="a" :label="item" :value="item"> </el-option>
-            </el-select>
-            <el-select v-model="filter.subCount" multiple :placeholder="__('副词条数量')" style="width: 20%;">
+            </el-select> -->
+            <el-select v-model="filter.subCount" multiple :placeholder="__('副词条数量')" style="width: 40%;">
                 <el-option v-for="(item, a) in [0, 1, 2, 3, 4]" :key="a" :label="item" :value="item"> </el-option>
             </el-select>
-            <el-select v-model="filter.lock" multiple :placeholder="__('是否加锁')" style="width: 20%;">
+            <el-select v-model="filter.lock" multiple :placeholder="__('是否加锁')" style="width: 15%;">
                 <el-option label="加锁" :value="true"> </el-option>
                 <el-option label="未加锁" :value="false"> </el-option>
             </el-select>
-            <el-select v-model="filter.character" multiple :placeholder="__('装备角色')" style="width: 20%;">
+            <el-select v-model="filter.character" multiple :placeholder="__('装备角色')" style="width: 45%;">
                 <el-option label="未装备" :value="''"> </el-option>
+                <el-option label="任意角色" :value="ArtifactFilter.anyCharacter"> </el-option>
                 <el-option v-for="(item, a) in CharacterNames" :key="a" :label="chs.character[item]" :value="item"> </el-option>
             </el-select>
+            <div class="leveldiv">
+                <span class="filter-name">星级</span>
+                <range-slider
+                    :model-value="filter.level"
+                    @update:model-value="filter.level = $event"
+                />
+            </div>
+            <div class="scorefilterdiv">
+                <div v-for="(filterName, index) in scoreFilterNames" :key="index">
+                    <span>{{ filterName[1] }}</span>
+                    <el-input v-model.number="filter.scoreFilters[filterName[0]].value" type="number">
+                        <template #prepend>
+                            <el-select v-model="filter.scoreFilters[filterName[0]].equation" style="width: 60px;">
+                                <el-option
+                                    v-for="(j, a) in availableSubFilterEquations"
+                                    :key="a"
+                                    :value="j.value"
+                                    :label="j.label"
+                                ></el-option>
+                            </el-select>
+                        </template>
+                    </el-input>
+                </div>
+            </div>
             <br />
             {{ __('需要包含的副词条') }}<br />
             {{ __('最少包含条数') }}<br />
@@ -180,7 +209,7 @@ export default defineComponent({
                                         @click="onSubClick(i)"
                                     ></el-option>
                                 </el-select>
-                                <el-select v-model="i.equation" style="margin-left: 0px; width: 70px;">
+                                <el-select v-model="i.equation" style="margin-left: 0px; width: 60px;">
                                     <el-option
                                         v-for="(j, a) in availableSubFilterEquations"
                                         :key="a"
@@ -288,6 +317,37 @@ export default defineComponent({
     // &::v-deep(.el-select) .el-input {
     //     width: 150px;
     // }
+    .leveldiv {
+        display: flex;
+        text-align: center;
+        align-items: center;
+        * {
+            width: 90%;
+        }
+        span {
+            width: 10%;
+        }
+    }
+    .scorefilterdiv {
+        display: flex;
+        > * {
+            display: flex;
+            width: 33%;
+            text-align: center;
+            align-items: center;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        > *:first-child {
+            margin-left: 0;
+        }
+        > *:last-child {
+            margin-right: 0;
+        }
+        > * > span {
+            min-width: 50px;
+        }
+    }
     .title-select {
         width: 180px;
         white-space: nowrap;

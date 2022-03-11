@@ -5,10 +5,30 @@
 import { Artifact, Affix } from './Artifact'
 export enum SubFilterEquation {
     '<',
-    '<=',
+    '≤',
     '>',
-    '>=',
+    '≥',
     '=',
+}
+export class ScoreFilter {
+    value: number = 0
+    equation: SubFilterEquation = SubFilterEquation['≥']
+    constructor (data?: any) {
+        if (!data) return;
+        for (const i in data)
+            if (this.hasOwnProperty(i)) {
+                // @ts-ignore
+                this[i] = data[i];
+            }
+    }
+    filter(value: number): boolean {
+        const thisvalue = this.value;
+        if (this.equation === SubFilterEquation['<']) return value < thisvalue
+        if (this.equation === SubFilterEquation['≤']) return value <= thisvalue
+        if (this.equation === SubFilterEquation['>']) return value > thisvalue
+        if (this.equation === SubFilterEquation['≥']) return value >= thisvalue
+        return value === thisvalue
+    }
 }
 export class SubFilter {
     name: string = ''
@@ -28,9 +48,9 @@ export class SubFilter {
         const value = input.value;
         const thisvalue = parseFloat(this.value);
         if (this.equation === SubFilterEquation['<']) return value < thisvalue ? 1 : 0
-        if (this.equation === SubFilterEquation['<=']) return value <= thisvalue ? 1 : 0
+        if (this.equation === SubFilterEquation['≤']) return value <= thisvalue ? 1 : 0
         if (this.equation === SubFilterEquation['>']) return value > thisvalue ? 1 : 0
-        if (this.equation === SubFilterEquation['>=']) return value >= thisvalue ? 1 : 0
+        if (this.equation === SubFilterEquation['≥']) return value >= thisvalue ? 1 : 0
         // remain '='
         return value === thisvalue ? 1 : 0
     }
@@ -40,20 +60,36 @@ export class SubFilter {
         return res
     }
 }
+export const scoreFilterNames = [
+    ['cur', '当前分'],
+    ['md', '期望分'],
+    ['tot', '总分'],
+]
 export class ArtifactFilter {
     main: String[] = []
     stars: Number[] = []
-    level: Number[] = []
+    // level: Number[] = []
+    level: Number[] = [0, 20]
     // name: String[] = []
     set: String[] = []
     position: String[] = []
     lock: Boolean[] = []
     character: String[] = []
+    static anyCharacter: string = 'anyCharacter'
     subCount: Number[] = []
     includeSub: SubFilter[] = []
     includeSubCount: number = 0
     excludeSub: SubFilter[] = []
     excludeSubCount: number = 0
+    scoreFilters: {string?: ScoreFilter} = {}
+
+    constructor(datastr?: string) {
+        for (let i = 0; i < scoreFilterNames.length; i ++ )
+            this.scoreFilters[scoreFilterNames[i][0]] = new ScoreFilter()
+        if (!datastr) return;
+        this.loadFromJSON(datastr)
+    }
+
     filterOne<T>(input: T, filter: T[]): boolean {
         if (filter.length === 0) return true
         return filter.indexOf(input) !== -1
@@ -68,7 +104,10 @@ export class ArtifactFilter {
         let inFilter = true
         inFilter &&= this.filterOne(artifact.main.key, this.main)
         inFilter &&= this.filterOne(artifact.rarity, this.stars)
-        inFilter &&= this.filterOne(artifact.level, this.level)
+        let level = [] as Number[]
+        for (let i = this.level[0] as number; i <= this.level[1]; i ++ )
+            level.push(i)
+        inFilter &&= this.filterOne(artifact.level, level)
         // inFilter &&= this.filterOne(artifact.name, this.name)
         // const [set, position] = ArtifactToSetPosition.get(artifact.name) || ['', '']
         const set = artifact.set;
@@ -76,8 +115,15 @@ export class ArtifactFilter {
         inFilter &&= this.filterOne(set, this.set)
         inFilter &&= this.filterOne(position, this.position)
         inFilter &&= this.filterOne(artifact.lock, this.lock)
-        inFilter &&= this.filterOne(artifact.location, this.character)
+        let character = this.character.slice()
+        // if anyCharacter and artifact has location, add location into filter
+        if (character.indexOf(ArtifactFilter.anyCharacter) > -1)
+            if (artifact.location !== '')
+                character.push(artifact.location)
+        inFilter &&= this.filterOne(artifact.location, character)
         inFilter &&= this.filterOne(artifact.minors.length, this.subCount)
+        for (const i in this.scoreFilters)
+            inFilter &&= this.scoreFilters[i].filter(artifact.data.affnum[i])
         const subInclude = this.filterSub(artifact.minors, this.includeSub, this.includeSubCount, true)
         const subExclude = this.filterSub(artifact.minors, this.excludeSub, this.excludeSubCount + 1, false)
         inFilter = inFilter && subInclude && !subExclude
@@ -91,6 +137,11 @@ export class ArtifactFilter {
                     this[i] = [];
                     for (let j = 0; j < data[i].length; j ++ )
                         this[i].push(new SubFilter(data[i][j]));
+                }
+                else if (i === 'scoreFilters') {
+                    for (const j in data[i])
+                        if (this.scoreFilters.hasOwnProperty(j))
+                            this.scoreFilters[j] = new ScoreFilter(data[i][j]);
                 }
                 // @ts-ignore
                 else this[i] = data[i];
