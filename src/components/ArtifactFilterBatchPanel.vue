@@ -35,6 +35,7 @@ export default defineComponent({
         },
         doSave() {
             this.$emit('update:show', false)
+            localStorage.setItem('filterBatchJSON', JSON.stringify(this.store.state.filterBatch))
         },
         doAddFilterBatch() {
             this.store.state.filterBatch.push(new FilterBatchOne());
@@ -45,8 +46,10 @@ export default defineComponent({
                 this.store.commit('filterBatchIndex', -1);
             return true;
         },
-        getFilterBatchJSON(event: Event) {
-            const trigger = event.target as Element;
+        doDeleteAllFilter() {
+            this.store.state.filterBatch.splice(0)
+        },
+        getFilterBatchJSON() {
             //console.log(trigger);
             navigator.clipboard.writeText(JSON.stringify(this.store.state.filterBatch));
             ElNotification({
@@ -118,7 +121,7 @@ export default defineComponent({
 })
 </script>
 <template>
-    <el-dialog :title="__('批量过滤规则')" width="70%" :model-value="show" @update:model-value="$emit('update:show', $event)">
+    <el-dialog :title="__('批量过滤规则')" width="70%" :model-value="show" @update:model-value="doSave">
         {{ __('可以设置多条过滤规则，每条规则有加锁、解锁、跳过三种状态，跳过状态下在批量执行过滤规则时会跳过该规则。') }}<br/>
         {{ __('批量执行加锁解锁时，规则会从上到下依次执行，匹配多个规则时，位于后面的规则效果会覆盖前面的规则。') }}<br/>
         {{ __('每个规则左侧为指定匹配上的圣遗物加锁还是解锁、编辑规则、启用规则。中间过滤规则注释可选，用于描述规则实际意义。右侧删除该规则。') }}
@@ -162,6 +165,17 @@ export default defineComponent({
                 <el-button style="float: left; color: green" @click="updateAllFilterLock('lock')">全锁</el-button>
                 <el-button style="float: left; color: red;" @click="updateAllFilterLock('unlock')">全解</el-button>
                 <el-button style="float: left; color: grey;" @click="updateAllFilterLock('disabled')">全跳</el-button>
+                    <el-popconfirm
+                        :confirmButtonText="__('确定')"
+                        :cancelButtonText="__('算了')"
+                        :title="__('真的要删除所有过滤规则吗？')"
+                        confirmButtonType="danger"
+                        @confirm="doDeleteAllFilter"
+                    >
+                        <template #reference>
+                            <el-button style="float: left;" type="danger">全部删除</el-button>
+                        </template>
+                    </el-popconfirm>
                 <el-button @click="getFilterBatchJSON">{{ __('导出') }}</el-button>
                 <el-button @click="showLoadFilterBatchPanel = true;">{{ __('导入') }}</el-button>
                 <el-button type="primary" @click="filterBatchStart">{{ __('批量加锁解锁') }}</el-button>

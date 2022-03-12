@@ -2,7 +2,7 @@
 import SectionTitle from './SectionTitle.vue';
 import DropSelect from './DropSelect.vue';
 import RangeSlider from './RangeSlider.vue';
-import { ArtifactFilter } from '../ys/artifactFilter'
+import { ArtifactFilter, FilterBatchOne } from '../ys/artifactFilter'
 import { ref } from 'vue'
 import { useStore } from '../store';
 import ArtifaceFilterPanel from './ArtifactFilterPanel.vue'
@@ -10,6 +10,7 @@ import ArtifaceFilterBatchPanel from './ArtifactFilterBatchPanel.vue'
 const store = useStore()
 let artifactFilter = new ArtifactFilter();
 let showFilter = ref(false);
+let localStorageTried = false;
 const updateArtifactFilter = (filter: ArtifactFilter) => {
     artifactFilter = filter
     // this.isFiltering = true
@@ -28,6 +29,32 @@ const disableFilterBatch = () => {
 const useFilterPro = (use: boolean) => {
     store.commit('useFilterPro', { use })
     store.state.useFilterBatch = -1
+    if (!localStorageTried) {
+        localStorageTried = true
+        try {
+            const datastr = localStorage.getItem('filterBatchJSON')
+            if (datastr) {
+                const data = JSON.parse(datastr);
+                store.state.filterBatch.splice(0);
+                for (let i = 0; i < data.length; i ++ )
+                    store.state.filterBatch.push(new FilterBatchOne(data[i]));
+                ElNotification({
+                    type: 'success',
+                    title: '已成功读取本地过滤规则',
+                    message: '为了防止丢失，推荐定期使用过滤规则导出功能备份',
+                })
+            }
+        }
+        catch (e) {
+            console.log(e)
+            console.log('saved data in localStorage: ', localStorage.getItem('filterBatchJSON'))
+            ElNotification({
+                type: 'error',
+                title: '从本地恢复过滤规则出错',
+                message: '控制台中包含详细信息。若需要上报错误和备份数据请前往控制台保存数据。'
+            })
+        }
+    }
 }
 const setFilter = (key: string, value: any) => {
     store.commit('setFilter', { key, value })
