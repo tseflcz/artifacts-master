@@ -1,4 +1,4 @@
-import { Artifact } from '../ys/artifact'
+import { Artifact, ArtifactScoreWeight } from '../ys/artifact'
 import { FilterBatchOne } from '../ys/artifactFilter'
 
 export interface IOption {
@@ -31,9 +31,7 @@ export interface IState {
     filterBatch: FilterBatchOne[]
     useFilterPro: boolean
     useFilterBatch: number
-    weight: {
-        [key: string]: number
-    },
+    weight: ArtifactScoreWeight,
     useWeightJson: boolean
     sortBy: string
     sortord: boolean

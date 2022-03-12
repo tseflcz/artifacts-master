@@ -1,6 +1,6 @@
 import { InjectionKey } from 'vue'
 import { createStore, useStore as baseUseStore, Store } from 'vuex'
-import { Artifact } from '../ys/artifact'
+import { ArtifactScoreWeight, Artifact } from '../ys/artifact'
 import { IState } from './types'
 import chs from '../ys/locale/chs'
 import data from '../ys/data'
@@ -51,22 +51,7 @@ export const store = createStore<IState>({
             filterBatch: [],
             useFilterPro: false,
             useFilterBatch: -1,  // -1 notwork, 0~length-1 select one
-            weight: {
-                hp: 0.3,
-                atk: 0.5,
-                def: 0.3,
-                hpp: 1,
-                atkp: 1,
-                defp: 1,
-                em: 1,
-                er: 1,
-                cr: 1.5,
-                cd: 1.5,
-                hpprop: 0.5,
-                defprop : 0.5,
-                main: 0.5,
-                set: 0.3
-            },
+            weight: new ArtifactScoreWeight(),
             //weightJson: '{"hp":0,"atk":0,"def":0,"hpp":0,"atkp":0.5,"defp":0,"em":0.5,"er":0.5,"cr":1,"cd":1}',
             useWeightJson: false,
             sortBy: 'tot',
@@ -253,17 +238,20 @@ export const store = createStore<IState>({
             state.loading = true
             setTimeout(() => {
                 let ret = state.artifacts
+                // weight
+                let weight = state.weight
                 if (state.useFilterPro && state.useFilterBatch == -1) {
                     ElNotification({
                         type: 'warning',
-                        title: '未选择过滤器',
-                        message: '显示全部圣遗物。如果要进行过滤请选择过滤器。'
+                        title: '未选择过滤规则',
+                        message: '显示全部圣遗物。如果要进行过滤请选择过滤规则。'
                     })
                 }
                 else if (state.useFilterPro) {
                     // use specified filterbatch
                     let filter = state.filterBatch[state.useFilterBatch].filter;
                     ret = ret.filter(a => filter.filter(a));
+                    weight = state.filterBatch[state.useFilterBatch].filter.scoreWeight;
                 }
                 else { // basic filter
                     if (state.filter.set)
@@ -287,8 +275,6 @@ export const store = createStore<IState>({
                         ));
                     }
                 }
-                // weight
-                let weight = state.weight
                 // update affix numbers
                 for (let a of ret) {
                     a.updateAffnum(weight)

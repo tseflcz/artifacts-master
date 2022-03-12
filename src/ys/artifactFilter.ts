@@ -2,7 +2,7 @@
  * 圣遗物过滤器
  *
  */
-import { Artifact, Affix } from './Artifact'
+import { Artifact, Affix, ArtifactScoreWeight } from './Artifact'
 export enum SubFilterEquation {
     '<',
     '≤',
@@ -82,6 +82,7 @@ export class ArtifactFilter {
     excludeSub: SubFilter[] = []
     excludeSubCount: number = 0
     scoreFilters: {string?: ScoreFilter} = {}
+    scoreWeight: ArtifactScoreWeight = new ArtifactScoreWeight()
 
     constructor(datastr?: string) {
         for (let i = 0; i < scoreFilterNames.length; i ++ )
@@ -143,8 +144,15 @@ export class ArtifactFilter {
                         if (this.scoreFilters.hasOwnProperty(j))
                             this.scoreFilters[j] = new ScoreFilter(data[i][j]);
                 }
-                // @ts-ignore
-                else this[i] = data[i];
+                else if (i === 'scoreWeight') {
+                    this.setScoreWeight(data[i] as ArtifactScoreWeight)
+                }
+                else if (this.hasOwnProperty(i))
+                    this[i] = data[i];
+    }
+    setScoreWeight(w: ArtifactScoreWeight) {
+        for (const i in w)
+            this.scoreWeight[i] = w[i]
     }
 }
 

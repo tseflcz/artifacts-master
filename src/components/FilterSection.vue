@@ -20,13 +20,14 @@ const disableFilterBatch = () => {
     // store.dispatch('updFilteredArtifacts')
     ElNotification({
         type: 'success',
-        title: '取消过滤器成功',
+        title: '取消过滤规则成功',
         message: '请再次开始计算应用新过滤策略',
     })
 }
 
 const useFilterPro = (use: boolean) => {
     store.commit('useFilterPro', { use })
+    store.state.useFilterBatch = -1
 }
 const setFilter = (key: string, value: any) => {
     store.commit('setFilter', { key, value })
@@ -118,9 +119,9 @@ const deselectAll = (filterProKey: string) => {
             </div>
         </div>
         <div class="section-content" v-show="store.state.useFilterPro">
-            <div class="filter-detail">{{ store.state.useFilterBatch != -1 ? '启用过滤器：' + (store.state.filterBatch[store.state.useFilterBatch].comment ? store.state.filterBatch[store.state.useFilterBatch].comment : '无名称注释') : '' }}</div>
+            <div class="filter-detail">{{ store.state.useFilterBatch != -1 ? '启用过滤规则：' + (store.state.filterBatch[store.state.useFilterBatch].comment ? store.state.filterBatch[store.state.useFilterBatch].comment : '无名称注释') : '' }}</div>
             <div class="filter-button">
-                <text-button @click="showFilter = true;">显示过滤器</text-button>
+                <text-button @click="showFilter = true;" style="width: 100px">显示过滤规则</text-button>
                 <text-button v-show="store.state.useFilterBatch != -1" @click="disableFilterBatch">取消选择</text-button>
             </div>
             <artifact-filter-batch-panel v-model:show="showFilter" />

@@ -2,6 +2,7 @@
 import { defineComponent, PropType } from 'vue'
 import { DeleteFilled } from '@element-plus/icons-vue'
 import chs from '../ys/locale/chs'
+import { useStore } from '../store';
 
 let ArtifactParamTypes : string[] = [];
 let ArtifactSubParamTypes : string[] = [];
@@ -45,8 +46,6 @@ export default defineComponent({
         let availableSubFilterEquations: any[] = []
         for (let i in SubFilterEquation)
             if (isNaN(Number(i))) availableSubFilterEquations.push({ value: SubFilterEquation[i], label: i })
-        let showLoadPanel = false;
-        let saveInput = '';
         return {
             ArtifactFilter,
             ArtifactParamTypes,
@@ -56,9 +55,11 @@ export default defineComponent({
             scoreFilterNames,
             CharacterNames,
             availableSubFilterEquations,
-            showLoadPanel,
-            saveInput,
-            chs
+            showLoadPanel: false,
+            showWeightPanel: false,
+            saveInput: '',
+            chs,
+            store: useStore()
         }
     },
     watch: {},
@@ -119,6 +120,14 @@ export default defineComponent({
                 })
                 console.log(e)
             }
+        },
+        doResetWeight() {
+            this.filter.setScoreWeight(this.store.state.weight)
+            this.$emit('update:filter', this.filter)
+                ElNotification({
+                    type: 'success',
+                    title: __('已复制权重'),
+                })
         }
     },
     components: {
@@ -164,17 +173,10 @@ export default defineComponent({
                 <el-option label="任意角色" :value="ArtifactFilter.anyCharacter"> </el-option>
                 <el-option v-for="(item, a) in CharacterNames" :key="a" :label="chs.character[item]" :value="item"> </el-option>
             </el-select>
-            <div class="leveldiv">
-                <span class="filter-name">星级</span>
-                <range-slider
-                    :model-value="filter.level"
-                    @update:model-value="filter.level = $event"
-                />
-            </div>
             <div class="scorefilterdiv">
                 <div v-for="(filterName, index) in scoreFilterNames" :key="index">
                     <span>{{ filterName[1] }}</span>
-                    <el-input v-model.number="filter.scoreFilters[filterName[0]].value" type="number">
+                    <el-input class="numberinput" v-model.number="filter.scoreFilters[filterName[0]].value" type="number">
                         <template #prepend>
                             <el-select v-model="filter.scoreFilters[filterName[0]].equation" style="width: 60px;">
                                 <el-option
@@ -187,6 +189,41 @@ export default defineComponent({
                         </template>
                     </el-input>
                 </div>
+            </div>
+            <div class="scoreweightdiv">
+                <span>分数权重</span>
+                <el-dialog title="编辑权重" width="400px" :model-value="showWeightPanel" @update:model-value="showWeightPanel = false;">
+                    <div class="scoreweightdialog">
+                        <div v-for="(value, key) in filter.scoreWeight" :key="key" class="scoreweightdivone">
+                            <span>{{  chs.affix[key] + (chs.affix[key].length >= 5 ? '' : '&emsp;'.repeat(5 - chs.affix[key].length)) }}</span>
+                            <el-input class="numberinput" v-model.number="filter.scoreWeight[key]" type="number" step="0.1" style="width: 80px;">{{ key }}</el-input>
+                        </div>
+                    </div>
+                    <template #footer>
+                        <span class="dialog-footer">
+                            <el-button type="primary" @click="showWeightPanel = false;">{{ __('关闭') }}</el-button>
+                        </span>
+                    </template>
+                </el-dialog>
+                <el-button @click="showWeightPanel = true;">编辑权重</el-button>
+                <el-popconfirm
+                    confirmButtonText="确定"
+                    cancelButtonText="算了"
+                    title="确定使用词条权重面板当前设置的权重覆盖？"
+                    confirmButtonType="danger"
+                    @confirm="doResetWeight"
+                >
+                    <template #reference>
+                        <el-button>复制当前</el-button>
+                    </template>
+                </el-popconfirm>
+            </div>
+            <div class="leveldiv">
+                <span class="filter-name">星级</span>
+                <range-slider
+                    :model-value="filter.level"
+                    @update:model-value="filter.level = $event"
+                />
             </div>
             <br />
             {{ __('需要包含的副词条') }}<br />
@@ -278,7 +315,8 @@ export default defineComponent({
                 width="600"
                 trigger="hover">
                     <div id="filter-hint" style="width: 600px;">
-                        <p>{{ __('部位、套装、等级、星级、主词条为复选菜单，不选时不使用该数据过滤，选择后过滤满足所选项的圣遗物。') }}</p>
+                        <p>{{ __('主词条、位置、套装、副词条数量、是否加锁、装备角色为复选菜单，不选时不使用该数据过滤，选择后过滤满足所选项的圣遗物。星级通过滑块选择范围。') }}{{ __('如果装备角色中选择了任意角色选项，会选择所有已被角色装备的圣遗物。') }}</p>
+                        <p>{{ __('需要根据分数过滤时，可以根据当前分、期望分、总分数值进行过滤。分数由规则中设置的分数权重计算得到，每个新规则初始分数权重为默认值，可以点击编辑权重修改。如果需要复制当前词条权重面板中设置的权重，点击复制当前并确认。') }}</p>
                         <p>{{ __('对于副词条，有想包含的副词条和不想包含的副词条两种。如果留空则不用于过滤。以想包含的副词条为例：') }}</p>
                         <ul>
                             <li>{{ __('最少包含条数：最少包含多少条所列的副词条。例如选择了攻充爆爆最少条数3，那么这四条中至少包含三条的圣遗物才会被过滤出来') }}</li>
@@ -286,7 +324,7 @@ export default defineComponent({
                             <li>{{ __('副词条：包含四部分，副词条名称、判断方式、数值、删除。名称选择副词条名，判断方式有') }}<code>&gt; &lt; =</code>{{ __('等，数值为数值阈值，删除为删除该副词条。') }}</li>
                         </ul>
                         <p>{{ __('不想包含的副词条和上述类似，不同在于：最多包含条数，圣遗物副词条最多只能包含多少条不想包含的副词条。添加不包含副词条，添加新的一条不想包含的副词条。') }}</p>
-                        <p>{{ __('点击确定应用过滤，界面将只展示过滤出的圣遗物，同时过滤按钮变为取消过滤，点击后重新展示所有圣遗物。') }}</p>
+                        <p>{{ __('点击以此规则过滤，会选择该过滤规则，之后点击开始计算展示过滤结果。') }}</p>
                     </div>
 
                     <template #reference>
@@ -318,9 +356,10 @@ export default defineComponent({
     //     width: 150px;
     // }
     .leveldiv {
-        display: flex;
+        display: inline-flex;
         text-align: center;
         align-items: center;
+        width: 65%;
         * {
             width: 90%;
         }
@@ -329,7 +368,7 @@ export default defineComponent({
         }
     }
     .scorefilterdiv {
-        display: flex;
+        display: inline-flex;
         > * {
             display: flex;
             width: 33%;
@@ -346,6 +385,35 @@ export default defineComponent({
         }
         > * > span {
             min-width: 50px;
+        }
+    }
+    .scoreweightdiv {
+        display: inline-flex;
+        width: 35%;
+        text-align: center;
+        align-items: center;
+        justify-content: space-around;
+        > * {
+            text-align: center;
+            align-items: center;
+        }
+        .scoreweightdialog {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            .scoreweightdivone {
+                width: 40%;
+                display: flex;
+                text-align: center;
+                align-items: center;
+                span {
+                    width: 60%;
+                    margin: 10px 0;
+                }
+                el-input {
+                    height: 100px;
+                }
+            }
         }
     }
     .title-select {
@@ -399,5 +467,12 @@ export default defineComponent({
     font-size: 85%;
     margin: 0;
     border-radius: 6px;
+}
+</style>
+<style lang="scss">
+.numberinput {
+    > input {
+        padding-right: 0px
+    }
 }
 </style>

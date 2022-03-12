@@ -59,9 +59,12 @@ const minors = computed(() => {
     let ret = []
     for (let a of props.artifact.minors) {
         let name = affixName(a.key)
+        let weight = store.state.weight
+        if (store.state.useFilterBatch != -1)
+            weight = store.state.filterBatch[store.state.useFilterBatch].filter.scoreWeight
         ret.push({
             text: `· ${name}+${a.valueString()}`,
-            style: `opacity: ${store.state.weight[a.key] > 0 ? 1 : 0.5};`
+            style: `opacity: ${weight[a.key] > 0 ? 1 : 0.5};`
         });
     }
     return ret;
