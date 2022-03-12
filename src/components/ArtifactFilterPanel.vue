@@ -225,93 +225,132 @@ export default defineComponent({
                     @update:model-value="filter.level = $event"
                 />
             </div>
-            <br />
-            {{ __('需要包含的副词条') }}<br />
-            {{ __('最少包含条数') }}<br />
-            <el-select v-model="filter.includeSubCount">
-                <el-option v-for="(item, a) in [0, 1, 2, 3, 4]" :key="a" :label="item" :value="item"> </el-option>
-            </el-select>
-            <el-tooltip class="item" effect="dark" :content="__('提示：过滤生命、防御、攻击时，根据过滤值是否带百分号来决定对固定值还是百分比生效。详见过滤逻辑。')" placement="top">
-                <el-empty v-if="filter.includeSub.length <= 0" :image-size="80" :description="__('暂无副词条')"></el-empty>
-                <ul v-else class="sub">
-                    <li v-for="(i, a) in filter.includeSub" :key="a">
-                        <el-input v-model="i.value" :placeholder="__('属性值')">
-                            <template #prepend>
-                                <el-select v-model="i.name" :placeholder="__('属性名')" style="width: 150px;">
-                                    <el-option
-                                        v-for="(j, a) in ArtifactSubParamTypes"
-                                        :key="a"
-                                        :value="j"
-                                        :label="chs.affix[j]"
-                                        @click="onSubClick(i)"
-                                    ></el-option>
-                                </el-select>
-                                <el-select v-model="i.equation" style="margin-left: 0px; width: 60px;">
-                                    <el-option
-                                        v-for="(j, a) in availableSubFilterEquations"
-                                        :key="a"
-                                        :value="j.value"
-                                        :label="j.label"
-                                    ></el-option>
-                                </el-select>
-                            </template>
-                            <template #append>
-                                <el-button @click="doDeleteIncludeSub(a)"><el-icon><delete-filled /></el-icon></el-button>
-                            </template>
-                        </el-input>
-                    </li>
-                </ul>
-            </el-tooltip>
-            {{ __('不想包含的副词条') }}<br />
-            {{ __('最多包含条数') }}<br />
-            <el-select v-model="filter.excludeSubCount">
-                <el-option v-for="item in [0, 1, 2, 3, 4]" :key="item" :label="item" :value="item"> </el-option>
-            </el-select>
-            <el-tooltip class="item" effect="dark" :content="__('提示：过滤生命、防御、攻击时，根据过滤值是否带百分号来决定对固定值还是百分比生效。详见过滤逻辑。')" placement="top">
-                <el-empty v-if="filter.excludeSub.length <= 0" :image-size="80" :description="__('暂无副词条')"></el-empty>
-                <ul v-else class="sub">
-                    <li v-for="(i, a) in filter.excludeSub" :key="a">
-                        <el-input v-model="i.value" :placeholder="__('属性值')">
-                            <template #prepend>
-                                <el-select v-model="i.name" :placeholder="__('属性名')" style="width: 150px;">
-                                    <el-option
-                                        v-for="(j, a) in ArtifactSubParamTypes"
-                                        :key="a"
-                                        :value="j"
-                                        :label="chs.affix[j]"
-                                        @click="onSubClick(i)"
-                                    ></el-option>
-                                </el-select>
-                                <el-select v-model="i.equation" style="margin-left: 0px; width: 70px;">
-                                    <el-option
-                                        v-for="(j, a) in availableSubFilterEquations"
-                                        :key="a"
-                                        :value="j.value"
-                                        :label="j.label"
-                                    ></el-option>
-                                </el-select>
-                            </template>
-                            <template #append>
-                                <el-button @click="doDeleteExcludeSub(a)"><el-icon><delete-filled /></el-icon></el-button>
-                            </template>
-                        </el-input>
-                    </li>
-                </ul>
+            <hr/>
+            <div class="sub-title-div">
+                {{ __('需要包含的副词条') }}
+            </div>
+            <div class="sub-control-div">
+                <el-button @click="doAddIncludeSub">
+                    {{ __('添加想包含副词条') }}
+                </el-button>
+                {{ __('最少包含条数') }}
+                <el-select v-model="filter.includeSubCount" style="margin-left: 5px">
+                    <el-option v-for="(item, a) in [0, 1, 2, 3, 4]" :key="a" :label="item" :value="item"> </el-option>
+                </el-select>
+            </div>
+            <el-empty v-if="filter.includeSub.length <= 0" :image-size="80" :description="__('暂无想包含副词条')"></el-empty>
+            <ul v-else class="sub">
+                <li v-for="(i, a) in filter.includeSub" :key="a">
+                    <el-input v-model="i.value" :placeholder="__('属性值')">
+                        <template #prepend>
+                            <el-select v-model="i.name" :placeholder="__('属性名')" style="width: 150px;">
+                                <el-option
+                                    v-for="(j, a) in ArtifactSubParamTypes"
+                                    :key="a"
+                                    :value="j"
+                                    :label="chs.affix[j]"
+                                    @click="onSubClick(i)"
+                                ></el-option>
+                            </el-select>
+                            <el-select v-model="i.equation" style="margin-left: 0px; width: 60px;">
+                                <el-option
+                                    v-for="(j, a) in availableSubFilterEquations"
+                                    :key="a"
+                                    :value="j.value"
+                                    :label="j.label"
+                                ></el-option>
+                            </el-select>
+                        </template>
+                        <template #append>
+                            <el-button @click="doDeleteIncludeSub(a)"><el-icon><delete-filled /></el-icon></el-button>
+                        </template>
+                    </el-input>
+                </li>
+            </ul>
+            <hr />
+            <div class="sub-title-div">
+                {{ __('不想包含的副词条') }}
+            </div>
+            <div class="sub-control-div">
+                <el-button @click="doAddExcludeSub">
+                    {{ __('添加不包含副词条') }}
+                </el-button>
+                {{ __('最多包含条数') }}
+                <el-select v-model="filter.excludeSubCount" style="margin-left: 5px">
+                    <el-option v-for="item in [0, 1, 2, 3, 4]" :key="item" :label="item" :value="item"> </el-option>
+                </el-select>
+            </div>
+            <el-empty v-if="filter.excludeSub.length <= 0" :image-size="80" :description="__('暂无不包含副词条')"></el-empty>
+            <ul v-else class="sub">
+                <li v-for="(i, a) in filter.excludeSub" :key="a">
+                    <el-input v-model="i.value" :placeholder="__('属性值')">
+                        <template #prepend>
+                            <el-select v-model="i.name" :placeholder="__('属性名')" style="width: 150px;">
+                                <el-option
+                                    v-for="(j, a) in ArtifactSubParamTypes"
+                                    :key="a"
+                                    :value="j"
+                                    :label="chs.affix[j]"
+                                    @click="onSubClick(i)"
+                                ></el-option>
+                            </el-select>
+                            <el-select v-model="i.equation" style="margin-left: 0px; width: 70px;">
+                                <el-option
+                                    v-for="(j, a) in availableSubFilterEquations"
+                                    :key="a"
+                                    :value="j.value"
+                                    :label="j.label"
+                                ></el-option>
+                            </el-select>
+                        </template>
+                        <template #append>
+                            <el-button @click="doDeleteExcludeSub(a)"><el-icon><delete-filled /></el-icon></el-button>
+                        </template>
+                    </el-input>
+                </li>
+            </ul>
+            <hr />
+            <el-tooltip class="item" effect="dark" content="提示：对过滤得到圣遗物分组并根据得分排名筛选。详见排名筛选逻辑。" placement="bottom">
+                <div class="rank-div">
+                    <div class="rank-title-div">
+                        <el-checkbox v-model="filter.useRankFilter" style="height: auto"></el-checkbox>
+                        <span style="margin-left: 5px;" :class="filter.useRankFilter ? '' : ''"> {{ __('根据排名筛选') }} </span>
+                    </div>
+                    <div style="width: 50%;">
+                        <span :class="filter.useRankFilter ? '' : 'rank-disabled'">用于分组的属性&emsp;</span>
+                        <el-checkbox v-model="filter.rankGroup.main" :disabled="!filter.useRankFilter">主词条</el-checkbox>
+                        <el-checkbox v-model="filter.rankGroup.position" :disabled="!filter.useRankFilter">位置</el-checkbox>
+                        <el-checkbox v-model="filter.rankGroup.set" :disabled="!filter.useRankFilter">套装</el-checkbox>
+                    </div>
+                    <div style="width: 50%;">
+                        <span :class="filter.useRankFilter ? '' : 'rank-disabled'">排序方式&emsp;</span>
+                        <el-radio v-model="filter.rankAscend" :label="false" :disabled="!filter.useRankFilter">先大后小</el-radio>
+                        <el-radio v-model="filter.rankAscend" :label="true" :disabled="!filter.useRankFilter">先小后大</el-radio>
+                    </div>
+                    <div style="width: 40%;">
+                        <span :class="filter.useRankFilter ? '' : 'rank-disabled'">排序分数&emsp;</span>
+                        <el-radio v-model="filter.rankScoreName" label="cur" :disabled="!filter.useRankFilter">当前</el-radio>
+                        <el-radio v-model="filter.rankScoreName" label="md" :disabled="!filter.useRankFilter">期望</el-radio>
+                        <el-radio v-model="filter.rankScoreName" label="tot" :disabled="!filter.useRankFilter">总分</el-radio>
+                    </div>
+                    <div class="rank-input-div" style="width: 30%;">
+                        <span :class="filter.useRankFilter ? '' : 'rank-disabled'">排名分界线x&emsp;</span>
+                        <el-input class="numberinput" v-model.number="filter.rankSelectNumber" type="number" :disabled="!filter.useRankFilter" style="width: 30%;"></el-input>
+                    </div>
+                    <div style="width: 30%;">
+                        <el-radio v-model="filter.rankReverseSelect" :label="false" :disabled="!filter.useRankFilter">筛选前x个</el-radio>
+                        <el-radio v-model="filter.rankReverseSelect" :label="true" :disabled="!filter.useRankFilter">排除前x个</el-radio>
+                    </div>
+                </div>
             </el-tooltip>
         </article>
         <template #footer>
             <span class="dialog-footer">
-                <el-button plain style="float: left" @click="doAddIncludeSub">
-                    {{ __('添加想包含副词条') }}
-                </el-button>
-                <el-button plain style="float: left" @click="doAddExcludeSub">
-                    {{ __('添加不包含副词条') }}
-                </el-button>
                 <el-button @click="showJSON">{{ __('导出') }}</el-button>
                 <el-button @click="showLoadPanel = true;">{{ __('导入') }}</el-button>
                 <el-button type="primary" @click="doFilter">{{ __('以此规则过滤') }}</el-button>
                 <el-popover
-                placement="top-end"
+                placement="top-start"
                 width="600"
                 trigger="hover">
                     <div id="filter-hint" style="width: 600px;">
@@ -324,12 +363,30 @@ export default defineComponent({
                             <li>{{ __('副词条：包含四部分，副词条名称、判断方式、数值、删除。名称选择副词条名，判断方式有') }}<code>&gt; &lt; =</code>{{ __('等，数值为数值阈值，删除为删除该副词条。') }}</li>
                         </ul>
                         <p>{{ __('不想包含的副词条和上述类似，不同在于：最多包含条数，圣遗物副词条最多只能包含多少条不想包含的副词条。添加不包含副词条，添加新的一条不想包含的副词条。') }}</p>
+                        <p>{{ __('') }}</p>
                         <p>{{ __('点击以此规则过滤，会选择该过滤规则，之后点击开始计算展示过滤结果。') }}</p>
                     </div>
 
                     <template #reference>
-                        <el-button plain>
+                        <el-button plain style="float: left">
                             {{ __('过滤逻辑') }}
+                        </el-button>
+                    </template>
+                </el-popover>
+                <el-popover
+                placement="top-start"
+                width="600"
+                trigger="hover">
+                    <div id="filter-hint" style="width: 600px;">
+                        <p>{{ __('根据排名筛选基于过滤结果，只会对过滤出的圣遗物进行排名筛选。使用该功能，请勾上根据排名筛选前的框。该功能主要用于对于同类圣遗物，选出该类中得分较高的加锁或较低的解锁。') }}</p>
+                        <p>{{ __('用于分组的属性指选择哪些属性进行圣遗物划分，类似SQL中的GROUP BY。选择属性相同的所有圣遗物会被划为一组并每组分别进行排名筛选。例如全不勾选就只分为一组一起排名；勾选套装和位置则所有同套装同位置（即名称相同）为同一组。') }}</p>
+                        <p>{{ __('排序方式包含先大后小（降序）和先小后大（升序）两类。排序结果从1开始编号。排序分数可以从三种分数中选择一种。') }}</p>
+                        <p>{{ __('排名分界线用于在每组圣遗物中根据排名选择。包含筛选前x个（显示排序第1至第x的圣遗物）和排除前x个（显示排序第x+1至最后的圣遗物）。') }}</p>
+                    </div>
+
+                    <template #reference>
+                        <el-button plain style="float: left">
+                            {{ __('排名筛选逻辑') }}
                         </el-button>
                     </template>
                 </el-popover>
@@ -455,6 +512,37 @@ export default defineComponent({
     .main ::v-deep(.el-input) {
         width: 180px !important;
         display: block;
+    }
+    
+    .sub-title-div, .rank-title-div {
+        font-size: 125%;
+        text-align: center;
+        margin: 10px 0;
+        width: 100%;
+    }
+    .sub-control-div {
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        > * {
+            margin-right: 20px;
+        }
+    }
+    .rank-div {
+        display: flex;
+        text-align: center;
+        align-items: center;
+        flex-wrap: wrap;
+        .rank-input-div {
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+        .rank-disabled {
+            color: #c0c4cc;
+        }
     }
 }
 

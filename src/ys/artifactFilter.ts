@@ -83,6 +83,16 @@ export class ArtifactFilter {
     excludeSubCount: number = 0
     scoreFilters: {string?: ScoreFilter} = {}
     scoreWeight: ArtifactScoreWeight = new ArtifactScoreWeight()
+    useRankFilter: boolean = false
+    rankGroup = {
+        main: false,
+        set: false,
+        position: false
+    }
+    rankAscend: boolean = false
+    rankSelectNumber: number = 10
+    rankReverseSelect: boolean = false
+    rankScoreName: string = 'tot'
 
     constructor(datastr?: string) {
         for (let i = 0; i < scoreFilterNames.length; i ++ )
@@ -91,7 +101,7 @@ export class ArtifactFilter {
         this.loadFromJSON(datastr)
     }
 
-    filterOne<T>(input: T, filter: T[]): boolean {
+    filterOneRule<T>(input: T, filter: T[]): boolean {
         if (filter.length === 0) return true
         return filter.indexOf(input) !== -1
     }
@@ -101,34 +111,86 @@ export class ArtifactFilter {
         for (const filter of filters) matchCount += filter.filter(input)
         return targetCount <= matchCount
     }
-    filter(artifact: Artifact): boolean {
+    filterOne(artifact: Artifact): boolean {
         let inFilter = true
-        inFilter &&= this.filterOne(artifact.main.key, this.main)
-        inFilter &&= this.filterOne(artifact.rarity, this.stars)
+        inFilter &&= this.filterOneRule(artifact.main.key, this.main)
+        inFilter &&= this.filterOneRule(artifact.rarity, this.stars)
         let level = [] as Number[]
         for (let i = this.level[0] as number; i <= this.level[1]; i ++ )
             level.push(i)
-        inFilter &&= this.filterOne(artifact.level, level)
+        inFilter &&= this.filterOneRule(artifact.level, level)
         // inFilter &&= this.filterOne(artifact.name, this.name)
         // const [set, position] = ArtifactToSetPosition.get(artifact.name) || ['', '']
         const set = artifact.set;
         const position = artifact.slot;
-        inFilter &&= this.filterOne(set, this.set)
-        inFilter &&= this.filterOne(position, this.position)
-        inFilter &&= this.filterOne(artifact.lock, this.lock)
+        inFilter &&= this.filterOneRule(set, this.set)
+        inFilter &&= this.filterOneRule(position, this.position)
+        inFilter &&= this.filterOneRule(artifact.lock, this.lock)
         let character = this.character.slice()
         // if anyCharacter and artifact has location, add location into filter
         if (character.indexOf(ArtifactFilter.anyCharacter) > -1)
             if (artifact.location !== '')
                 character.push(artifact.location)
-        inFilter &&= this.filterOne(artifact.location, character)
-        inFilter &&= this.filterOne(artifact.minors.length, this.subCount)
+        inFilter &&= this.filterOneRule(artifact.location, character)
+        inFilter &&= this.filterOneRule(artifact.minors.length, this.subCount)
         for (const i in this.scoreFilters)
             inFilter &&= this.scoreFilters[i].filter(artifact.data.affnum[i])
         const subInclude = this.filterSub(artifact.minors, this.includeSub, this.includeSubCount, true)
         const subExclude = this.filterSub(artifact.minors, this.excludeSub, this.excludeSubCount + 1, false)
         inFilter = inFilter && subInclude && !subExclude
         return inFilter
+    }
+    genGroupName(artifact: Artifact) : string {
+        let res = 'G'
+        if (this.rankGroup.main) res += '_' + artifact.main.key
+        if (this.rankGroup.position) res += '_' + artifact.slot
+        if (this.rankGroup.set) res += '_' + artifact.set
+        return res
+    }
+    rankFilter(artifacts: Artifact[]) : number[] {
+        let res = [] as number[]
+        let groups = {}
+        for (let i = 0; i < artifacts.length; i ++ ) {
+            const groupname = this.genGroupName(artifacts[i])
+            groups[groupname] = []
+        }
+        for (let i = 0; i < artifacts.length; i ++ ) {
+            const groupname = this.genGroupName(artifacts[i])
+            groups[groupname].push(i)
+        }
+        for (let gn in groups) {
+            groups[gn].sort((i: number, j: number) => { 
+                const diff = artifacts[i].data.affnum[this.rankScoreName] - artifacts[j].data.affnum[this.rankScoreName]
+                return this.rankAscend ? diff : -diff
+            })
+            if (this.rankReverseSelect)
+                for (let i = this.rankSelectNumber; i < groups[gn].length; i ++ )
+                    res.push(groups[gn][i])
+            else
+                for (let i = 0; i < groups[gn].length; i ++ ) {
+                    res.push(groups[gn][i])
+                    if (i + 1 >= this.rankSelectNumber)
+                        break
+                }
+        }
+        return res
+    }
+    filter(artifacts: Artifact[]) : number[] {
+        // input artifacts, output artifact indices filtered.
+        let results = []
+        let firstRound = []
+        for (let i = 0; i < artifacts.length; i ++ )
+            if (this.filterOne(artifacts[i])) {
+                results.push(i)
+                firstRound.push(artifacts[i])
+            }
+        if (! this.useRankFilter)
+            return results
+        let results2 = []
+        const rankRes = this.rankFilter(firstRound)
+        for (let i of rankRes)
+            results2.push(results[i])
+        return results2
     }
     loadFromJSON(str: string) {
         const data = JSON.parse(str);

@@ -11,6 +11,7 @@ declare module 'vue' {
     DataExport: typeof import('./src/components/DataExport.vue')['default']
     DropSelect: typeof import('./src/components/DropSelect.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDivider: typeof import('element-plus/es')['ElDivider']

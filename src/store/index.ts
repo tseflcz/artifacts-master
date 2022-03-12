@@ -220,11 +220,14 @@ export const store = createStore<IState>({
                 // let ruleResult = [];
                 if (state.filterBatch[i].lock == 'disabled')
                     continue
-                for (let j = 0; j < state.artifacts.length; j ++ )
-                    if (filter.filter(state.artifacts[j])) {
-                        // ruleResult.push(JSON.parse(JSON.stringify(state.artifacts[j])));
-                        newLock[j] = state.filterBatch[i].lock == 'lock';
-                    }
+                const filterRes = filter.filter(state.artifacts)
+                for (const j of filterRes)
+                    newLock[j] = state.filterBatch[i].lock == 'lock';
+                // for (let j = 0; j < state.artifacts.length; j ++ )
+                //     if (filter.filterOne(state.artifacts[j])) {
+                //         // ruleResult.push(JSON.parse(JSON.stringify(state.artifacts[j])));
+                //         newLock[j] = state.filterBatch[i].lock == 'lock';
+                //     }
                 // console.log(state.filterBatch[i], ruleResult);
             }
             for (let i = 0; i < state.artifacts.length; i ++ )
@@ -250,7 +253,11 @@ export const store = createStore<IState>({
                 else if (state.useFilterPro) {
                     // use specified filterbatch
                     let filter = state.filterBatch[state.useFilterBatch].filter;
-                    ret = ret.filter(a => filter.filter(a));
+                    const filterRes = filter.filter(state.artifacts)
+                    ret = []
+                    for (const j of filterRes)
+                        ret.push(state.artifacts[j])
+                    ret = ret.filter(a => filter.filterOne(a));
                     weight = state.filterBatch[state.useFilterBatch].filter.scoreWeight;
                 }
                 else { // basic filter
