@@ -48,6 +48,7 @@ export default defineComponent({
         },
         doDeleteAllFilter() {
             this.store.state.filterBatch.splice(0)
+            return true
         },
         getFilterBatchJSON() {
             //console.log(trigger);

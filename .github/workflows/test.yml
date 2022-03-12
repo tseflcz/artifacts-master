@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Unsafe-Build
-        run: yarn unsafe-build
+        run: yarn build
       - name: Upload
         uses: actions/upload-artifact@v2
         with:

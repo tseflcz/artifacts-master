@@ -128,6 +128,7 @@ export default defineComponent({
                     type: 'success',
                     title: __('已复制权重'),
                 })
+            return true
         }
     },
     components: {

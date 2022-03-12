@@ -69,7 +69,7 @@ export class ArtifactFilter {
     main: String[] = []
     stars: Number[] = []
     // level: Number[] = []
-    level: Number[] = [0, 20]
+    level: number[] = [0, 20]
     // name: String[] = []
     set: String[] = []
     position: String[] = []
