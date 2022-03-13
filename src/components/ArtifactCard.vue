@@ -59,9 +59,12 @@ const minors = computed(() => {
     let ret = []
     for (let a of props.artifact.minors) {
         let name = affixName(a.key)
+        let weight = store.state.weight
+        if (store.state.useFilterBatch != -1)
+            weight = store.state.filterBatch[store.state.useFilterBatch].filter.scoreWeight
         ret.push({
             text: `· ${name}+${a.valueString()}`,
-            style: `opacity: ${store.state.weight[a.key] > 0 ? 1 : 0.5};`
+            style: `opacity: ${weight[a.key] > 0 ? 1 : 0.5};`
         });
     }
     return ret;
@@ -129,7 +132,7 @@ const flipLock = () => {
                 </div>
             </div>
             <div class="minor-affixes">
-                 <div class="minor-affix" v-for="a in minors" :style="a.style">{{ a.text }}</div>
+                 <div class="minor-affix" v-for="(a, index) in minors" :key="index" :style="a.style">{{ a.text }}</div>
             </div>
             <div class="affix-numbers" v-if="artifact.level < 20">
                 <div class="cur-an">当前{{ affnum.cur }}</div>
@@ -161,6 +164,11 @@ const flipLock = () => {
     border-radius: 3px;
     background-color: black;
     color: white;
+}
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 .artifact-card {
     user-select: none;

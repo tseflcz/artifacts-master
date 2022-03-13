@@ -5,11 +5,6 @@ $green: #66c238;
 body {
     box-sizing: border-box;
 }
-* {
-    box-sizing: inherit;
-    padding: 0;
-    margin: 0;
-}
 .pop-enter-active,
 .pop-leave-active {
     transition: all 200ms ease;
