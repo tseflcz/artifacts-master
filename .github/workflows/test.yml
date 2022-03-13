@@ -30,6 +30,7 @@ jobs:
         run: (Get-content yarn.lock) | Foreach-Object {$_ -replace "registry.nlark.com", "r.cnpmjs.org"} | Set-Content yarn.lock
       - name: Install dependencies
         run: yarn
+        npm install @types/node --save-dev
       - name: Unsafe-Build
         run: yarn build
       - name: Upload
