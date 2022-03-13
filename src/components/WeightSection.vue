@@ -30,6 +30,7 @@ const showLoader = ref(false)
             <value-button
                 class="weight-button"
                 v-for="(_, key) in store.state.weight"
+                :key="key"
                 :model-value="store.state.weight[key]"
                 @update:model-value="setWeight(key as string, $event)"
             >{{ (chs.affix as any)[key] }}</value-button>
@@ -39,8 +40,7 @@ const showLoader = ref(false)
             <textarea class="json-input" v-model="weightJson" />
         </div>
         -->
-        <div class="section-content" v-show="store.state.useWeightJson || store.state.useFilterBatch != -1">
-            <div class="filter-hint-div" v-show="store.state.useFilterBatch != -1">已选择过滤规则，当前使用过滤规则内的词条权重</div>
+        <div class="section-content" v-show="store.state.useFilterBatch == -1 && store.state.useWeightJson">
             <el-form :inline="true">
                 <el-form-item 
                     v-for="(_, key) in store.state.weight"
@@ -49,6 +49,19 @@ const showLoader = ref(false)
                     style="width: 50%; margin-right: 0"
                 >
                     <el-input class="weight-input" v-model.number="store.state.weight[key]" type="number" step="0.1"></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="section-content" v-if="store.state.useFilterBatch != -1">
+            <div class="filter-hint-div">已选择过滤规则，当前使用过滤规则内的词条权重</div>
+            <el-form :inline="true">
+                <el-form-item 
+                    v-for="(_, key) in store.state.filterBatch[store.state.useFilterBatch].filter.scoreWeight"
+                    :key="key"
+                    :label="chs.affix[key] + (chs.affix[key].length >= 5 ? '' : '&emsp;'.repeat(5 - chs.affix[key].length))"
+                    style="width: 50%; margin-right: 0"
+                >
+                    <el-input class="weight-input" v-model.number="store.state.filterBatch[store.state.useFilterBatch].filter.scoreWeight[key]" type="number" step="0.1"></el-input>
                 </el-form-item>
             </el-form>
         </div>
