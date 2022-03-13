@@ -195,14 +195,7 @@ export const store = createStore<IState>({
             setTimeout(() => {
                 let ret = state.artifacts
                 // weight
-                if (state.useFilterPro && state.useFilterBatch == -1) {
-                    ElNotification({
-                        type: 'warning',
-                        title: '未选择过滤规则',
-                        message: '显示全部圣遗物。如果要进行过滤请选择过滤规则。'
-                    })
-                }
-                else if (state.useFilterPro) {
+                if (state.useFilterPro) {
                     // use specified filterbatch
                     let filter = state.filterBatch[state.useFilterBatch].filter;
                     const filterRes = filter.filter(state.artifacts)
