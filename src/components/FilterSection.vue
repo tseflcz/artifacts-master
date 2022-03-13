@@ -21,7 +21,6 @@ const disableFilterBatch = () => {
     ElNotification({
         type: 'success',
         title: '取消过滤规则成功',
-        message: '请再次开始计算应用新过滤策略',
     })
 }
 
