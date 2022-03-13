@@ -172,23 +172,6 @@ export default defineComponent({
                 <el-option label="任意角色" :value="ArtifactFilter.anyCharacter"> </el-option>
                 <el-option v-for="(item, a) in CharacterNames" :key="a" :label="chs.character[item]" :value="item"> </el-option>
             </el-select>
-            <div class="scorefilterdiv">
-                <div v-for="(filterName, index) in scoreFilterNames" :key="index">
-                    <span>{{ filterName[1] }}</span>
-                    <el-input class="numberinput" v-model.number="filter.scoreFilters[filterName[0]].value" type="number">
-                        <template #prepend>
-                            <el-select v-model="filter.scoreFilters[filterName[0]].equation" style="width: 60px;">
-                                <el-option
-                                    v-for="(j, a) in availableSubFilterEquations"
-                                    :key="a"
-                                    :value="j.value"
-                                    :label="j.label"
-                                ></el-option>
-                            </el-select>
-                        </template>
-                    </el-input>
-                </div>
-            </div>
             <div class="scoreweightdiv">
                 <span>分数权重</span>
                 <el-dialog title="编辑权重" width="400px" :model-value="showWeightPanel" @update:model-value="showWeightPanel = false;">
@@ -218,11 +201,28 @@ export default defineComponent({
                 </el-popconfirm>
             </div>
             <div class="leveldiv">
-                <span class="filter-name">星级</span>
+                <span class="filter-name">等级</span>
                 <range-slider
                     :model-value="filter.level"
                     @update:model-value="filter.level = $event"
                 />
+            </div>
+            <div class="scorefilterdiv">
+                <div v-for="(filterName, index) in scoreFilterNames" :key="index">
+                    <span>{{ filterName[1] }}</span>
+                    <el-input class="numberinput" v-model.number="filter.scoreFilters[filterName[0]].value" type="number">
+                        <template #prepend>
+                            <el-select v-model="filter.scoreFilters[filterName[0]].equation" style="width: 60px;">
+                                <el-option
+                                    v-for="(j, a) in availableSubFilterEquations"
+                                    :key="a"
+                                    :value="j.value"
+                                    :label="j.label"
+                                ></el-option>
+                            </el-select>
+                        </template>
+                    </el-input>
+                </div>
             </div>
             <hr/>
             <div class="sub-title-div">

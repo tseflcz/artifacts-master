@@ -19,15 +19,6 @@ export interface IState {
         lvRange: number[]
         score: number[]
     }
-    filterPro: {
-        set: string[]
-        slot: string[]
-        main: string[]
-        location: string[]
-        lock: string[]
-        lvRange: number[]
-        score: number[]
-    }
     filterBatch: FilterBatchOne[]
     useFilterPro: boolean
     useFilterBatch: number

@@ -26,7 +26,6 @@ const showLoader = ref(false)
             <span v-show="store.state.useWeightJson" @click="useWeightJson(false)">基本</span>
             <span v-show="!store.state.useWeightJson" @click="useWeightJson(true)">高级</span>
         </section-title>
-        <div class="filter-hint-div" v-show="store.state.useFilterBatch != -1">已选择过滤规则，使用过滤规则内的词条权重</div>
         <div style="margin-top: 14px;" v-show="store.state.useFilterBatch == -1 && !store.state.useWeightJson">
             <value-button
                 class="weight-button"
@@ -40,7 +39,8 @@ const showLoader = ref(false)
             <textarea class="json-input" v-model="weightJson" />
         </div>
         -->
-        <div class="section-content" v-show="store.state.useFilterBatch == -1 && store.state.useWeightJson">
+        <div class="section-content" v-show="store.state.useWeightJson || store.state.useFilterBatch != -1">
+            <div class="filter-hint-div" v-show="store.state.useFilterBatch != -1">已选择过滤规则，当前使用过滤规则内的词条权重</div>
             <el-form :inline="true">
                 <el-form-item 
                     v-for="(_, key) in store.state.weight"

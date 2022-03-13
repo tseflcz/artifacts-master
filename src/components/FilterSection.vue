@@ -18,7 +18,6 @@ const updateArtifactFilter = (filter: ArtifactFilter) => {
 }
 const disableFilterBatch = () => {
     store.commit('filterBatchIndex', -1)
-    // store.dispatch('updFilteredArtifacts')
     ElNotification({
         type: 'success',
         title: '取消过滤规则成功',
@@ -59,20 +58,6 @@ const useFilterPro = (use: boolean) => {
 const setFilter = (key: string, value: any) => {
     store.commit('setFilter', { key, value })
 }
-const setFilterPro = (key: string, value: any) => {
-    store.commit('setFilterPro', { key, value })
-}
-const selectAll = (filterProKey: string, items: Array<{ key: string, value: string }>) => {
-    let keys = []
-    for (let i of items) {
-        keys.push(i.key)
-    }
-    store.commit('setFilterPro', { key: filterProKey, value: keys })
-}
-const deselectAll = (filterProKey: string) => {
-    store.commit('setFilterPro', { key: filterProKey, value: [] })
-}
-
 </script>
 
 

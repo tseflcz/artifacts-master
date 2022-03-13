@@ -38,21 +38,10 @@ export const store = createStore<IState>({
                 lvRange: [0, 20],
                 score: [0,20]
             },
-            filterPro: {
-                set,
-                slot,
-                main,
-                location,
-                lock: ['true', 'false'],
-                lvRange: [0, 20],
-                score: [0,20]
-                
-            },
             filterBatch: [],
             useFilterPro: false,
             useFilterBatch: -1,  // -1 notwork, 0~length-1 select one
             weight: new ArtifactScoreWeight(),
-            //weightJson: '{"hp":0,"atk":0,"def":0,"hpp":0,"atkp":0.5,"defp":0,"em":0.5,"er":0.5,"cr":1,"cd":1}',
             useWeightJson: false,
             sortBy: 'tot',
             sortord:false,
@@ -106,40 +95,6 @@ export const store = createStore<IState>({
             if ('false' in s) ret.push({ key: 'false', value: '解锁', tip: s['false'].toString() })
             return ret
         },
-        filterProSets() {
-            let sets = []
-            for (let key in chs.set) {
-                sets.push({ key, value: chs.set[key].name })
-            }
-            return sets
-        },
-        filterProSlots() {
-            let slots = []
-            for (let key in chs.slot) {
-                slots.push({ key, value: chs.slot[key] })
-            }
-            return slots
-        },
-        filterProMains() {
-            let mains = []
-            for (let key of data.mainKeys.all) {
-                mains.push({ key, value: chs.affix[key] })
-            }
-            return mains
-        },
-        filterProLocations() {
-            let locations = [{ key: '', value: '闲置' }]
-            for (let key in chs.character) {
-                locations.push({ key, value: chs.character[key] })
-            }
-            return locations
-        },
-        filterProLocks() {
-            return [
-                { key: 'true', value: '加锁' },
-                { key: 'false', value: '解锁' },
-            ]
-        },
     },
     mutations: {
         useWeightJson(state, payload) {
@@ -153,9 +108,6 @@ export const store = createStore<IState>({
         },
         setFilter(state, payload) {
             (state.filter as any)[payload.key] = payload.value
-        },
-        setFilterPro(state, payload) {
-            (state.filterPro as any)[payload.key] = payload.value
         },
         setSortBy(state, payload) {
             state.sortBy = payload.sort
@@ -243,7 +195,6 @@ export const store = createStore<IState>({
             setTimeout(() => {
                 let ret = state.artifacts
                 // weight
-                let weight = state.weight
                 if (state.useFilterPro && state.useFilterBatch == -1) {
                     ElNotification({
                         type: 'warning',
@@ -259,7 +210,7 @@ export const store = createStore<IState>({
                     for (const j of filterRes)
                         ret.push(state.artifacts[j])
                     ret = ret.filter(a => filter.filterOne(a));
-                    weight = state.filterBatch[state.useFilterBatch].filter.scoreWeight;
+                    state.weight = state.filterBatch[state.useFilterBatch].filter.scoreWeight;
                 }
                 else { // basic filter
                     if (state.filter.set)
@@ -283,6 +234,7 @@ export const store = createStore<IState>({
                         ));
                     }
                 }
+                let weight = state.weight
                 // update affix numbers
                 for (let a of ret) {
                     a.updateAffnum(weight)
