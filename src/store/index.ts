@@ -194,6 +194,7 @@ export const store = createStore<IState>({
         },
         filterBatchIndex(state, payload) {
             state.useFilterBatch = payload
+            store.dispatch('updFilteredArtifacts')
         }
     },
     actions: {

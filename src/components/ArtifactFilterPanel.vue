@@ -139,16 +139,14 @@ export default defineComponent({
 <template>
     <el-dialog :title="title?.length ? title : '新规则'" width="800px" :model-value="show" @update:model-value="$emit('update:show', $event)">
         <article class="artifact-edit-panel">
-            <el-select v-model="filter.main" multiple :placeholder="__('主词条')" style="width: 100%;">
-                <el-option v-for="(item, a) in ArtifactParamTypes" :key="a" :label="chs.affix[item]" :value="item">
-                </el-option>
+            <el-select v-model="filter.set" multiple :placeholder="__('套装')" style="width: 100%;">
+                <el-option v-for="(item, a) in ArtifactSetNames" :key="a" :label="chs.set[item].name" :value="item"> </el-option>
             </el-select>
             <el-select v-model="filter.position" multiple :placeholder="__('位置')" style="width: 50%;">
-                <el-option v-for="(item, a) in ArtifactPositionNames" :key="a" :label="chs.slot[item]" :value="item">
-                </el-option>
+                <el-option v-for="(item, a) in ArtifactPositionNames" :key="a" :label="chs.slot[item]" :value="item"></el-option>
             </el-select>
-            <el-select v-model="filter.set" multiple :placeholder="__('套装')" style="width: 50%;">
-                <el-option v-for="(item, a) in ArtifactSetNames" :key="a" :label="chs.set[item].name" :value="item"> </el-option>
+            <el-select v-model="filter.main" multiple :placeholder="__('主词条')" style="width: 50%;">
+                <el-option v-for="(item, a) in ArtifactParamTypes" :key="a" :label="chs.affix[item]" :value="item"></el-option>
             </el-select>
             <!-- <el-select v-model="filter.level" multiple :placeholder="__('等级')" style="width: 20%;">
                 <el-option

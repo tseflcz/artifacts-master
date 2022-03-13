@@ -106,14 +106,12 @@ export default defineComponent({
         doOneFilter(index: number) {
             this.store.state.filteredArtifacts
             this.store.commit('filterBatchIndex', index)
-            // this.store.dispatch('updFilteredArtifacts')
-            // for (let i = 0; i < store.state.artifacts.length; i ++ )
             this.$emit('update:show', false)
-            ElNotification({
-                type: 'success',
-                title: '选择过滤规则成功',
-                message: '请再次开始计算应用新过滤策略',
-            })
+            // ElNotification({
+            //     type: 'success',
+            //     title: '选择过滤规则成功',
+            //     message: '请再次开始计算应用新过滤策略',
+            // })
         }
     },
     components: {
