@@ -1,6 +1,5 @@
 import { argmax, argmin, assert } from "./utils"
 import data from "./data"
-import setweight from "./distr"
 
 interface IAffix {
     key: string
@@ -310,34 +309,31 @@ export class Artifact implements IArtifact {
         //total score
         this.data.affnum.ma = this.data.affnum.ma + w['main'] * data.mainWeight[this.slot][this.main.key].p / data.mainWeight[this.slot][this.main.key].v
         if(this.main.key!='atk' && this.main.key!='hp'){
-            if(setweight[this.slot][this.main.key][this.set]<0){
-                this.data.affnum.se = 0.25 * w['set'] * setweight[this.slot][this.main.key][this.set]
+            if(data.setweight[this.set][this.main.key]<0){
+                this.data.affnum.se = 0.25 * w['set'] * data.setweight[this.set][this.main.key]
             }else{
-                this.data.affnum.se = w['set'] * setweight[this.slot][this.main.key][this.set]
-            }
-            if(this.main.key!='atkp' && this.main.key!='hpp'&& this.main.key!='defp'&& this.main.key!='cr'&& this.main.key!='cd'){
-                this.data.affnum.se = 2 * this.data.affnum.se
+                this.data.affnum.se = w['set'] * data.setweight[this.set][this.main.key]
             }
         }else{switch(maintag){
             case 'attack':
-                if(setweight['minor']['atkp'][this.set]<0){
-                    this.data.affnum.se = 0.25 * w['set'] * setweight['minor']['atkp'][this.set]
+                if(data.setweight[this.set]['atkp']<0){
+                    this.data.affnum.se = 0.25 * w['set'] * data.setweight[this.set]['atkp']
                 }else{
-                    this.data.affnum.se = w['set'] * setweight['minor']['atkp'][this.set]
+                    this.data.affnum.se = w['set'] * data.setweight[this.set]['atkp']
                 }
                 break
             case 'defend':
-                if(setweight['minor']['defp'][this.set]<0){
-                    this.data.affnum.se = 0.25 * w['set'] * setweight['minor']['defp'][this.set]
+                if(data.setweight[this.set]['defp']<0){
+                    this.data.affnum.se = 0.25 * w['set'] * data.setweight[this.set]['defp']
                 }else{
-                    this.data.affnum.se = w['set'] * setweight['minor']['defp'][this.set]
+                    this.data.affnum.se = w['set'] * data.setweight[this.set]['defp']
                 }
                 break 
             case 'life':
-                if(setweight['minor']['hpp'][this.set]<0){
-                    this.data.affnum.se = 0.25 * w['set'] * setweight['minor']['hpp'][this.set]
+                if(data.setweight[this.set]['hpp']<0){
+                    this.data.affnum.se = 0.25 * w['set'] * data.setweight[this.set]['hpp']
                 }else{
-                    this.data.affnum.se = w['set'] * setweight['minor']['hpp'][this.set]
+                    this.data.affnum.se = w['set'] * data.setweight[this.set]['hpp']
                 }
                 break 
             }
