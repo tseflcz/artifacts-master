@@ -204,6 +204,7 @@ export const store = createStore<IState>({
                     for (const j of filterRes)
                         ret.push(state.artifacts[j])
                     ret = ret.filter(a => filter.filterOne(a));
+                    weight = state.filterBatch[state.useFilterBatch].filter.scoreWeight;
                 }
                 else { // basic filter
                     if (state.filter.set)

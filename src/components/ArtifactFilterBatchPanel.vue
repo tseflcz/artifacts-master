@@ -104,7 +104,6 @@ export default defineComponent({
                 this.store.state.filterBatch[i].lock = s;
         },
         doOneFilter(index: number) {
-            this.store.state.filteredArtifacts
             this.store.commit('filterBatchIndex', index)
             this.$emit('update:show', false)
             ElNotification({
