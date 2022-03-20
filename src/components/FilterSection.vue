@@ -132,7 +132,7 @@ const setFilter = (key: string, value: any) => {
         <div class="section-content" v-show="store.state.useFilterPro">
             <div class="filter-detail">{{ store.state.useFilterBatch != -1 ? '启用过滤规则：' + (store.state.filterBatch[store.state.useFilterBatch].comment ? store.state.filterBatch[store.state.useFilterBatch].comment : '无名称注释') : '' }}</div>
             <div class="filter-button">
-                <text-button @click="showFilter = true;" style="width: 100px">显示过滤规则</text-button>
+                <text-button @click="showFilter = true;" style="width: 110px">显示过滤规则</text-button>
                 <text-button v-show="store.state.useFilterBatch != -1" @click="disableFilterBatch">取消选择</text-button>
             </div>
             <artifact-filter-batch-panel v-model:show="showFilter" />

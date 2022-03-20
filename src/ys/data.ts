@@ -99,4 +99,4 @@ export default <IData>{
     'NoblesseOblige','BloodstainedChivalry','ArchaicPetra','RetracingBolide','BlizzardStrayer','HeartOfDepth','TenacityOfTheMillelith','PaleFlame',
     'ShimenawasReminiscence','EmblemOfSeveredFate','HuskOfOpulentDreams','OceanHuedClam'],
     slot:['flower','plume','sands','goblet','circlet'],
-                }
+}

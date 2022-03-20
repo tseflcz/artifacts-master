@@ -315,6 +315,9 @@ export class Artifact implements IArtifact {
             }else{
                 this.data.affnum.se = w['set'] * setweight[this.slot][this.main.key][this.set]
             }
+            if(this.main.key!='atkp' && this.main.key!='hpp'&& this.main.key!='defp'&& this.main.key!='cr'&& this.main.key!='cd'){
+                this.data.affnum.se = 2 * this.data.affnum.se
+            }
         }else{switch(maintag){
             case 'attack':
                 if(setweight['minor']['atkp'][this.set]<0){
