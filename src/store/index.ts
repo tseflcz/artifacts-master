@@ -173,6 +173,9 @@ export const store = createStore<IState>({
                 // let ruleResult = [];
                 if (state.filterBatch[i].lock == 'disabled')
                     continue
+                for (let a of state.artifacts) {
+                    a.updateAffnum(filter.scoreWeight)
+                }
                 const filterRes = filter.filter(state.artifacts)
                 for (const j of filterRes)
                     newLock[j] = state.filterBatch[i].lock == 'lock';
@@ -197,6 +200,13 @@ export const store = createStore<IState>({
                 // weight
                 let weight = state.weight
                 if (state.useFilterPro && state.useFilterBatch != -1) {
+                    weight = state.filterBatch[state.useFilterBatch].filter.scoreWeight;
+                }
+                // update affix numbers
+                for (let a of ret) {
+                    a.updateAffnum(weight)
+                }
+                if (state.useFilterPro && state.useFilterBatch != -1) {
                     // use specified filterbatch
                     let filter = state.filterBatch[state.useFilterBatch].filter;
                     const filterRes = filter.filter(state.artifacts)
@@ -204,7 +214,6 @@ export const store = createStore<IState>({
                     for (const j of filterRes)
                         ret.push(state.artifacts[j])
                     ret = ret.filter(a => filter.filterOne(a));
-                    weight = state.filterBatch[state.useFilterBatch].filter.scoreWeight;
                 }
                 else { // basic filter
                     if (state.filter.set)
@@ -227,10 +236,6 @@ export const store = createStore<IState>({
                             a.data.affnum[state.sortBy] <= state.filter.score[1]
                         ));
                     }
-                }
-                // update affix numbers
-                for (let a of ret) {
-                    a.updateAffnum(weight)
                 }
                 // sort
                 if (state.sortBy) { // sort in descending order of affix number
