@@ -318,9 +318,6 @@ export class Artifact implements IArtifact {
             if(this.main.key!='atkp' && this.main.key!='hpp'&& this.main.key!='defp'&& this.main.key!='cr'&& this.main.key!='cd'){
                 this.data.affnum.se = 2 * this.data.affnum.se
             }
-            if(this.main.key=='atkp' || this.main.key=='hpp' || this.main.key=='defp'|| this.main.key=='em'|| this.main.key=='er'){
-                this.data.affnum.ma = this.data.affnum.ma + w['main'] * 2
-            }
         }else{switch(maintag){
             case 'attack':
                 if(setweight['minor']['atkp'][this.set]<0){
