@@ -25,6 +25,8 @@ export default {
             EmblemOfSeveredFate: 'emblemOfSeveredFate',
             HuskOfOpulentDreams: 'huskOfOpulentDreams',
             OceanHuedClam: 'oceanHuedClam',
+            VermillionHereafter: 'VermillionHereafter',
+            EchoesOfAnOffering: 'EchoesOfAnOffering'
         },
         affix: <{ [key: string]: string }>{
             hp: 'lifeStatic',
@@ -71,6 +73,7 @@ export default {
             for (let martifact of mona[mtype]) {
                 if (martifact['star'] !== 5) continue
                 let set = whatis(martifact['setName'], this.keymap.set)
+                // console.log(set, martifact['setName'])
                 if (!set) {
                     console.warn(`Ignoring unrecognized artifact: ${martifact['setName']}`)
                     continue

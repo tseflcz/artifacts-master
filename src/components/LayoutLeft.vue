@@ -137,6 +137,7 @@ watch(() => store.state.nReload, () => {
             <div class="artifacts">
                 <artifact-card
                     v-for="a in store.state.filteredArtifacts"
+                    :key="a.data.index"
                     :artifact="a"
                     :select-mode="selectMode"
                     :selected="selected(a.data.index)"

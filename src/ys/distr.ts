@@ -27,7 +27,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 5.0205,
             "EmblemOfSeveredFate": -0.121,
             "HuskOfOpulentDreams": -4.7842,
-            "OceanHuedClam": -3.5642
+            "OceanHuedClam": -3.5642,
+            "VermillionHereafter": 5.3093,
+            "EchoesOfAnOffering": 5.3093
         },
         "hpp": {
             "GladiatorsFinale": -3.6917,
@@ -49,7 +51,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -2.3054,
             "EmblemOfSeveredFate": -1.9813,
             "HuskOfOpulentDreams": -1.5617,
-            "OceanHuedClam": 4.4877
+            "OceanHuedClam": 4.4877,
+            "VermillionHereafter": -3.6917,
+            "EchoesOfAnOffering": -3.6917
         },
         "defp": {
             "GladiatorsFinale": -1.2681,
@@ -71,7 +75,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -2.4918,
             "EmblemOfSeveredFate": -1.2326,
             "HuskOfOpulentDreams": 9.0219,
-            "OceanHuedClam": -1.525
+            "OceanHuedClam": -1.525,
+            "VermillionHereafter": -1.2681,
+            "EchoesOfAnOffering": -1.2681
         },
         "em": {
             "GladiatorsFinale": -0.4189,
@@ -93,7 +99,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 0.8119,
             "EmblemOfSeveredFate": -1.1519,
             "HuskOfOpulentDreams": -2.0609,
-            "OceanHuedClam": -1.1084
+            "OceanHuedClam": -1.1084,
+            "VermillionHereafter": -0.4189,
+            "EchoesOfAnOffering": -0.4189
         },
         "er": {
             "GladiatorsFinale": -0.2857,
@@ -115,7 +123,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -0.6389,
             "EmblemOfSeveredFate": 5.6737,
             "HuskOfOpulentDreams": -1.9166,
-            "OceanHuedClam": 3.7796
+            "OceanHuedClam": 3.7796,
+            "VermillionHereafter": -0.2857,
+            "EchoesOfAnOffering": -0.2857
         }
     },
     "circlet": {
@@ -139,7 +149,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 1.6903,
             "EmblemOfSeveredFate": 1.1547,
             "HuskOfOpulentDreams": -1.6903,
-            "OceanHuedClam": 2.5
+            "OceanHuedClam": 2.5,
+            "VermillionHereafter": 1.5119,
+            "EchoesOfAnOffering": 1.5119
         },
         "hpp": {
             "GladiatorsFinale": -2.6514,
@@ -161,7 +173,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -2.4918,
             "EmblemOfSeveredFate": -1.2326,
             "HuskOfOpulentDreams": -1.2888,
-            "OceanHuedClam": 3.965
+            "OceanHuedClam": 3.965,
+            "VermillionHereafter": -2.6514,
+            "EchoesOfAnOffering": -2.6514
         },
         "defp": {
             "GladiatorsFinale": -2.0386,
@@ -183,7 +197,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -1.8993,
             "EmblemOfSeveredFate": 0.7785,
             "HuskOfOpulentDreams": 7.9772,
-            "OceanHuedClam": 0.6742
+            "OceanHuedClam": 0.6742,
+            "VermillionHereafter": -2.0386,
+            "EchoesOfAnOffering": -2.0386
         },
         "em": {
             "GladiatorsFinale": -1.2971,
@@ -205,7 +221,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -1.1155,
             "EmblemOfSeveredFate": -0.762,
             "HuskOfOpulentDreams": -1.5617,
-            "OceanHuedClam": -0.264
+            "OceanHuedClam": -0.264,
+            "VermillionHereafter": -1.2971,
+            "EchoesOfAnOffering": -1.2971
         },
         "hb": {
             "GladiatorsFinale": -3.0237,
@@ -227,7 +245,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -2.8172,
             "EmblemOfSeveredFate": -1.1547,
             "HuskOfOpulentDreams": 0.0,
-            "OceanHuedClam": 10.0
+            "OceanHuedClam": 10.0,
+            "VermillionHereafter": -3.0237,
+            "EchoesOfAnOffering": -3.0237
         },
         "cr": {
             "GladiatorsFinale": 3.9887,
@@ -249,7 +269,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 3.7486,
             "EmblemOfSeveredFate": -0.2649,
             "HuskOfOpulentDreams": -1.1634,
-            "OceanHuedClam": -7.3413
+            "OceanHuedClam": -7.3413,
+            "VermillionHereafter": 3.9887,
+            "EchoesOfAnOffering": 3.9887
         },
         "cd": {
             "GladiatorsFinale": 3.4352,
@@ -271,7 +293,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 3.185,
             "EmblemOfSeveredFate": -0.8959,
             "HuskOfOpulentDreams": -0.9368,
-            "OceanHuedClam": -6.8719
+            "OceanHuedClam": -6.8719,
+            "VermillionHereafter": 3.4352,
+            "EchoesOfAnOffering": 3.4352
         }
     },
     "goblet": {
@@ -295,7 +319,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 0.1155,
             "EmblemOfSeveredFate": 4.4971,
             "HuskOfOpulentDreams": -2.4254,
-            "OceanHuedClam": -0.41
+            "OceanHuedClam": -0.41,
+            "VermillionHereafter": 0.7748,
+            "EchoesOfAnOffering": 0.7748
         },
         "hpp": {
             "GladiatorsFinale": -3.1944,
@@ -317,7 +343,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -3.0159,
             "EmblemOfSeveredFate": -1.6265,
             "HuskOfOpulentDreams": -1.4286,
-            "OceanHuedClam": 5.0709
+            "OceanHuedClam": 5.0709,
+            "VermillionHereafter": -3.1944,
+            "EchoesOfAnOffering": -3.1944
         },
         "defp": {
             "GladiatorsFinale": -0.5096,
@@ -339,7 +367,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -1.8993,
             "EmblemOfSeveredFate": 0.7785,
             "HuskOfOpulentDreams": 7.9772,
-            "OceanHuedClam": 0.6742
+            "OceanHuedClam": 0.6742,
+            "VermillionHereafter": -0.5096,
+            "EchoesOfAnOffering": -0.5096
         },
         "em": {
             "GladiatorsFinale": -1.2971,
@@ -361,7 +391,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -1.1155,
             "EmblemOfSeveredFate": -0.762,
             "HuskOfOpulentDreams": -1.5617,
-            "OceanHuedClam": -0.264
+            "OceanHuedClam": -0.264,
+            "VermillionHereafter": -1.2971,
+            "EchoesOfAnOffering": -1.2971
         },
         "geoDB": {
             "GladiatorsFinale": -0.7559,
@@ -383,7 +415,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -1.6903,
             "EmblemOfSeveredFate": -1.1547,
             "HuskOfOpulentDreams": 6.7612,
-            "OceanHuedClam": -0.5
+            "OceanHuedClam": -0.5,
+            "VermillionHereafter": -0.7559,
+            "EchoesOfAnOffering": -0.7559
         },
         "pyroDB": {
             "GladiatorsFinale": -0.8671,
@@ -405,7 +439,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 0.3878,
             "EmblemOfSeveredFate": -1.8543,
             "HuskOfOpulentDreams": -0.3878,
-            "OceanHuedClam": -0.9177
+            "OceanHuedClam": -0.9177,
+            "VermillionHereafter": -0.8671,
+            "EchoesOfAnOffering": -0.8671
         },
         "hydroDB": {
             "GladiatorsFinale": -1.2681,
@@ -427,7 +463,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -1.117,
             "EmblemOfSeveredFate": 0.1761,
             "HuskOfOpulentDreams": -1.2888,
-            "OceanHuedClam": 2.135
+            "OceanHuedClam": 2.135,
+            "VermillionHereafter": -1.2681,
+            "EchoesOfAnOffering": -1.2681
         },
         "cryoDB": {
             "GladiatorsFinale": 1.214,
@@ -449,7 +487,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 0.3878,
             "EmblemOfSeveredFate": 3.4438,
             "HuskOfOpulentDreams": -1.9389,
-            "OceanHuedClam": 0.4588
+            "OceanHuedClam": 0.4588,
+            "VermillionHereafter": 1.214,
+            "EchoesOfAnOffering": 1.214
         },
         "anemoDB": {
             "GladiatorsFinale": -0.0998,
@@ -471,7 +511,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 0.0744,
             "EmblemOfSeveredFate": -3.2006,
             "HuskOfOpulentDreams": -1.5617,
-            "OceanHuedClam": 1.3199
+            "OceanHuedClam": 1.3199,
+            "VermillionHereafter": -0.0998,
+            "EchoesOfAnOffering": -0.0998
         },
         "electroDB": {
             "GladiatorsFinale": 1.5119,
@@ -493,7 +535,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 1.6903,
             "EmblemOfSeveredFate": 2.3094,
             "HuskOfOpulentDreams": -1.6903,
-            "OceanHuedClam": -2.0
+            "OceanHuedClam": -2.0,
+            "VermillionHereafter": 1.5119,
+            "EchoesOfAnOffering": 1.5119
         },
         "physicalDB": {
             "GladiatorsFinale": 3.4922,
@@ -515,7 +559,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 2.4542,
             "EmblemOfSeveredFate": -0.762,
             "HuskOfOpulentDreams": 0.2231,
-            "OceanHuedClam": -1.8479
+            "OceanHuedClam": -1.8479,
+            "VermillionHereafter": 3.4922,
+            "EchoesOfAnOffering": 3.4922
         }
     },
     "minor": {
@@ -539,7 +585,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": 5.0709,
             "EmblemOfSeveredFate": -0.0,
             "HuskOfOpulentDreams": -5.0709,
-            "OceanHuedClam": -4.0
+            "OceanHuedClam": -4.0,
+            "VermillionHereafter": 4.1576,
+            "EchoesOfAnOffering": 4.1576
         },
         "hpp": {
             "GladiatorsFinale": -3.6917,
@@ -561,7 +609,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -2.3054,
             "EmblemOfSeveredFate": -1.9813,
             "HuskOfOpulentDreams": -1.5617,
-            "OceanHuedClam": 4.4877
+            "OceanHuedClam": 4.4877,
+            "VermillionHereafter": -3.6917,
+            "EchoesOfAnOffering": -3.6917
         },
         "defp": {
             "GladiatorsFinale": -1.9166,
@@ -583,7 +633,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -3.0159,
             "EmblemOfSeveredFate": -0.3253,
             "HuskOfOpulentDreams": 10.0,
-            "OceanHuedClam": 0.0
+            "OceanHuedClam": 0.0,
+            "VermillionHereafter": -1.9166,
+            "EchoesOfAnOffering": -1.9166
         },
         "em": {
             "GladiatorsFinale": -1.6903,
@@ -605,7 +657,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -0.42,
             "EmblemOfSeveredFate": 0.0,
             "HuskOfOpulentDreams": -1.2599,
-            "OceanHuedClam": 0.0
+            "OceanHuedClam": 0.0,
+            "VermillionHereafter": -1.6903,
+            "EchoesOfAnOffering": -1.6903
         },
         "er": {
             "GladiatorsFinale": -1.494,
@@ -627,7 +681,9 @@ export default <IAffnumDistr>{
             "ShimenawasReminiscence": -1.7817,
             "EmblemOfSeveredFate": 3.6515,
             "HuskOfOpulentDreams": 1.3363,
-            "OceanHuedClam": 3.1623
+            "OceanHuedClam": 3.1623,
+            "VermillionHereafter": -1.494,
+            "EchoesOfAnOffering": -1.494
         }
     }
 }

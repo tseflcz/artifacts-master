@@ -217,7 +217,7 @@ export const store = createStore<IState>({
                 }
                 else { // basic filter
                     if (state.filter.set)
-                    ret = ret.filter(a => a.set == state.filter.set);
+                        ret = ret.filter(a => a.set == state.filter.set);
                     if (state.filter.slot)
                         ret = ret.filter(a => a.slot == state.filter.slot);
                     if (state.filter.main)
