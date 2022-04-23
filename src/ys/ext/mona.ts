@@ -73,7 +73,6 @@ export default {
             for (let martifact of mona[mtype]) {
                 if (martifact['star'] !== 5) continue
                 let set = whatis(martifact['setName'], this.keymap.set)
-                // console.log(set, martifact['setName'])
                 if (!set) {
                     console.warn(`Ignoring unrecognized artifact: ${martifact['setName']}`)
                     continue
