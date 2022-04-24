@@ -19,7 +19,7 @@ try {
             yasUpdLog.value = r.data['body']
             let yas_ver=localStorage.getItem('yas_ver')
             if (!yas_ver) {
-                message.value = '你可能还没有下载yas-lock。yas-lock是一个轻量windows端圣遗物导出和加解锁工具，配合该工具使用效果更佳！'
+                message.value = '你可能还没有下载yas-lock。yas-lock是一个轻量windows端圣遗物导出和加解锁工具，导出功能需配合该工具使用！'
             } else if (yas_ver != r.data['tag_name']) {
                 message.value = `你的yas-lock当前版本为${yas_ver}，最新版本为${r.data['tag_name']}，建议更新！`
             } else return
