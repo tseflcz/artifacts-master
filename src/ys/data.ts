@@ -13,6 +13,7 @@ interface IData {
         sands: string[]
         goblet: string[]
         circlet: string[]
+        [key: string]: string[] // 允许以string为键访问
     }
     mainStat: {
         [key: string]: number[]

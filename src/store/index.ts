@@ -18,6 +18,7 @@ function countArtifactAttr(artifacts: Artifact[], key: keyof Artifact) {
     }
     return s
 }
+const LOADING_DELAY = 250
 export const key: InjectionKey<Store<IState>> = Symbol()
 export const store = createStore<IState>({
     state: () => {
@@ -130,7 +131,7 @@ export const store = createStore<IState>({
                 }
             }
         },
-        delete(state, payload) {          
+        delArtifacts(state, payload) {          
             let s: Set<number> = new Set(payload.indices)
             let i = 0
             for (let a of state.artifacts) {
@@ -252,7 +253,7 @@ export const store = createStore<IState>({
                 state.filteredArtifacts = ret;
                 state.nReload++
                 state.loading = false
-            }, 250)
+            }, LOADING_DELAY)
         },
         updArtifact({ state, dispatch }, payload) {
             for (let a of state.filteredArtifacts) {

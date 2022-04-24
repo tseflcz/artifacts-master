@@ -12,10 +12,6 @@ const setWeight = (key: string, value: number) => {
 const useWeightJson = (use: boolean) => {
     store.commit('useWeightJson', { use })
 }
-// const weightJson = computed<string>({
-//      get() { return store.state.weightJson },
-//      set(json) { store.commit('setWeightJson', { json }) }
-//  })
 const showLoader = ref(false)
 </script>
 
@@ -27,6 +23,7 @@ const showLoader = ref(false)
             <span v-show="!store.state.useWeightJson" @click="useWeightJson(true)">高级</span>
         </section-title>
         <div style="margin-top: 14px;" v-show="store.state.useFilterBatch == -1 && !store.state.useWeightJson">
+            <p class="info">点按粗调，拖拽微调，悬停查看数值，大于1的权重需进入高级设置</p>
             <value-button
                 class="weight-button"
                 v-for="(_, key) in store.state.weight"
@@ -35,11 +32,6 @@ const showLoader = ref(false)
                 @update:model-value="setWeight(key as string, $event)"
             >{{ (chs.affix as any)[key] }}</value-button>
         </div>
-        <!--
-        <div class="section-content" v-show="store.state.useWeightJson">
-            <textarea class="json-input" v-model="weightJson" />
-        </div>
-        -->
         <div class="section-content" v-show="store.state.useFilterBatch == -1 && store.state.useWeightJson">
             <el-form :inline="true">
                 <el-form-item 

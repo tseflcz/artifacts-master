@@ -89,6 +89,7 @@ export default defineComponent({
         },
         filterBatchStart() {
             this.store.dispatch('setLockByFilterBatch')
+            this.doSave()
         },
         updateArtifactFilter(filter: ArtifactFilter, index: number) {
             this.store.state.filterBatch[index].filter = filter;
