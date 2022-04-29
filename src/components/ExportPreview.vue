@@ -35,7 +35,6 @@ const claim = () => {
     showUpdateDialog.value = false
 }
 const updYas = () => {
-    claim()
     window.open('https://ghproxy.com/https://github.com/ideless/yas-lock/releases/latest/download/yas-lock.exe', '_blank')
 }
 
@@ -102,13 +101,13 @@ const exportArts = () => {
         <div class="update-content" v-show="showUpdateDialog">
             <p>{{ message }}</p>
             <p>
-                <el-button :icon="Download" type="primary" @click="updYas">下载 yas-lock {{ yasVersion }}</el-button>
-                <el-button @click="claim" style="margin-left: 10px;">我已有此版本</el-button>
-            </p>
-            <p>
                 <b>更新日志：</b>
             </p>
             <p style="white-space: pre-wrap;">{{ yasUpdLog }}</p>
+            <p>
+                <el-button :icon="Download" type="primary" @click="updYas">下载 yas-lock {{ yasVersion }}</el-button>
+                <el-button @click="claim" style="margin-left: 10px;">我已有此版本</el-button>
+            </p>
         </div>
         <div v-show="!showUpdateDialog">此功能用于导出加解锁信息，然后经由yas-lock同步到游戏，详情见<a href="./tutorial" target="_blank">教程</a></div>
         <el-alert type="warning" style="margin-top: 10px;">

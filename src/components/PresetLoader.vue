@@ -47,7 +47,7 @@ const presets = computed<IOption[]>(() => {
             for (let i of c.presets) {
                 ret.push({
                     value: i,
-                    label: chs.preset[i]
+                    label: i,
                 })
             }
             break
@@ -66,20 +66,24 @@ const applyDisabled = computed(() => {
     return preset.value == ""
 })
 const apply = () => {
-    if (typeof preset.value == 'number') {
-        let w=Preset.presets[preset.value]
-        w['hpprop']=0
-        w['defprop']=0
-        w['main']=0.5
-        w['set']=0.3
-        store.commit('usePreset', { weight: w })
-        emit('update:modelValue', false)
-    }
+    let w=Preset.presets[preset.value]
+    w['hpprop']=0
+    w['defprop']=0
+    w['main']=1
+    w['set']=1
+    store.commit('usePreset', { charKey: character.value, weight: w })
+    emit('update:modelValue', false)
 }
 </script>
 
 <template>
     <el-dialog title="词条权重预设" v-model="show">
+    <p class="info">
+            配装数据来自
+            <a href="https://ngabbs.com/read.php?tid=27859119">全角色圣遗物及武器搭配简述 [NGA]</a>
+            ，权重由
+            <a href="https://bbs.nga.cn/read.php?tid=25843014">全角色收益曲线 [NGA]</a>计算
+        </p>
         <el-row justify="space-between">
             <el-col :span="8">元素类型</el-col>
             <el-col :span="8">

@@ -1,5 +1,4 @@
-interface IBuild {
-    [characterKey: string]: {
+export interface IBuild {
         set: {
             2: string[]
             4: string[]
@@ -7,14 +6,15 @@ interface IBuild {
         main: {
             [slotKey: string]: string[]
         }
-        minors: string
-    }
+}
+interface IBuildExt extends IBuild {
+    minors: string
 }
 
-export default <IBuild>{
+export default <{ [charKey: string]: IBuildExt }>{
     Noelle: {
         set: {
-            2: [''],
+            2: [],
             4: ['RetracingBolide', 'GladiatorsFinale', 'HuskOfOpulentDreams']
         },
         main: {
@@ -29,7 +29,7 @@ export default <IBuild>{
     Ningguang: {
         set: {
             2: ['ArchaicPetra', 'GladiatorsFinale', 'NoblesseOblige', 'ShimenawasReminiscence'],
-            4: ['']
+            4: []
         },
         main: {
             flower: ['hp'],
@@ -56,7 +56,7 @@ export default <IBuild>{
     },
     Albedo: {
         set: {
-            2: [''],
+            2: [],
             4: ['ArchaicPetra', 'HuskOfOpulentDreams', 'TenacityOfTheMillelith']
         },
         main: {
@@ -196,7 +196,7 @@ export default <IBuild>{
     },
     Yanfei: {
         set: {
-            2: [''],
+            2: [],
             4: ['RetracingBolide', 'CrimsonWitchOfFlames', 'WanderersTroupe']
         },
         main: {
@@ -333,6 +333,18 @@ export default <IBuild>{
             circlet: ['hb']
         },
         minors: 'atkp,em,er,hpp'
+    },
+    KamisatoAyato: {
+        set: {2:[],
+            4:["EchoesOfAnOffering", "GladiatorsFinale", "HeartOfDepth"]},
+        main: {
+            flower: ['hp'],
+            plume: ['atk'],
+            sands: ['atkp'],
+            goblet: ['hydroDB'],
+            circlet: ['cr', 'cd']
+        },
+        minors: 'atkp,cd,cr,em,er'
     },
     Ganyu: {
         set: {
@@ -476,7 +488,7 @@ export default <IBuild>{
     },
     Venti: {
         set: {
-            2: [''],
+            2: [],
             4: ['ViridescentVenerer']
         },
         main: {
@@ -518,7 +530,7 @@ export default <IBuild>{
     },
     KaedeharaKazuha: {
         set: {
-            2: [''],
+            2: [],
             4: ['ViridescentVenerer']
         },
         main: {
@@ -533,7 +545,7 @@ export default <IBuild>{
     Xiao: {
         set: {
             2: ['ViridescentVenerer', 'GladiatorsFinale', 'ShimenawasReminiscence'],
-            4: ['']
+            4: []
         },
         main: {
             flower: ['hp'],
@@ -560,7 +572,7 @@ export default <IBuild>{
     },
     TravelerAnemo: {
         set: {
-            2: [''],
+            2: [],
             4: ['ViridescentVenerer']
         },
         main: {
@@ -644,7 +656,7 @@ export default <IBuild>{
     },
     RaidenShogun: {
         set: {
-            2: [''],
+            2: [],
             4: ['EmblemOfSeveredFate']
         },
         main: {
