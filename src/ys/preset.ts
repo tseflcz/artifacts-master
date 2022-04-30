@@ -191,8 +191,8 @@ export default <IPreset>{
         },
         {
             key: "TravelerGeo", element: "geo", presets: ['空/荧（岩） | 雾切之回光 | 2磐岩2角斗 | 攻岩暴',
-            '空/荧（岩） | 磐岩结绿 | 2磐岩2角斗 | 攻岩暴',
-            '空/荧（岩） | 黑剑 | 2磐岩2角斗 | 攻岩暴',]
+                '空/荧（岩） | 磐岩结绿 | 2磐岩2角斗 | 攻岩暴',
+                '空/荧（岩） | 黑剑 | 2磐岩2角斗 | 攻岩暴',]
         },
         {
             key: "TravelerElectro", element: "electro", presets: ['空/荧（雷） | 西风剑 | 旗印4 | 充雷暴',]
@@ -401,7 +401,7 @@ export default <IPreset>{
             'atkp': 0.8918,
             'defp': 0.0,
             'em': 0.9328,
-            'er': 0.4459,
+            'er': 0.4664,
             'cr': 0.8936,
             'cd': 1.0
         },
@@ -461,7 +461,7 @@ export default <IPreset>{
             'atkp': 0.8708,
             'defp': 0.0,
             'em': 1.0,
-            'er': 0.4354,
+            'er': 0.5,
             'cr': 0.8638,
             'cd': 0.927
         },
@@ -725,7 +725,7 @@ export default <IPreset>{
             'atkp': 0.0,
             'defp': 0.0,
             'em': 1.0,
-            'er': 0.0,
+            'er': 0.5,
             'cr': 0.7723,
             'cd': 0.8643
         },
@@ -737,7 +737,7 @@ export default <IPreset>{
             'atkp': 0.7258,
             'defp': 0.0,
             'em': 1.0,
-            'er': 0.3629,
+            'er': 0.5,
             'cr': 0.7727,
             'cd': 0.8677
         },
@@ -749,7 +749,7 @@ export default <IPreset>{
             'atkp': 0.5994,
             'defp': 0.0,
             'em': 1.0,
-            'er': 0.2997,
+            'er': 0.5,
             'cr': 0.7651,
             'cd': 0.9941
         },
@@ -881,7 +881,7 @@ export default <IPreset>{
             'atkp': 0.0,
             'defp': 0.0,
             'em': 1.0,
-            'er': 0.0,
+            'er': 0.5,
             'cr': 0.0,
             'cd': 0.0
         },
@@ -893,7 +893,7 @@ export default <IPreset>{
             'atkp': 0.0,
             'defp': 0.0,
             'em': 1.0,
-            'er': 0.0,
+            'er': 0.5,
             'cr': 0.0,
             'cd': 0.0
         },
@@ -1013,7 +1013,7 @@ export default <IPreset>{
             'atkp': 0.0,
             'defp': 0.0,
             'em': 1.0,
-            'er': 0.0,
+            'er': 0.5,
             'cr': 0.0,
             'cd': 0.0
         },
@@ -1025,7 +1025,7 @@ export default <IPreset>{
             'atkp': 0.0,
             'defp': 0.0,
             'em': 1.0,
-            'er': 0.0,
+            'er': 0.5,
             'cr': 0.0,
             'cd': 0.0
         },
@@ -1037,7 +1037,7 @@ export default <IPreset>{
             'atkp': 0.0,
             'defp': 0.0,
             'em': 1.0,
-            'er': 0.0,
+            'er': 0.5,
             'cr': 0.0,
             'cd': 0.0
         },
@@ -1049,7 +1049,7 @@ export default <IPreset>{
             'atkp': 0.0,
             'defp': 0.0,
             'em': 1.0,
-            'er': 0.0,
+            'er': 0.5,
             'cr': 0.0,
             'cd': 0.0
         },
@@ -1283,13 +1283,13 @@ export default <IPreset>{
         },
         '空/荧（雷） | 西风剑 | 旗印4 | 充雷暴': {
             'hp': 0.0,
-            'atk': 0.0,
+            'atk': 0.5005,
             'def': 0.0,
             'hpp': 0.0,
-            'atkp': 0.0,
+            'atkp': 1.0,
             'defp': 0.0,
             'em': 0.0,
-            'er': 1.0,
+            'er': 0.2511,
             'cr': 0.0,
             'cd': 0.0
         },
@@ -1632,12 +1632,12 @@ export default <IPreset>{
         '五郎 | 西风猎弓 | 流放4 | 充岩暴': {
             'hp': 0.0,
             'atk': 0.0,
-            'def': 0.0,
+            'def': 0.4897,
             'hpp': 0.0,
             'atkp': 0.0,
-            'defp': 0.0,
+            'defp': 1.0,
             'em': 0.0,
-            'er': 1.0,
+            'er': 0.3523,
             'cr': 0.0,
             'cd': 0.0
         },
