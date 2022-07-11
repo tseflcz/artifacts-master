@@ -7,6 +7,8 @@ import mona from '../ys/ext/mona';
 import good from '../ys/ext/good';
 import genmo from '../ys/ext/genmo';
 import { useStore } from '../store';
+import { Artifact } from '../ys/artifact';
+import pparser from '../ys/p2p/pparser';
 const store = useStore()
 const msg = ref('')
 const ok = ref(false)
@@ -21,40 +23,53 @@ const importArts = () => {
         if (!finput.files || finput.files.length == 0) return
         let file = finput.files[0];
         var reader = new FileReader();
-        reader.readAsText(file, "UTF-8");
-        reader.onload = (evt) => {
-            if (typeof reader.result !== 'string') {
-                msg.value = '可能不是文本文件'
-                ok.value = false
-                return
-            }
-            let artifacts: any[] = [], format = ''
-            try {
-                artifacts = good.loads(reader.result)
-                format = 'GOOD'
-            } catch (e) {
+        if (file.name.endsWith('.pcap')) {
+            reader.onload = async () => {
                 try {
-                    artifacts = mona.loads(reader.result)
-                    format = 'mona-urani'
+                    let result = reader.result as ArrayBuffer
+                    let GOOD = await pparser.parseArtifacts(new Uint8Array(result, 0, result.byteLength))
+                    let artifacts = good.loads(JSON.stringify(GOOD))
+                    msg.value = `成功导入${artifacts.length}个5星圣遗物`
+                    ok.value = true
+                    store.dispatch('setArtifacts', { artifacts, canExport: true })
+                } catch (e) {
+                    msg.value = String(e)
+                    ok.value = false
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        } else {
+            reader.onload = (evt) => {
+                if (typeof reader.result !== 'string') {
+                    msg.value = '可能不是文本文件'
+                    ok.value = false
+                    return
+                }
+                let artifacts: Artifact[] = [], canExport = false
+                try {
+                    artifacts = good.loads(reader.result)
+                    canExport = artifacts.length > 0
+                        && artifacts[0].data.source == 'yas-lock/good'
                 } catch (e) {
                     try {
-                        artifacts = genmo.loads(reader.result)
-                        format = 'genmo'
-                    } catch (e: any) {
-                        if (typeof e == 'object' && e.message) {
-                            msg.value = e.message
-                        } else {
-                            msg.value = '解析失败'
+                        artifacts = mona.loads(reader.result)
+                    } catch (e) {
+                        try {
+                            artifacts = genmo.loads(reader.result)
+                        } catch (e: any) {
+                            console.error(e)
+                            msg.value = String(e)
+                            ok.value = false
+                            return
                         }
-                        ok.value = false
-                        return
                     }
                 }
-            }
-            msg.value = `成功导入${artifacts.length}个5星圣遗物`
-            ok.value = true
-            store.dispatch('setArtifacts', { artifacts, format })
-        };
+                msg.value = `成功导入${artifacts.length}个5星圣遗物`
+                ok.value = true
+                store.dispatch('setArtifacts', { artifacts, canExport })
+            };
+            reader.readAsText(file, "UTF-8");
+        }
         reader.onerror = (evt) => {
             msg.value = '无法读取文件'
             ok.value = false
@@ -77,12 +92,13 @@ const showPreview = ref(false)
         </section-title>
         <div class="section-content">
             <text-button @click="importArts">导入</text-button>
-            <text-button style="margin-left: 20px;" @click="showPreview = true" :disabled="!store.state.canExport">导出</text-button>
+            <text-button style="margin-left: 20px;" @click="showPreview = true" :disabled="!store.state.canExport">导出
+            </text-button>
             <p :class="importMsgClass">{{ msg }}</p>
         </div>
     </div>
     <div class="hidden">
-        <input type="file" id="file-input" />
+        <input type="file" id="file-input" accept=".json, .pcap" />
     </div>
     <export-preview v-model="showPreview" />
 </template>
@@ -91,10 +107,12 @@ const showPreview = ref(false)
 .import-msg {
     color: red;
     margin-top: 10px;
+
     &.ok {
         color: $green;
     }
 }
+
 .hidden {
     position: fixed;
     top: -999px;

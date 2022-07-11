@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import SectionTitle from './SectionTitle.vue';
-import DropSelect from './DropSelect.vue';
+import DropSelectPlus from './DropSelectPlus.vue';
 import RangeSlider from './RangeSlider.vue';
+import chs from '../ys/locale/chs';
+import { computed, nextTick, ref, watch } from 'vue';
 import { ArtifactFilter, FilterBatchOne } from '../ys/artifactFilter'
-import { ref } from 'vue'
 import { useStore } from '../store';
-import ArtifaceFilterPanel from './ArtifactFilterPanel.vue'
-import ArtifaceFilterBatchPanel from './ArtifactFilterBatchPanel.vue'
+import { Artifact } from '../ys/artifact';
+import data from '../ys/data';
 const store = useStore()
 let artifactFilter = new ArtifactFilter();
 let showFilter = ref(false);
@@ -23,86 +24,146 @@ const disableFilterBatch = () => {
         title: '取消过滤规则成功',
     })
 }
-
-const useFilterPro = (use: boolean) => {
-    store.commit('useFilterPro', { use })
-    store.state.useFilterBatch = -1
-    if (!localStorageTried) {
-        localStorageTried = true
-        try {
-            const datastr = localStorage.getItem('filterBatchJSON')
-            if (datastr) {
-                const data = JSON.parse(datastr);
-                store.state.filterBatch.splice(0);
-                for (let i = 0; i < data.length; i ++ )
-                    store.state.filterBatch.push(new FilterBatchOne(data[i]));
-                ElNotification({
-                    type: 'success',
-                    title: '已成功读取本地过滤规则',
-                    message: '为了防止丢失，推荐定期使用过滤规则导出功能备份',
-                })
-            }
-        }
-        catch (e) {
-            console.log(e)
-            ElNotification({
-                type: 'error',
-                title: '从本地恢复过滤规则出错',
-                message: '可能是浏览器版本过低导致的，详细信息请F12打开控制台查看。'
-            })
-        }
+const pro = computed<boolean>({
+    get() { return store.state.filter.pro },
+    set(v) { store.commit('setFilter', { key: 'pro', value: v }) }
+})
+function countArtifactAttr(key: keyof Artifact) {
+    let c: { [key: string]: number } = {}
+    for (let a of store.state.artifacts) {
+        let akey = a[key].toString()
+        c[akey] = (akey in c) ? c[akey] + 1 : 1
     }
+    return c
 }
-const setFilter = (key: string, value: any) => {
-    store.commit('setFilter', { key, value })
-}
+// 套装
+const setOptions = computed(() => {
+    let c = countArtifactAttr('set')
+    return Object.keys(chs.set)
+        .filter(key => key in c)
+        .map(key => ({
+            key,
+            label: chs.set[key].name,
+            icon: `./assets/artifacts/${key}/flower.png`,
+            tip: c[key].toString(),
+        }))
+})
+const set = computed<string[]>({
+    get() { return store.state.filter.set },
+    set(v) { store.commit('setFilter', { key: 'set', value: v }) }
+})
+// 部位
+const slotOptions = computed(() => {
+    let c = countArtifactAttr('slot')
+    return Object.keys(chs.slot)
+        .filter(key => key in c)
+        .map(key => ({
+            key,
+            label: chs.slot[key],
+            icon: `./assets/game_icons/${key}.png`,
+            tip: c[key].toString(),
+        }))
+})
+const slot = computed<string[]>({
+    get() { return store.state.filter.slot },
+    set(v) { store.commit('setFilter', { key: 'slot', value: v }) }
+})
+// 主词条
+const mainOptions = computed(() => {
+    let c = countArtifactAttr('mainKey')
+    return data.mainKeys.all
+        .filter(key => key in c)
+        .map(key => ({
+            key,
+            label: chs.affix[key],
+            tip: c[key].toString(),
+        }))
+})
+const main = computed<string[]>({
+    get() { return store.state.filter.main },
+    set(v) { store.commit('setFilter', { key: 'main', value: v }) }
+})
+// 锁
+const lockOptions = computed(() => {
+    let c = countArtifactAttr('lock')
+    return ['true', 'false']
+        .filter(key => key in c)
+        .map(key => ({
+            key,
+            label: key == 'true' ? '加锁' : '解锁',
+            tip: c[key].toString(),
+        }))
+})
+const lock = computed<string[]>({
+    get() { return store.state.filter.lock },
+    set(v) { store.commit('setFilter', { key: 'lock', value: v }) }
+})
+// 等级
+const lvRange = computed<number[]>({
+    get() { return store.state.filter.lvRange },
+    set(v) { store.commit('setFilter', { key: 'lvRange', value: v }) }
+})
+// 佩戴角色
+const charOptions = computed(() => {
+    let c = countArtifactAttr('location')
+    return [''].concat(data.characters.map(C => C.key))
+        .filter(key => key in c)
+        .map(key => ({
+            key,
+            label: key ? chs.character[key] || key : '未佩戴',
+            icon: key ? `./assets/char_faces/${key}.png` : './assets/forbidden.png',
+            tip: c[key].toString(),
+        }))
+})
+const char = computed<string[]>({
+    get() { return store.state.filter.location },
+    set(v) { store.commit('setFilter', { key: 'location', value: v }) }
+})
+// 必须包含和不得包含的副词条
+const minorOptions = data.minorKeys.map(key => ({
+    key,
+    label: chs.affix[key]
+}))
+const minorMustHave = computed<string[]>({
+    get() { return store.state.filter.minorMustHave },
+    set(v) { store.commit('setFilter', { key: 'minorMustHave', value: v }) }
+})
+const minorMustNotHave = computed<string[]>({
+    get() { return store.state.filter.minorMustNotHave },
+    set(v) { store.commit('setFilter', { key: 'minorMustNotHave', value: v }) }
+})
+// 更新，填充
+watch(() => store.state.nResetFilter, () => {
+    store.commit('setFilter', { key: 'set', value: setOptions.value.map(o => o.key) })
+    store.commit('setFilter', { key: 'slot', value: slotOptions.value.map(o => o.key) })
+    store.commit('setFilter', { key: 'main', value: mainOptions.value.map(o => o.key) })
+    store.commit('setFilter', { key: 'lock', value: lockOptions.value.map(o => o.key) })
+    store.commit('setFilter', { key: 'lvRange', value: [0, 20] })
+    store.commit('setFilter', { key: 'location', value: charOptions.value.map(o => o.key) })
+})
 </script>
 
 
 <template>
     <div class="section">
         <section-title title="筛选">
-            <span v-show="store.state.useFilterPro" @click="useFilterPro(false)">基本</span>
-            <span v-show="!store.state.useFilterPro" @click="useFilterPro(true)">高级</span>
+            <span v-show="pro" @click="pro = false">基本</span>
+            <span v-show="!pro" @click="pro = true">高级</span>
         </section-title>
-        <div class="section-content" v-show="!store.state.useFilterPro">
-            <div class="filter">
-                <span class="filter-name">套装：</span>
-                <drop-select class="filter-ctrl" :items="store.getters.filterSets" :model-value="store.state.filter.set"
-                    @update:model-value="setFilter('set', $event)" />
-            </div>
-            <div class="filter">
-                <span class="filter-name">部位：</span>
-                <drop-select class="filter-ctrl" :items="store.getters.filterSlots"
-                    :model-value="store.state.filter.slot" @update:model-value="setFilter('slot', $event)" />
-            </div>
-            <div class="filter">
-                <span class="filter-name">主词条：</span>
-                <drop-select class="filter-ctrl" :items="store.getters.filterMains"
-                    :model-value="store.state.filter.main" @update:model-value="setFilter('main', $event)" />
-            </div>
-            <div class="filter">
-                <span class="filter-name">角色：</span>
-                 <drop-select class="filter-ctrl" :items="store.getters.filterLocations"
-                    :model-value="store.state.filter.location" @update:model-value="setFilter('location', $event)" />
-            </div>
-            <div class="filter">
-                <span class="filter-name">锁：</span>
-                <drop-select class="filter-ctrl" :items="store.getters.filterLocks"
-                    :model-value="store.state.filter.lock" @update:model-value="setFilter('lock', $event)" />
-            </div>
-            <div class="filter">
-                <span class="filter-name">等级：</span>
-                <range-slider class="filter-ctrl" :model-value="store.state.filter.lvRange"
-                    @update:model-value="setFilter('lvRange', $event)" />
-            </div>
-            <div class="filter">
-                <span class="filter-name">评分：</span>
-                <range-slider class="filter-ctrl" :model-value="store.state.filter.score"
-                    @update:model-value="setFilter('score', $event)"
-                />
+        <div class="section-content">
+            <drop-select-plus class="filter" title="套装" :options="setOptions" v-model="set" :use-icon="true" />
+            <drop-select-plus class="filter" title="部位" :options="slotOptions" v-model="slot" :use-icon="true" />
+            <range-slider class="filter" v-model="lvRange" />
+            <div v-show="pro">
+                
+                <drop-select-plus class="filter" title="主词条" :options="mainOptions" v-model="main" />
+                <drop-select-plus class="filter" title="角色" :options="charOptions" v-model="char" :use-icon="true" />
+                <drop-select-plus class="filter" title="锁" :options="lockOptions" v-model="lock" />
+                <drop-select-plus class="filter" title="必须包含的副词条" :options="minorOptions" v-model="minorMustHave" />
+                <drop-select-plus class="filter" title="不得包含的副词条" :options="minorOptions" v-model="minorMustNotHave" />
             </div>
         </div>
+        <!--
         <div class="section-content" v-show="store.state.useFilterPro">
             <div class="filter-detail">{{ store.state.useFilterBatch != -1 ? '启用过滤规则：' + (store.state.filterBatch[store.state.useFilterBatch].comment ? store.state.filterBatch[store.state.useFilterBatch].comment : '无名称注释') : '' }}</div>
             <div class="filter-button">
@@ -111,28 +172,18 @@ const setFilter = (key: string, value: any) => {
             </div>
             <artifact-filter-batch-panel v-model:show="showFilter" />
         </div>
+        -->
     </div>
 </template>
 
 <style lang="scss">
 .filter {
-    display: flex;
-    align-items: center;
-    &:not(:last-child) {
-        margin-bottom: 10px;
-    }
-    .filter-name {
-        flex: 1;
-        color: gray;
-    }
-    .filter-ctrl {
-        width: 300px;
-    }
+    margin-top: 15px;
 }
 .check {
     --el-checkbox-font-size: 16px;
-    --el-checkbox-font-weight: bold;
-    --el-checkbox-text-color: #444;
+    // --el-checkbox-font-weight: bold;
+    // --el-checkbox-text-color: #444;
     height: 30px;
     &.p2 {
         width: 170px;

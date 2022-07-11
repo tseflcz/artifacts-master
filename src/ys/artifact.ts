@@ -352,7 +352,7 @@ export class Artifact implements IArtifact {
             return cur + n * sum_w / 4 * 0.85
         }
     }
-    updateProp() {
+    updateProp(charKeys: string[]) {
         this.data.charScores = []
         // AffnumCache记录不同权重下圣遗物的满级期望词条数
         const AffnumCache = new SimpleCache((weight: IWeight) => {
@@ -368,7 +368,7 @@ export class Artifact implements IArtifact {
             return (p * x + 1 - p) ** 100 // 有没有100其实无所谓，有100更好看一点
         })
         // 对每个角色分别计算
-        for (let charKey in build) {
+        for (let charKey of charKeys) {
             let b = build[charKey]
             // if the main stat is not recommanded, skip
             if (!b.main[this.slot].includes(this.mainKey))
@@ -397,8 +397,9 @@ export class Artifact implements IArtifact {
             }
             let score=Math.max.apply(null,scorearr)
             // update
-            if (score < 0.001) continue
-            this.data.charScores.push({ charKey, score })
+            if (score > 0.001){
+                this.data.charScores.push({ charKey, score })
+            }
         }
         this.data.charScores.sort((a, b) => b.score - a.score)
         if(this.data.charScores.length==0){

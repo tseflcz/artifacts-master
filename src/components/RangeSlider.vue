@@ -33,6 +33,7 @@ const range = computed({
         width: 38px;
         text-align: center;
         line-height: 0;
+        font-family: Arial, Helvetica, sans-serif;
     }
     .slider {
         flex: 1;
