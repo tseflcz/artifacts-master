@@ -4,26 +4,10 @@ import DropSelectPlus from './DropSelectPlus.vue';
 import RangeSlider from './RangeSlider.vue';
 import chs from '../ys/locale/chs';
 import { computed, nextTick, ref, watch } from 'vue';
-import { ArtifactFilter, FilterBatchOne } from '../ys/artifactFilter'
 import { useStore } from '../store';
 import { Artifact } from '../ys/artifact';
 import data from '../ys/data';
 const store = useStore()
-let artifactFilter = new ArtifactFilter();
-let showFilter = ref(false);
-let localStorageTried = false;
-const updateArtifactFilter = (filter: ArtifactFilter) => {
-    artifactFilter = filter
-    // this.isFiltering = true
-    // this.selectedIds = []
-}
-const disableFilterBatch = () => {
-    store.commit('filterBatchIndex', -1)
-    ElNotification({
-        type: 'success',
-        title: '取消过滤规则成功',
-    })
-}
 const pro = computed<boolean>({
     get() { return store.state.filter.pro },
     set(v) { store.commit('setFilter', { key: 'pro', value: v }) }
@@ -141,21 +125,30 @@ watch(() => store.state.nResetFilter, () => {
     store.commit('setFilter', { key: 'lvRange', value: [0, 20] })
     store.commit('setFilter', { key: 'location', value: charOptions.value.map(o => o.key) })
 })
+const disableFilterBatch = () => {
+    store.commit('filterBatchIndex', -1)
+    ElNotification({
+        type: 'success',
+        title: '取消过滤规则成功',
+    })
+}
 </script>
 
 
 <template>
     <div class="section">
         <section-title title="筛选">
-            <span v-show="pro" @click="pro = false">基本</span>
-            <span v-show="!pro" @click="pro = true">高级</span>
+            <span v-show="pro && store.state.useFilterBatch == -1" @click="pro = false">基本</span>
+            <span v-show="!pro && store.state.useFilterBatch == -1" @click="pro = true">高级</span>
         </section-title>
-        <div class="section-content">
+        <div class="filter-detail" v-show="store.state.useFilterBatch != -1">
+            {{ store.state.useFilterBatch != -1 ? '当前过滤规则：' + (store.state.filterBatch[store.state.useFilterBatch].comment ? store.state.filterBatch[store.state.useFilterBatch].comment : '无名称注释') : '' }}
+        </div>
+        <div class="section-content" v-show="store.state.useFilterBatch == -1">
             <drop-select-plus class="filter" title="套装" :options="setOptions" v-model="set" :use-icon="true" />
             <drop-select-plus class="filter" title="部位" :options="slotOptions" v-model="slot" :use-icon="true" />
             <range-slider class="filter" v-model="lvRange" />
-            <div v-show="pro">
-                
+            <div v-show="pro">                
                 <drop-select-plus class="filter" title="主词条" :options="mainOptions" v-model="main" />
                 <drop-select-plus class="filter" title="角色" :options="charOptions" v-model="char" :use-icon="true" />
                 <drop-select-plus class="filter" title="锁" :options="lockOptions" v-model="lock" />
@@ -163,16 +156,6 @@ watch(() => store.state.nResetFilter, () => {
                 <drop-select-plus class="filter" title="不得包含的副词条" :options="minorOptions" v-model="minorMustNotHave" />
             </div>
         </div>
-        <!--
-        <div class="section-content" v-show="store.state.useFilterPro">
-            <div class="filter-detail">{{ store.state.useFilterBatch != -1 ? '启用过滤规则：' + (store.state.filterBatch[store.state.useFilterBatch].comment ? store.state.filterBatch[store.state.useFilterBatch].comment : '无名称注释') : '' }}</div>
-            <div class="filter-button">
-                <text-button @click="showFilter = true;" style="width: 110px">显示过滤规则</text-button>
-                <text-button v-show="store.state.useFilterBatch != -1" @click="disableFilterBatch">取消选择</text-button>
-            </div>
-            <artifact-filter-batch-panel v-model:show="showFilter" />
-        </div>
-        -->
     </div>
 </template>
 
@@ -195,15 +178,10 @@ watch(() => store.state.nResetFilter, () => {
         width: 50px;
     }
 }
-.filter-button {
-    display: flex;
-    justify-content: space-around;
-    padding: 20px 0;
-}
 .filter-detail {
     display: flex;
     justify-content: center;
-    padding: 10px 0;
-    color: #A00
+    padding: 10px 0px;
+    color: #A00008
 }
 </style>

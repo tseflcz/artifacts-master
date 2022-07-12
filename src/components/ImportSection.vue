@@ -9,6 +9,7 @@ import genmo from '../ys/ext/genmo';
 import { useStore } from '../store';
 import { Artifact } from '../ys/artifact';
 import pparser from '../ys/p2p/pparser';
+import { ArtifactFilter, FilterBatchOne } from '../ys/artifactFilter'
 const store = useStore()
 const msg = ref('')
 const ok = ref(false)
@@ -83,6 +84,38 @@ const openTutorial = () => {
 }
 // 预览对话框
 const showPreview = ref(false)
+// 批量过滤
+let showFilter = ref(false);
+let localStorageTried = false;
+const useFilterBatch = () => {
+    store.state.useFilterBatch = -1
+    showFilter.value=true
+    if (!localStorageTried) {
+        localStorageTried = true
+        try {
+            const datastr = localStorage.getItem('filterBatchJSON')
+            if (datastr) {
+                const data = JSON.parse(datastr);
+                store.state.filterBatch.splice(0);
+                for (let i = 0; i < data.length; i ++ )
+                    store.state.filterBatch.push(new FilterBatchOne(data[i]));
+                ElNotification({
+                    type: 'success',
+                    title: '已成功读取本地过滤规则',
+                    message: '为了防止丢失，推荐定期使用过滤规则导出功能备份',
+                })
+            }
+        }
+        catch (e) {
+            console.log(e)
+            ElNotification({
+                type: 'error',
+                title: '从本地恢复过滤规则出错',
+                message: '可能是浏览器版本过低导致的，详细信息请F12打开控制台查看。'
+            })
+        }
+    }
+}
 </script>
 
 <template>
@@ -92,8 +125,8 @@ const showPreview = ref(false)
         </section-title>
         <div class="section-content">
             <text-button @click="importArts">导入</text-button>
-            <text-button style="margin-left: 20px;" @click="showPreview = true" :disabled="!store.state.canExport">导出
-            </text-button>
+            <text-button style="margin-left: 20px;" @click="useFilterBatch">批量过滤</text-button>
+            <text-button style="margin-left: 20px;" @click="showPreview = true">导出</text-button>
             <p :class="importMsgClass">{{ msg }}</p>
         </div>
     </div>
@@ -101,18 +134,17 @@ const showPreview = ref(false)
         <input type="file" id="file-input" accept=".json, .pcap" />
     </div>
     <export-preview v-model="showPreview" />
+    <artifact-filter-batch-panel v-model:show="showFilter" />
 </template>
 
 <style lang="scss">
 .import-msg {
     color: red;
     margin-top: 10px;
-
     &.ok {
         color: $green;
     }
 }
-
 .hidden {
     position: fixed;
     top: -999px;

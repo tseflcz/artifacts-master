@@ -5,6 +5,7 @@ import { download } from '../store/utils';
 import { useStore } from '../store';
 import { Download } from '@element-plus/icons-vue'
 import ArtifactCard from './ArtifactCard.vue';
+import PartialExport from './PartialExport.vue';
 import axios from 'axios'
 
 const store = useStore()
@@ -12,6 +13,7 @@ const showUpdateDialog = ref(false)
 const message = ref('Hello')
 const yasVersion = ref('v0.0.0')
 const yasUpdLog = ref('Fix bugs')
+const showExport = ref(false)
 try {
     axios.get('https://api.github.com/repos/ideless/yas-lock/releases/latest').then(r => {
         if ('tag_name' in r.data) {
@@ -135,8 +137,10 @@ const exportArts = () => {
             <el-checkbox v-model="remember">记住本次更改，重新导入新的圣遗物前将不再导出以上圣遗物</el-checkbox>
         </div>
         <div style="margin-top: 10px; text-align: center;">
-            <el-button type="primary" @click="exportArts">导出</el-button>
+            <el-button type="primary" @click="showExport=true" >全量导出</el-button>
+            <el-button type="primary" @click="exportArts" :disabled="!store.state.canExport">导出加解锁信息</el-button>
         </div>
+        <partial-export v-model="showExport" :artifacts="store.state.artifacts" />
     </el-dialog>
 </template>
 

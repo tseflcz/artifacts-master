@@ -13,8 +13,8 @@ const start = () => { store.dispatch('updFilteredArtifacts') }
     <div class="layout-right">
         <el-scrollbar>
             <import-section />
-            <weight-section />
             <filter-section />
+            <weight-section />
             <sort-section />
             <build-section />
             <div class="start-container">
