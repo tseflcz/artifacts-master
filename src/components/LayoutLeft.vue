@@ -3,11 +3,12 @@ import ArtifactCard from './ArtifactCard.vue';
 import ArtifactEditor from './ArtifactEditor.vue';
 import ArtifactCreator from './ArtifactCreator.vue';
 import PartialExport from './PartialExport.vue';
+import AlikeLocker from './AlikeLocker.vue';
 import Grid from 'vue-virtual-scroll-grid'
 import { useStore } from '../store';
 import { computed, ref, watch } from 'vue';
 import type { ElScrollbar } from 'element-plus'
-import { View, Sort, CirclePlus, MagicStick } from '@element-plus/icons-vue'
+import { View, Sort, CirclePlus, Stopwatch } from '@element-plus/icons-vue'
 import { Artifact } from '../ys/artifact';
 const store = useStore()
 const stat = computed(() => {
@@ -21,6 +22,10 @@ const stat = computed(() => {
 })
 const flipLock = (index: number) => {
     store.dispatch('flipLock', { index })
+    if (alikeEnabled.value) {
+        targetIndex.value = index
+        showAlike.value = true
+    }
 }
 const selectMode = ref(false)
 const selection = ref([] as number[])
@@ -152,15 +157,10 @@ const pageProvider = async (pageNumber: number, pageSize: number) => {
 const showAffnum = ref(false)
 // 手动添加
 const showCreator = ref(false)
-// 预设模式
-const presetMode = ref(false)
-const setpPresetMode = () => {
-    if(!store.state.usePreset){
-        presetMode.value=true
-    }else{
-        store.state.usePreset=false
-    }
-}
+// 相似圣遗物
+const alikeEnabled = ref(true)
+const showAlike = ref(false)
+const targetIndex = ref(-1)
 </script>
 
 <template>
@@ -187,11 +187,11 @@ const setpPresetMode = () => {
                         </el-icon>
                         <span>手动添加</span>
                     </div>
-                    <div :class="{ btn: true, checked: store.state.usePreset!='' }" @click="setpPresetMode">
+                    <div :class="{ btn: true, checked: alikeEnabled }" @click="alikeEnabled = !alikeEnabled">
                         <el-icon>
-                            <magic-stick />
+                            <Stopwatch />
                         </el-icon>
-                        <span>预设模式</span>
+                        <span>联想</span>
                     </div>
                 </div>
             </div>
@@ -226,7 +226,7 @@ const setpPresetMode = () => {
     <artifact-editor v-model="showEditor" :index="editorIndex" />
     <artifact-creator v-model="showCreator" />
     <partial-export v-model="showExport" :artifacts="artifactsToExport" />
-    <preset-loader v-model="presetMode" />
+    <alike-locker v-model="showAlike" :index="targetIndex" />
 </template>
 
 <style lang="scss" scoped>

@@ -28,7 +28,7 @@ export interface IState {
     useFilterBatch: number
     weight: ArtifactScoreWeight
     useWeightJson: boolean
-    usePreset: boolean
+    usePreset: string
     sort: {
         by: string
         characters: string[]

@@ -46,8 +46,12 @@ const setsOptions = Object.entries(chs.set).map(([key, val]) => ({
     label: val.name,
     icon: `./assets/artifacts/${key}/flower.png`,
 }))
-const sets = computed<string[]>({
-    get() { return store.state.sort.sets },
+const sets4 = computed<string[]>({
+    get() { return store.state.sort.build.set[4] },
+    set(v) { store.commit('setSort', { key: 'sets', value: v }) }
+})
+const sets2 = computed<string[]>({
+    get() { return store.state.sort.build.set[2] },
     set(v) { store.commit('setSort', { key: 'sets', value: v }) }
 })
 const sandsOptions = data.mainKeys.sands.map(m => ({
@@ -55,7 +59,7 @@ const sandsOptions = data.mainKeys.sands.map(m => ({
     label: chs.affix[m]
 }))
 const sands = computed<string[]>({
-    get() { return store.state.sort.sands },
+    get() { return store.state.sort.build.main.sands },
     set(v) { store.commit('setSort', { key: 'sands', value: v }) }
 })
 const gobletOptions = data.mainKeys.goblet.map(m => ({
@@ -63,7 +67,7 @@ const gobletOptions = data.mainKeys.goblet.map(m => ({
     label: chs.affix[m]
 }))
 const goblet = computed<string[]>({
-    get() { return store.state.sort.goblet },
+    get() { return store.state.sort.build.main.goblet },
     set(v) { store.commit('setSort', { key: 'goblet', value: v }) }
 })
 const circletOptions = data.mainKeys.circlet.map(m => ({
@@ -71,7 +75,7 @@ const circletOptions = data.mainKeys.circlet.map(m => ({
     label: chs.affix[m]
 }))
 const circlet = computed<string[]>({
-    get() { return store.state.sort.circlet },
+    get() { return store.state.sort.build.main.circlet },
     set(v) { store.commit('setSort', { key: 'circlet', value: v }) }
 })
 // 按上位替代数
@@ -85,7 +89,10 @@ const openPresetLoader = () => showPresetLoader.value = true
 
 <template>
     <div class="section">
-         <section-title title="排序" />
+         <section-title title="排序">
+            <span v-show="store.state.usePreset==''" @click="showPresetLoader=true">预设</span>
+            <span v-show="store.state.usePreset!=''" @click="showPresetLoader=true">当前预设：{{chs.character[store.state.usePreset]}}</span>
+         </section-title>
         <div class="content">
             <drop-select class="row" v-model="sortBy" :options="sortByOptions" title="排序方式"/>
             <div v-if="sortBy == 'prop'">
@@ -101,7 +108,8 @@ const openPresetLoader = () => showPresetLoader.value = true
                 <p class="row small">
                     <span class="text-btn" @click="openPresetLoader">加载预设配装</span>
                 </p>
-                <drop-select-plus class="row" v-model="sets" :options="setsOptions" title="套装偏好" :use-icon="true" />
+                <drop-select-plus class="row" v-model="sets4" :options="setsOptions" title="四件套套装偏好" :use-icon="true" />
+                <drop-select-plus class="row" v-model="sets2" :options="setsOptions" title="二件套套装偏好" :use-icon="true" />
                 <drop-select-plus class="row" v-model="sands" :options="sandsOptions" title="时之沙主词条偏好" />
                 <drop-select-plus class="row" v-model="goblet" :options="gobletOptions" title="空之杯主词条偏好" />
                 <drop-select-plus class="row" v-model="circlet" :options="circletOptions" title="理之冠主词条偏好" />
@@ -113,7 +121,7 @@ const openPresetLoader = () => showPresetLoader.value = true
             </div>
         </div>
     </div>
-    <build-loader v-model="showPresetLoader" />
+    <preset-loader v-model="showPresetLoader" />
 </template>
 
 <style lang="scss" scoped>

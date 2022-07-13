@@ -140,7 +140,6 @@ const selectedCount = computed(() => {
     // border-radius: 3px;
     user-select: none;
     cursor: pointer;
-
     .selected-options-wrapper {
         flex: 1;
         line-height: 0;
@@ -161,13 +160,11 @@ const selectedCount = computed(() => {
             padding: 0 10px;
         }
     }
-
     .select-arrow {
         margin: 0 2px;
         transform: rotate(0deg);
         transition: transform 200ms ease;
     }
-
     &.show {
         box-shadow: 0 0 4px 0 $primary-color;
         transition: box-shadow 100ms ease;
@@ -176,7 +173,6 @@ const selectedCount = computed(() => {
             transform: rotate(180deg);
         }
     }
-
     .title {
         position: absolute;
         top: 0;
@@ -188,8 +184,6 @@ const selectedCount = computed(() => {
         line-height: 1;
         padding: 0 5px;
     }
-
-
     .options {
         position: absolute;
         top: calc(100% + 6px);
@@ -206,7 +200,6 @@ const selectedCount = computed(() => {
         border-radius: 5px;
         cursor: initial;
         z-index: 2;
-
         &.top {
             top: unset;
             bottom: calc(100% + 6px);
@@ -216,12 +209,10 @@ const selectedCount = computed(() => {
         :deep(.el-checkbox__label) {
             width: 100%;
         }
-
         .options-header {
             padding: 10px 12px;
             border-bottom: 1px solid lightgray;
         }
-
         .option {
             padding: 5px 12px;
 
@@ -230,23 +221,19 @@ const selectedCount = computed(() => {
             }
 
         }
-
         .option-content {
             display: flex;
             align-items: center;
             // box-shadow: 0 0 1px 0 black;
-
             .icon {
                 width: 32px;
                 height: 32px;
                 object-fit: contain;
                 margin-right: 5px;
             }
-
             .label {
                 flex: 1;
             }
-
             .tip {
                 color: gray;
                 font-family: Arial, Helvetica, sans-serif;

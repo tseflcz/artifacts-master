@@ -31,7 +31,7 @@ export const store = createStore<IState>({
             useFilterBatch: -1,  // -1 notwork, 0~length-1 select one
             weight: new ArtifactScoreWeight(),
             useWeightJson: false,
-            usePreset: false,
+            usePreset: '',
             sort: {
                 by: 'tot', // 'avg', 'min', 'max', 'cur', 'pmulti', 'psingle', 'defeat', 'index',
                 characters: Object.keys(build),
@@ -70,7 +70,7 @@ export const store = createStore<IState>({
         },
         usePreset(state, payload) {
             state.weight = payload.weight
-            state.usePreset = true
+            state.usePreset = payload.charKey
         },
         setSort(state, payload) {
             (state.sort as any)[payload.key] = payload.value

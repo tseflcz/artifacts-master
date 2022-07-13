@@ -87,6 +87,11 @@ const lvRange = computed<number[]>({
     get() { return store.state.filter.lvRange },
     set(v) { store.commit('setFilter', { key: 'lvRange', value: v }) }
 })
+// 得分
+const score = computed<number[]>({
+    get() { return store.state.filter.score },
+    set(v) { store.commit('setFilter', { key: 'score', value: v }) }
+})
 // 佩戴角色
 const charOptions = computed(() => {
     let c = countArtifactAttr('location')
@@ -147,10 +152,11 @@ const disableFilterBatch = () => {
         <div class="section-content" v-show="store.state.useFilterBatch == -1">
             <drop-select-plus class="filter" title="套装" :options="setOptions" v-model="set" :use-icon="true" />
             <drop-select-plus class="filter" title="部位" :options="slotOptions" v-model="slot" :use-icon="true" />
-            <range-slider class="filter" v-model="lvRange" />
-            <div v-show="pro">                
+            <range-slider class="filter" title="等级" v-model="lvRange" />
+            <div v-show="pro">            
                 <drop-select-plus class="filter" title="主词条" :options="mainOptions" v-model="main" />
                 <drop-select-plus class="filter" title="角色" :options="charOptions" v-model="char" :use-icon="true" />
+                <range-slider class="filter" title="得分" v-model="score" />                    
                 <drop-select-plus class="filter" title="锁" :options="lockOptions" v-model="lock" />
                 <drop-select-plus class="filter" title="必须包含的副词条" :options="minorOptions" v-model="minorMustHave" />
                 <drop-select-plus class="filter" title="不得包含的副词条" :options="minorOptions" v-model="minorMustNotHave" />
