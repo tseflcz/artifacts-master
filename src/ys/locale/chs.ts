@@ -1,4 +1,4 @@
-import { ITranslation } from "./locale_type"
+import { ITranslation } from "./type"
 
 export default <ITranslation>{
     set: {

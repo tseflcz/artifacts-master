@@ -4,7 +4,7 @@ import WeightSection from './WeightSection.vue'
 import FilterSection from './FilterSection.vue';
 import SortSection from './SortSection.vue';
 import TextButton from './TextButton.vue';
-import { useStore } from '../store';
+import { useStore } from '@/store';
 const store = useStore()
 const start = () => { store.dispatch('updFilteredArtifacts') }
 </script>
@@ -16,7 +16,6 @@ const start = () => { store.dispatch('updFilteredArtifacts') }
             <filter-section />
             <weight-section />
             <sort-section />
-            <build-section />
             <div class="start-container">
                 <text-button @click="start">开始计算</text-button>
             </div>

@@ -12,6 +12,12 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "suppressImplicitAnyIndexErrors": true,
+    "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        },
     "lib": [
       "esnext",
       "dom"

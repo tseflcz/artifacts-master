@@ -1,6 +1,6 @@
 import { Artifact, ArtifactScoreWeight } from '../ys/artifact'
 import { FilterBatchOne } from '../ys/artifactFilter'
-import { IBuild } from '../ys/build'
+import { IBuild } from '../ys/data/character'
 
 export interface IOption {
     key: string

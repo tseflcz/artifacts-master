@@ -2,11 +2,12 @@
 import SectionTitle from './SectionTitle.vue';
 import DropSelectPlus from './DropSelectPlus.vue';
 import RangeSlider from './RangeSlider.vue';
-import chs from '../ys/locale/chs';
-import { computed, nextTick, ref, watch } from 'vue';
-import { useStore } from '../store';
-import { Artifact } from '../ys/artifact';
-import data from '../ys/data';
+import chs from '@/ys/locale/chs';
+import { computed, watch } from 'vue';
+import { useStore } from '@/store';
+import { Artifact } from '@/ys/artifact';
+import ArtfactData from "@/ys/data/artifact"
+import CharacterData from '@/ys/data/character';
 const store = useStore()
 const pro = computed<boolean>({
     get() { return store.state.filter.pro },
@@ -55,7 +56,7 @@ const slot = computed<string[]>({
 // 主词条
 const mainOptions = computed(() => {
     let c = countArtifactAttr('mainKey')
-    return data.mainKeys.all
+    return ArtfactData.mainKeys.all
         .filter(key => key in c)
         .map(key => ({
             key,
@@ -95,7 +96,7 @@ const score = computed<number[]>({
 // 佩戴角色
 const charOptions = computed(() => {
     let c = countArtifactAttr('location')
-    return [''].concat(data.characters.map(C => C.key))
+    return ['', 'Traveler'].concat(Object.keys(CharacterData))
         .filter(key => key in c)
         .map(key => ({
             key,
@@ -109,7 +110,7 @@ const char = computed<string[]>({
     set(v) { store.commit('setFilter', { key: 'location', value: v }) }
 })
 // 必须包含和不得包含的副词条
-const minorOptions = data.minorKeys.map(key => ({
+const minorOptions = ArtfactData.minorKeys.map(key => ({
     key,
     label: chs.affix[key]
 }))

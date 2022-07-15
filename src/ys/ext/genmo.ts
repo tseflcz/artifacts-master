@@ -1,6 +1,5 @@
 import { assert } from "@vue/compiler-core"
 import { Affix, Artifact } from "../artifact"
-import data from "../data"
 import { whatis } from "../utils"
 
 export default {

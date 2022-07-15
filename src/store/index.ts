@@ -2,10 +2,7 @@ import { InjectionKey } from 'vue'
 import { createStore, useStore as baseUseStore, Store } from 'vuex'
 import { ArtifactScoreWeight, Artifact } from '../ys/artifact'
 import { IState } from './types'
-import chs from '../ys/locale/chs'
-import data from '../ys/data'
-import build from '../ys/build'
-import { elFormItemKey } from 'element-plus'
+import CharacterData from "@/ys/data/character"
 
 const LOADING_DELAY = 250
 export const key: InjectionKey<Store<IState>> = Symbol()
@@ -34,7 +31,7 @@ export const store = createStore<IState>({
             usePreset: '',
             sort: {
                 by: 'tot', // 'avg', 'min', 'max', 'cur', 'pmulti', 'psingle', 'defeat', 'index',
-                characters: Object.keys(build),
+                characters: Object.keys(CharacterData),
                 build: {
                     set: {
                         2: [],
@@ -70,7 +67,17 @@ export const store = createStore<IState>({
         },
         usePreset(state, payload) {
             state.weight = payload.weight
+            state.sort.by = 'presettot'
             state.usePreset = payload.charKey
+            if (payload.charKey in CharacterData) {
+                let b = CharacterData[payload.charKey].build
+                // 不要直接赋值
+                state.sort.build.set[4] = [...b.set[4]]
+                state.sort.build.set[2] = [...b.set[2]]
+                state.sort.build.main.sands = [...b.main.sands]
+                state.sort.build.main.goblet = [...b.main.goblet]
+                state.sort.build.main.circlet = [...b.main.circlet]
+            }
         },
         setSort(state, payload) {
             (state.sort as any)[payload.key] = payload.value

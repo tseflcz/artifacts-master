@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import SectionTitle from './SectionTitle.vue';
 import ValueButton from './ValueButton.vue';
-import chs from "../ys/locale/chs"
-import { useStore } from '../store';
+import chs from "@/ys/locale/chs"
+import { useStore } from '@/store';
 import { ref, computed } from 'vue';
 const store = useStore()
 const setWeight = (key: string, value: number) => {

@@ -5,11 +5,11 @@ import ArtifactCreator from './ArtifactCreator.vue';
 import PartialExport from './PartialExport.vue';
 import AlikeLocker from './AlikeLocker.vue';
 import Grid from 'vue-virtual-scroll-grid'
-import { useStore } from '../store';
+import { useStore } from '@/store';
 import { computed, ref, watch } from 'vue';
 import type { ElScrollbar } from 'element-plus'
 import { View, Sort, CirclePlus, Stopwatch } from '@element-plus/icons-vue'
-import { Artifact } from '../ys/artifact';
+import { Artifact } from '@/ys/artifact';
 const store = useStore()
 const stat = computed(() => {
     let nAll = store.state.filteredArtifacts.length
@@ -158,7 +158,7 @@ const showAffnum = ref(false)
 // 手动添加
 const showCreator = ref(false)
 // 相似圣遗物
-const alikeEnabled = ref(true)
+const alikeEnabled = ref(false)
 const showAlike = ref(false)
 const targetIndex = ref(-1)
 </script>
