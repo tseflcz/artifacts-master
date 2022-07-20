@@ -8,7 +8,10 @@ export interface IOption {
     tip?: string
     icon?: string
 }
-
+export interface ICharOption {
+    key: string
+    tip?: string
+}
 export interface IState {
     artifacts: Artifact[]
     filteredArtifacts: Artifact[]

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import SectionTitle from './SectionTitle.vue';
 import DropSelectPlus from './DropSelectPlus.vue';
+import CharSelect from './CharSelect.vue';
 import RangeSlider from './RangeSlider.vue';
 import chs from '@/ys/locale/chs';
 import { computed, watch } from 'vue';
@@ -100,8 +101,6 @@ const charOptions = computed(() => {
         .filter(key => key in c)
         .map(key => ({
             key,
-            label: key ? chs.character[key] || key : '未佩戴',
-            icon: key ? `./assets/char_faces/${key}.png` : './assets/forbidden.png',
             tip: c[key].toString(),
         }))
 })
@@ -156,8 +155,8 @@ const disableFilterBatch = () => {
             <range-slider class="filter" title="等级" v-model="lvRange" />
             <div v-show="pro">            
                 <drop-select-plus class="filter" title="主词条" :options="mainOptions" v-model="main" />
-                <drop-select-plus class="filter" title="角色" :options="charOptions" v-model="char" :use-icon="true" />
-                <range-slider class="filter" title="得分" v-model="score" />                    
+                <char-select class="filter" title="角色" :options="charOptions" v-model="char" />
+                <range-slider class="filter" title="当前排序得分" v-model="score" v-show='store.state.sort.by!="index"'/>                    
                 <drop-select-plus class="filter" title="锁" :options="lockOptions" v-model="lock" />
                 <drop-select-plus class="filter" title="必须包含的副词条" :options="minorOptions" v-model="minorMustHave" />
                 <drop-select-plus class="filter" title="不得包含的副词条" :options="minorOptions" v-model="minorMustNotHave" />

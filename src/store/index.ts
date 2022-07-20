@@ -189,12 +189,14 @@ export const store = createStore<IState>({
                             return true
                         })
                     }
-                    if (state.sort.by) {
+                    if (state.sort.by) {//得分筛选
                         if (['presetprop', 'prop'].includes(state.sort.by)) {
                             ret = ret.filter((a) => (
                                 state.filter.score[0] <= a.data.charScores[0].score &&
                                 a.data.charScores[0].score <= state.filter.score[1]
                             ));
+                        }else if(state.sort.by=='index') {
+                            
                         } else {
                             ret = ret.filter((a) => (
                                 state.filter.score[0] <= a.data.affnum[state.sort.by] &&
@@ -253,6 +255,22 @@ export const store = createStore<IState>({
                 state.artifacts.push(a)
             state.nResetFilter++
             dispatch('updFilteredArtifacts') // 也许可以改为部分更新
+        },
+        flipLock({ state }, payload) {
+            for (let a of state.artifacts) {
+                if (a.data.index == payload.index) {
+                    a.lock = !a.lock
+                    return
+                }
+            }
+        },
+        setLock({ state }, payload) {
+            let s: Set<number> = new Set(payload.indices)
+            for (let a of state.artifacts) {
+                if (s.has(a.data.index)) {
+                    a.lock = payload.lock
+                }
+            }
         },
     }
 })

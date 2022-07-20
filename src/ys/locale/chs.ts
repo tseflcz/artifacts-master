@@ -403,6 +403,7 @@ export default <ITranslation>{
         electro: "雷元素",
         anemo: "风元素",
         cryo: "冰元素",
-        geo: "岩元素"
+        geo: "岩元素",
+        dendro: "草元素"
     }
 }
