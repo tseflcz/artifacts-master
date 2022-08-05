@@ -43,4 +43,9 @@ const start = () => { store.dispatch('updFilteredArtifacts') }
         z-index: 1;
     }
 }
+@-moz-document url-prefix() {
+    .layout-right .start-container {
+        background-color: $right-bgcolor;
+    }
+}
 </style>

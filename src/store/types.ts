@@ -37,6 +37,12 @@ export interface IState {
         characters: string[]
         build: IBuild
     }
+    artMode: {
+        [key: string]: any // allow string key
+        showAffnum: boolean // 展示词条数而不是数值
+        useMaxAsUnit: boolean // 用最大提升量作为1单位词条
+    }
+    // miscs
     canExport: boolean
     nReload: number
     loading: boolean

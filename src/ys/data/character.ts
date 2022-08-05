@@ -1,11 +1,11 @@
 export interface IBuild {
-        set: {
-            2: string[]
-            4: string[]
-        }
-        main: {
-            [slotKey: string]: string[]
-        }
+    set: {
+        2: string[]
+        4: string[]
+    }
+    main: {
+        [slotKey: string]: string[]
+    }
 }
 interface ICharacterData {
     [key: string]: {
@@ -18,7 +18,7 @@ interface ICharacterData {
 
 export default <ICharacterData>{
     Albedo: {
-        element: "geo", 
+        element: "geo",
         rarity: 5,
         presets: ['阿贝多 | 辰砂之纺锤 | 华馆4 | 防岩暴',
             '阿贝多 | 辰砂之纺锤 | 磐岩4 | 防岩暴',
@@ -38,7 +38,7 @@ export default <ICharacterData>{
         },
     },
     Aloy: {
-        element: "cryo", 
+        element: "cryo",
         rarity: 5,
         presets: ['埃洛伊 | 西风猎弓 | 2冰风2角斗 | 攻冰暴',],
         build: {
@@ -56,7 +56,7 @@ export default <ICharacterData>{
         },
     },
     Amber: {
-        element: "pyro", 
+        element: "pyro",
         rarity: 4,
         presets: ['安柏 | 终末嗟叹之诗 | 宗室4 | 攻火暴',
             '安柏 | 阿莫斯之弓 | 乐团4 | 攻火暴',],
@@ -75,7 +75,7 @@ export default <ICharacterData>{
         },
     },
     AratakiItto: {
-        element: "geo", 
+        element: "geo",
         rarity: 5,
         presets: ['荒泷一斗 | 赤角石溃杵 | 华馆4 | 防岩暴',
             '荒泷一斗 | 螭骨剑 | 华馆4 | 防岩暴',
@@ -95,7 +95,7 @@ export default <ICharacterData>{
         },
     },
     Barbara: {
-        element: "hydro", 
+        element: "hydro",
         rarity: 4,
         presets: ['芭芭拉 | 不灭月华 | 少女4 | 生生治',
             '芭芭拉 | 讨龙英杰谭 | 少女4 | 生生治',
@@ -115,7 +115,7 @@ export default <ICharacterData>{
         },
     },
     Beidou: {
-        element: "electro", 
+        element: "electro",
         rarity: 4,
         presets: ['北斗 | 狼的末路 | 旗印4 | 充雷暴',
             '北斗 | 螭骨剑 | 旗印4 | 充攻暴',],
@@ -134,7 +134,7 @@ export default <ICharacterData>{
         },
     },
     Bennett: {
-        element: "pyro", 
+        element: "pyro",
         rarity: 4,
         presets: ['班尼特 | 风鹰剑 | 宗室4 | 充火暴',
             '班尼特 | 天空之刃 | 宗室4 | 充火暴',
@@ -155,7 +155,7 @@ export default <ICharacterData>{
         },
     },
     Chongyun: {
-        element: "cryo", 
+        element: "cryo",
         rarity: 4,
         presets: ['重云 | 狼的末路 | 2冰风2宗室 | 攻冰暴',
             '重云 | 螭骨剑 | 2冰风2宗室 | 攻冰暴',],
@@ -174,7 +174,7 @@ export default <ICharacterData>{
         },
     },
     Diluc: {
-        element: "pyro", 
+        element: "pyro",
         rarity: 5,
         presets: ['迪卢克 | 狼的末路 | 魔女4 | 精火暴',
             '迪卢克 | 螭骨剑 | 魔女4 | 攻火暴',],
@@ -193,7 +193,7 @@ export default <ICharacterData>{
         },
     },
     Diona: {
-        element: "cryo", 
+        element: "cryo",
         rarity: 4,
         presets: ['迪奥娜 | 祭礼弓 | 2少女2千岩 | 生生生',],
         build: {
@@ -211,7 +211,7 @@ export default <ICharacterData>{
         },
     },
     Eula: {
-        element: "cryo", 
+        element: "cryo",
         rarity: 5,
         presets: ['优菈 | 松籁响起之时 | 苍白4 | 攻物暴',
             '优菈 | 狼的末路 | 苍白4 | 攻物暴',
@@ -231,7 +231,7 @@ export default <ICharacterData>{
         },
     },
     Fischl: {
-        element: "electro", 
+        element: "electro",
         rarity: 4,
         presets: ['菲谢尔 | 绝弦 | 2如雷2角斗 | 攻雷暴',
             '菲谢尔 | 天空之翼 | 2如雷2角斗 | 攻雷暴',],
@@ -250,7 +250,7 @@ export default <ICharacterData>{
         },
     },
     Ganyu: {
-        element: "cryo", 
+        element: "cryo",
         rarity: 5,
         presets: ['甘雨 | 阿莫斯之弓 | 冰风4 | 攻冰暴',
             '甘雨 | 破魔之弓 | 冰风4 | 攻冰暴',
@@ -273,7 +273,7 @@ export default <ICharacterData>{
         },
     },
     Gorou: {
-        element: "geo", 
+        element: "geo",
         rarity: 4,
         presets: ['五郎 | 西风猎弓 | 流放4 | 充岩暴',],
         build: {
@@ -291,7 +291,7 @@ export default <ICharacterData>{
         },
     },
     HuTao: {
-        element: "pyro", 
+        element: "pyro",
         rarity: 5,
         presets: ['胡桃 | 护摩之杖 | 追忆4 | 生火暴',
             '胡桃 | 护摩之杖 | 追忆4 | 精火暴',
@@ -316,7 +316,7 @@ export default <ICharacterData>{
         },
     },
     Jean: {
-        element: "anemo", 
+        element: "anemo",
         rarity: 5,
         presets: ['琴 | 腐殖之剑 | 2翠绿2角斗 | 攻攻治',
             '琴 | 西风剑 | 2翠绿2角斗 | 攻攻治',
@@ -336,7 +336,7 @@ export default <ICharacterData>{
         },
     },
     KaedeharaKazuha: {
-        element: "anemo", 
+        element: "anemo",
         rarity: 5,
         presets: ['枫原万叶 | 苍古自由之誓 | 翠绿4 | 精精精',
             '枫原万叶 | 铁蜂刺 | 翠绿4 | 精精精',],
@@ -355,7 +355,7 @@ export default <ICharacterData>{
         },
     },
     Kaeya: {
-        element: "cryo", 
+        element: "cryo",
         rarity: 4,
         presets: ['凯亚 | 西风剑 | 旗印4 | 攻冰暴',
             '凯亚 | 磐岩结绿 | 旗印4 | 充冰暴',],
@@ -374,7 +374,7 @@ export default <ICharacterData>{
         },
     },
     KamisatoAyaka: {
-        element: "cryo", 
+        element: "cryo",
         rarity: 5,
         presets: ['神里绫华 | 雾切之回光 | 冰风4 | 攻冰暴',
             '神里绫华 | 天目影打刀 | 冰风4 | 攻冰暴',],
@@ -393,14 +393,16 @@ export default <ICharacterData>{
         },
     },
     KamisatoAyato: {
-        element: "hydro", 
+        element: "hydro",
         rarity: 5,
-        presets: ['神里绫人 | 波乱月白经津 | 回响4 | 攻水暴',
+        presets: ['神里绫人 | 波乱月白经津 | 余响4 | 攻水暴',
             '神里绫人 | 磐岩结绿 | 沉沦4 | 攻水暴',
-            '神里绫人 | 黑剑 | 回响4 | 攻水暴',],
+            '神里绫人 | 黑剑 | 余响4 | 攻水暴',],
         build: {
-            set: {2:[],
-                4:["EchoesOfAnOffering", "GladiatorsFinale", "HeartOfDepth"]},
+            set: {
+                2: [],
+                4: ["EchoesOfAnOffering", "GladiatorsFinale", "HeartOfDepth"]
+            },
             main: {
                 flower: ['hp'],
                 plume: ['atk'],
@@ -411,7 +413,7 @@ export default <ICharacterData>{
         },
     },
     Keqing: {
-        element: "electro", 
+        element: "electro",
         rarity: 5,
         presets: ['刻晴 | 雾切之回光 | 2如雷2角斗 | 攻雷暴',
             '刻晴 | 磐岩结绿 | 2如雷2角斗 | 攻雷暴',
@@ -431,7 +433,7 @@ export default <ICharacterData>{
         },
     },
     Klee: {
-        element: "pyro", 
+        element: "pyro",
         rarity: 5,
         presets: ['可莉 | 四风原典 | 魔女4 | 攻火暴',
             '可莉 | 流浪乐章 | 魔女4 | 攻火暴',],
@@ -451,7 +453,7 @@ export default <ICharacterData>{
     },
     KujouSara: {
         element: "electro",
-        rarity: 4, 
+        rarity: 4,
         presets: ['九条裟罗 | 天空之翼 | 旗印4 | 充雷暴',
             '九条裟罗 | 祭礼弓 | 旗印4 | 充雷暴',],
         build: {
@@ -468,26 +470,28 @@ export default <ICharacterData>{
             },
         },
     },
-    "KukiShinobu": {
-        "element": "electro",
-        "rarity": 4,
-        "presets": [''],
-        "build": {
-            "set": {
-                2:["MaidenBeloved"],
-                4:["TenacityOfTheMillelith", "OceanHuedClam"],
+    KukiShinobu: {
+        element: "electro",
+        rarity: 4,
+        presets: ['久岐忍 | 苍古自由之誓 | 千岩4 | 生生治',
+            '久岐忍 | 铁蜂刺 | 千岩4 | 生生治',
+            '久岐忍 | 西风剑 | 千岩4 | 生生治',],
+        build: {
+            set: {
+                2: ["MaidenBeloved"],
+                4: ["TenacityOfTheMillelith", "OceanHuedClam"],
             },
-            "main": {
-                "flower": ["hp"],
-                "plume": ["atk"],
-                "sands": ["em", "hpp"],
-                "goblet": ["em", "hpp"],
-                "circlet": ["hb", "em"]
+            main: {
+                flower: ["hp"],
+                plume: ["atk"],
+                sands: ["em", "hpp"],
+                goblet: ["em", "hpp"],
+                circlet: ["hb", "em"]
             },
         },
     },
     Lisa: {
-        element: "electro", 
+        element: "electro",
         rarity: 4,
         presets: ['丽莎 | 四风原典 | 2雷2角斗 | 攻雷暴',
             '丽莎 | 流浪乐章 | 宗室4 | 攻雷暴',],
@@ -506,7 +510,7 @@ export default <ICharacterData>{
         },
     },
     Mona: {
-        element: "hydro", 
+        element: "hydro",
         rarity: 5,
         presets: ['莫娜 | 流浪乐章 | 旗印4 | 攻水暴',
             '莫娜 | 讨龙英杰谭 | 宗室4 | 充水暴',
@@ -526,7 +530,7 @@ export default <ICharacterData>{
         },
     },
     Ningguang: {
-        element: "geo", 
+        element: "geo",
         rarity: 4,
         presets: ['凝光 | 四风原典 | 2磐岩2角斗 | 攻岩暴',
             '凝光 | 尘世之锁 | 2磐岩2角斗 | 攻岩暴',
@@ -546,7 +550,7 @@ export default <ICharacterData>{
         },
     },
     Noelle: {
-        element: "geo", 
+        element: "geo",
         rarity: 4,
         presets: ['诺艾尔 | 赤角石溃杵 | 华馆4 | 防岩暴',
             '诺艾尔 | 螭骨剑 | 华馆4 | 防岩暴',
@@ -566,7 +570,7 @@ export default <ICharacterData>{
         },
     },
     Qiqi: {
-        element: "cryo", 
+        element: "cryo",
         rarity: 5,
         presets: ['七七 | 祭礼剑 | 海染4 | 攻攻治',
             '七七 | 风鹰剑 | 海染4 | 攻攻治',
@@ -586,7 +590,7 @@ export default <ICharacterData>{
         },
     },
     RaidenShogun: {
-        element: "electro", 
+        element: "electro",
         rarity: 5,
         presets: ['雷电将军 | 薙草之稻光 | 旗印4 | 充雷暴',
             '雷电将军 | 渔获 | 旗印4 | 充攻暴',],
@@ -605,7 +609,7 @@ export default <ICharacterData>{
         },
     },
     Razor: {
-        element: "electro", 
+        element: "electro",
         rarity: 4,
         presets: ['雷泽 | 螭骨剑 | 角斗4 | 攻物暴',
             '雷泽 | 狼的末路 | 角斗4 | 攻物暴',],
@@ -625,7 +629,7 @@ export default <ICharacterData>{
     },
     Rosaria: {
         element: "cryo",
-        rarity: 4, 
+        rarity: 4,
         presets: ['罗莎莉亚 | 西风长枪 | 宗室4 | 攻冰暴',],
         build: {
             set: {
@@ -643,7 +647,7 @@ export default <ICharacterData>{
     },
     SangonomiyaKokomi: {
         element: "hydro",
-        rarity: 5, 
+        rarity: 5,
         presets: ['珊瑚宫心海 | 不灭月华 | 海染4 | 生水治',
             '珊瑚宫心海 | 试做金珀 | 海染4 | 生水治',
             '珊瑚宫心海 | 讨龙英杰谭 | 千岩4 | 生生治',
@@ -663,7 +667,7 @@ export default <ICharacterData>{
         },
     },
     Sayu: {
-        element: "anemo", 
+        element: "anemo",
         rarity: 4,
         presets: ['早柚 | 狼的末路 | 翠绿4 | 精攻治',
             '早柚 | 西风大剑 | 翠绿4 | 精攻治',],
@@ -682,7 +686,7 @@ export default <ICharacterData>{
         },
     },
     Shenhe: {
-        element: "cryo", 
+        element: "cryo",
         rarity: 5,
         presets: ['申鹤 | 息灾 | 2角斗2追忆 | 攻攻攻',
             '申鹤 | 薙草之稻光 | 2角斗2追忆 | 攻攻攻',
@@ -702,8 +706,28 @@ export default <ICharacterData>{
             },
         },
     },
+    ShikanoinHeizou: {
+        element: "anemo",
+        rarity: 4,
+        presets: ['鹿野院平藏 | 天空之卷 | 翠绿4 | 攻风暴',
+            '鹿野院平藏 | 四风原典 | 翠绿4 | 攻风暴',
+            '鹿野院平藏 | 匣里日月 | 翠绿4 | 攻风暴',],
+        build: {
+            set: {
+                2: ["GladiatorsFinale", "ShimenawasReminiscence"],
+                4: ["ViridescentVenerer", "EchoesOfAnOffering", "WanderersTroupe"]
+            },
+            main: {
+                flower: ["hp"],
+                plume: ["atk"],
+                sands: ["atkp"],
+                goblet: ["anemoDB"],
+                circlet: ["cr", "cd"]
+            },
+        }
+    },
     Sucrose: {
-        element: "anemo", 
+        element: "anemo",
         rarity: 4,
         presets: ['砂糖 | 祭礼残章 | 翠绿4 | 充精精',
             '砂糖 | 试做金珀 | 翠绿4 | 充精精',
@@ -723,11 +747,13 @@ export default <ICharacterData>{
         },
     },
     Tartaglia: {
-        element: "hydro", 
+        element: "hydro",
         rarity: 5,
-        presets: ['达达利亚 | 冬极百星 | 2沉沦2角斗 | 攻水暴',
+        presets: ['达达利亚 | 冬极百星 | 2沉沦2乐团 | 攻水暴',
+            '达达利亚 | 冬极百星 | 2沉沦2角斗 | 攻水暴',
             '达达利亚 | 天空之翼 | 2沉沦2角斗 | 攻水暴',
-            '达达利亚 | 弓藏 | 2沉沦2角斗 | 攻水暴',],
+            '达达利亚 | 弓藏 | 2沉沦2角斗 | 攻水暴',
+            '达达利亚 | 苍翠猎弓 | 2沉沦2角斗 | 攻水暴',],
         build: {
             set: {
                 2: ['ShimenawasReminiscence', 'NoblesseOblige', 'GladiatorsFinale', 'WanderersTroupe'],
@@ -743,7 +769,7 @@ export default <ICharacterData>{
         },
     },
     Thoma: {
-        element: "pyro", 
+        element: "pyro",
         rarity: 4,
         presets: ['托马 | 西风长枪 | 2旗印2千岩 | 充生暴',
             '托马 | 黑缨枪 | 2旗印2千岩 | 充生生',],
@@ -762,10 +788,10 @@ export default <ICharacterData>{
         },
     },
     Traveler: {
-        element: "", 
+        element: "",
         rarity: 5,
         presets: ['默认权重'],
-        build:{
+        build: {
             set: {
                 2: [''],
                 4: ['']
@@ -780,7 +806,7 @@ export default <ICharacterData>{
         }
     },
     TravelerAnemo: {
-        element: "anemo", 
+        element: "anemo",
         rarity: 5,
         presets: ['空/荧（风） | 西风剑 | 翠绿4 | 精精精',],
         build: {
@@ -798,7 +824,7 @@ export default <ICharacterData>{
         },
     },
     TravelerGeo: {
-        element: "geo", 
+        element: "geo",
         rarity: 5,
         presets: ['空/荧（岩） | 雾切之回光 | 2磐岩2角斗 | 攻岩暴',
             '空/荧（岩） | 磐岩结绿 | 2磐岩2角斗 | 攻岩暴',
@@ -818,7 +844,7 @@ export default <ICharacterData>{
         },
     },
     TravelerElectro: {
-        element: "electro", 
+        element: "electro",
         rarity: 5,
         presets: ['空/荧（雷） | 西风剑 | 旗印4 | 充雷暴',],
         build: {
@@ -836,7 +862,7 @@ export default <ICharacterData>{
         }
     },
     Venti: {
-        element: "anemo", 
+        element: "anemo",
         rarity: 5,
         presets: ['温迪 | 终末嗟叹之诗 | 翠绿4 | 精精精',
             '温迪 | 西风猎弓 | 翠绿4 | 精精精',
@@ -856,9 +882,11 @@ export default <ICharacterData>{
         },
     },
     Xiangling: {
-        element: "pyro", 
+        element: "pyro",
         rarity: 4,
-        presets: ['香菱 | 天空之脊 | 旗印4 | 充火暴',
+        presets: ['香菱 | 薙草之稻光 | 旗印4 | 充火暴',
+            '香菱 | 薙草之稻光 | 旗印4 | 精火暴',
+            '香菱 | 天空之脊 | 旗印4 | 充火暴',
             '香菱 | 天空之脊 | 旗印4 | 精火暴',
             '香菱 | 渔获 | 旗印4 | 充火暴',
             '香菱 | 渔获 | 旗印4 | 精火暴',],
@@ -877,11 +905,11 @@ export default <ICharacterData>{
         },
     },
     Xiao: {
-        element: "anemo", 
+        element: "anemo",
         rarity: 5,
         presets: ['魈 | 和璞鸢 | 辰砂4 | 攻风暴',
             '魈 | 护摩之杖 | 辰砂4 | 攻风暴',
-            '魈 | 决斗之枪 | 2翠绿2角斗 | 攻风暴',],
+            '魈 | 决斗之枪 | 辰砂4 | 攻风暴',],
         build: {
             set: {
                 2: ['ViridescentVenerer', 'GladiatorsFinale', 'ShimenawasReminiscence'],
@@ -897,7 +925,7 @@ export default <ICharacterData>{
         },
     },
     Xingqiu: {
-        element: "hydro", 
+        element: "hydro",
         rarity: 4,
         presets: ['行秋 | 祭礼剑 | 2沉沦2宗室 | 攻水暴',
             '行秋 | 磐岩结绿 | 旗印4 | 充水暴',],
@@ -916,7 +944,7 @@ export default <ICharacterData>{
         },
     },
     Xinyan: {
-        element: "pyro", 
+        element: "pyro",
         rarity: 4,
         presets: ['辛焱 | 无工之剑 | 2苍白2骑士 | 攻物暴',
             '辛焱 | 白影剑 | 2苍白2骑士 | 攻物暴',
@@ -937,16 +965,16 @@ export default <ICharacterData>{
         },
     },
     YaeMiko: {
-        element: "electro", 
+        element: "electro",
         rarity: 5,
-        presets: ['八重神子 | 神乐之真意 | 平雷4 | 攻雷暴',
-            '八重神子 | 天空之卷 | 平雷4 | 攻雷暴',
-            '八重神子 | 匣里日月 | 平雷4 | 攻雷暴',
-            '八重神子 | 流浪乐章 | 平雷4 | 攻雷暴',],
+        presets: ['八重神子 | 神乐之真意 | 2如雷2角斗 | 攻雷暴',
+            '八重神子 | 天空之卷 | 2如雷2角斗 | 攻雷暴',
+            '八重神子 | 匣里日月 | 2如雷2角斗 | 攻雷暴',
+            '八重神子 | 流浪乐章 | 2如雷2角斗 | 攻雷暴',],
         build: {
             "set": {
-                2:["ShimenawasReminiscence", "GladiatorsFinale"],
-                4:["ThunderingFury", "Thundersoother", "TenacityOfTheMillelith"],
+                2: ["ShimenawasReminiscence", "GladiatorsFinale"],
+                4: ["ThunderingFury", "Thundersoother", "TenacityOfTheMillelith"],
             },
             "main": {
                 "flower": ["hp"],
@@ -958,7 +986,7 @@ export default <ICharacterData>{
         },
     },
     Yanfei: {
-        element: "pyro", 
+        element: "pyro",
         rarity: 4,
         presets: ['烟绯 | 四风原典 | 乐团4 | 攻火暴',
             '烟绯 | 流浪乐章 | 乐团4 | 攻火暴',],
@@ -977,25 +1005,28 @@ export default <ICharacterData>{
         },
     },
     Yelan: {
-        element: "hydro", 
+        element: "hydro",
         rarity: 5,
-        presets: [''],
-        build:{
+        presets: ['夜兰 | 若水 | 绝缘4 | 充水暴',
+            '夜兰 | 若水 | 绝缘4 | 生水暴',
+            '夜兰 | 终末嗟叹之诗 | 绝缘4 | 生水暴',
+            '夜兰 | 西风猎弓 | 绝缘4 | 生水暴',],
+        build: {
             set: {
-                2:["HeartOfDepth", "NoblesseOblige", "TenacityOfTheMillelith"],
-                4:["EmblemOfSeveredFate"]
+                2: ["HeartOfDepth", "NoblesseOblige", "TenacityOfTheMillelith"],
+                4: ["EmblemOfSeveredFate"]
             },
             main: {
                 flower: ['hp'],
                 plume: ['atk'],
-                sands: ['hpp','er'],
+                sands: ['hpp', 'er'],
                 goblet: ['hydroDB'],
                 circlet: ['cr', 'cd']
             },
         },
     },
     Yoimiya: {
-        element: "pyro", 
+        element: "pyro",
         rarity: 5,
         presets: ['宵宫 | 飞雷之弦振 | 追忆4 | 攻火暴',
             '宵宫 | 弓藏 | 追忆4 | 攻火暴',],
@@ -1014,7 +1045,7 @@ export default <ICharacterData>{
         },
     },
     YunJin: {
-        element: "geo", 
+        element: "geo",
         rarity: 4,
         presets: ['云堇 | 薙草之稻光 | 华馆4 | 防防防',
             '云堇 | 天空之脊 | 华馆4 | 防防防',
@@ -1031,10 +1062,10 @@ export default <ICharacterData>{
                 goblet: ['defp'],
                 circlet: ['defp']
             },
-    },
+        },
     },
     Zhongli: {
-        element: "geo", 
+        element: "geo",
         rarity: 5,
         presets: ['钟离 | 黑缨枪 | 千岩4 | 生生生',
             '钟离 | 护摩之杖 | 千岩4 | 生生生',

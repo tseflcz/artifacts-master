@@ -1,6 +1,6 @@
 import { InjectionKey } from 'vue'
 import { createStore, useStore as baseUseStore, Store } from 'vuex'
-import { ArtifactScoreWeight, Artifact } from '../ys/artifact'
+import { ArtifactScoreWeight, Artifact } from '@/ys/artifact'
 import { IState } from './types'
 import CharacterData from "@/ys/data/character"
 
@@ -46,6 +46,10 @@ export const store = createStore<IState>({
                     },
                 },
             },
+            artMode: {
+                showAffnum: false,
+                useMaxAsUnit: true,
+            },
             canExport: false,
             nReload: 0,// for UI refreshing
             loading: false,
@@ -67,7 +71,7 @@ export const store = createStore<IState>({
         },
         usePreset(state, payload) {
             state.weight = payload.weight
-            state.sort.by = 'presettot'
+            state.sort.by = 'tot'
             state.usePreset = payload.charKey
             if (payload.charKey in CharacterData) {
                 let b = CharacterData[payload.charKey].build
@@ -85,6 +89,13 @@ export const store = createStore<IState>({
         filterBatchIndex(state, payload) {
             state.useFilterBatch = payload
             store.dispatch('updFilteredArtifacts')
+        },
+        setArtMode(state, payload) {
+            for (let key in payload) {
+                if (key in state.artMode) {
+                    state.artMode[key] = payload[key]
+                }
+            }
         }
     },
     actions: {
@@ -151,12 +162,12 @@ export const store = createStore<IState>({
                 // update affix numbers
                 for (let a of ret) {
                     a.updateAffnum(weight)
-                    if (state.sort.by == 'sigle') {
+                    if(state.usePreset){
                         a.updatePresetTot(state.sort.build)
-                    } else if(state.sort.by == 'prop') {
+                        a.updatePresetProp(state.sort.build,state.usePreset,weight)
+                    }
+                    else if(state.sort.by == 'prop') {
                         a.updateProp(state.sort.characters)
-                    }else if (state.sort.by == 'presetprop') {
-                        a.updatePresetProp(state.sort.build,state.sort.characters[0],weight)
                     }
                 }
                 if (state.useFilterBatch != -1) {

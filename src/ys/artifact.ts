@@ -382,10 +382,8 @@ export class Artifact implements IArtifact {
             }
             // get score
             let charweight = []
-            for (let c of CharacterData[charKey].presets) {
-                for (let p of c) {
+            for (let p of CharacterData[charKey].presets) {
                     charweight.push(preset.presets[p])
-                }
             }
             let scorearr = []
             for (let w of charweight){

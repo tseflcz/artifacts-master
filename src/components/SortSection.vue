@@ -23,8 +23,8 @@ const presetOptions = [
     { key: 'index', label: '不排序' },
     { key: 'cur', label: '按当前词条数' },
     { key: 'md', label: '按满级期望词条数' },
-    { key: 'presettot', label: '按圣遗物评分(预设)' },
-    { key: 'presetprop', label: '按角色适配概率（预设）' },
+    { key: 'tot', label: '按圣遗物评分(预设)' },
+    { key: 'prop', label: '按角色适配概率（预设）' },
 ]
 const sortBy = computed<string>({
     get() { return store.state.sort.by },
@@ -102,21 +102,21 @@ const disablePreset = () => {
         <div class="content">
             <drop-select class="row" v-if="!store.state.usePreset" v-model="sortBy" :options="sortByOptions" title="排序方式"/>
             <drop-select class="row" v-else v-model="sortBy" :options="presetOptions" title="排序方式"/>
-            <div v-if="sortBy == 'prop'">
-                <p class="row small">圣遗物a对角色c的适配概率定义为，刷100个满级圣遗物，其中和a同部位同主词条的圣遗物得分均不超过a的满级期望得分的概率。如果a对c是散件则是200个。</p>
-                <p class="row small">根据<a href="https://ngabbs.com/read.php?tid=27859119"
-                        target="_blank">推荐配装</a>为每个角色计算适配概率（自定义的词条权重不会生效），总的适配概率为所有选中角色适配概率的最大值。
-                </p>
-                <p class="row small">鼠标悬停在圣遗物上可以查看详细的计算结果。</p>
-                <char-select class="row" title="角色" :options="charOptions" v-model="char" />
-            </div>
-            <div v-else-if="['presetprop', 'presettot'].includes(sortBy)">
+            <div v-if="store.state.usePreset!=''">
                 <p class="row small">圣遗物a对角色c的适配概率定义为，刷100个满级圣遗物，其中和a同部位同主词条的圣遗物得分均不超过a的满级期望得分的概率。如果a对c是散件则是200个。</p>
                 <drop-select-plus class="row" v-model="sets4" :options="setsOptions" title="四件套套装偏好" :use-icon="true" />
                 <drop-select-plus class="row" v-model="sets2" :options="setsOptions" title="二件套套装偏好" :use-icon="true" />
                 <drop-select-plus class="row" v-model="sands" :options="sandsOptions" title="时之沙主词条偏好" />
                 <drop-select-plus class="row" v-model="goblet" :options="gobletOptions" title="空之杯主词条偏好" />
                 <drop-select-plus class="row" v-model="circlet" :options="circletOptions" title="理之冠主词条偏好" />
+            </div>
+            <div v-else-if="sortBy == 'prop'">
+                <p class="row small">圣遗物a对角色c的适配概率定义为，刷100个满级圣遗物，其中和a同部位同主词条的圣遗物得分均不超过a的满级期望得分的概率。如果a对c是散件则是200个。</p>
+                <p class="row small">根据<a href="https://ngabbs.com/read.php?tid=27859119"
+                        target="_blank">推荐配装</a>为每个角色计算适配概率（自定义的词条权重不会生效），总的适配概率为所有选中角色适配概率的最大值。
+                </p>
+                <p class="row small">鼠标悬停在圣遗物上可以查看详细的计算结果。</p>
+                <char-select class="row" title="角色" :options="charOptions" v-model="char" />
             </div>
             <div v-else-if="sortBy == 'index'">
             </div>

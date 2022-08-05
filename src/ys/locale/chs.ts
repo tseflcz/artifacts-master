@@ -378,6 +378,7 @@ export default <ITranslation>{
         SangonomiyaKokomi: "珊瑚宫心海",
         Sayu: "早柚",
         Shenhe: "申鹤",
+        ShikanoinHeizou: "鹿野院平藏",
         Sucrose: "砂糖",
         Tartaglia: "达达利亚",
         Thoma: "托马",
