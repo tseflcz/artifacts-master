@@ -26,7 +26,9 @@ export default {
             HuskOfOpulentDreams: 'huskOfOpulentDreams',
             OceanHuedClam: 'oceanHuedClam',
             VermillionHereafter: 'VermillionHereafter',
-            EchoesOfAnOffering: 'EchoesOfAnOffering'
+            EchoesOfAnOffering: 'EchoesOfAnOffering',
+            DeepwoodMemories: "DeepwoodMemories",
+            GildedDreams: "GildedDreams",
         },
         affix: <{ [key: string]: string }>{
             hp: 'lifeStatic',
@@ -47,6 +49,7 @@ export default {
             cryoDB: 'iceBonus',
             geoDB: 'rockBonus',
             physicalDB: 'physicalBonus',
+            dendroDB: 'dendroBonus'
         },
         slot: <{ [key: string]: string }>{
             flower: 'flower',
@@ -67,9 +70,11 @@ export default {
     loads(json: string) {
         let mona = JSON.parse(json)
         // assert(mona.version == '1', 'Unsupported version')
+        assert(mona instanceof Object)
         let ret = []
         const mtypes = ['flower', 'feather', 'sand', 'cup', 'head']
         for (let mtype of mtypes) {
+            assert(mtype in mona && mona[mtype] instanceof Array)
             for (let martifact of mona[mtype]) {
                 if (martifact['star'] !== 5) continue
                 let set = whatis(martifact['setName'], this.keymap.set)

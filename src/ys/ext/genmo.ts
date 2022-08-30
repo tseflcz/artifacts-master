@@ -1,6 +1,5 @@
-import { assert } from "@vue/compiler-core"
 import { Affix, Artifact } from "../artifact"
-import { whatis } from "../utils"
+import { whatis, assert } from "../utils"
 
 export default {
     keymap: {
@@ -26,7 +25,9 @@ export default {
             HuskOfOpulentDreams: 'husk_of_opulent_dreams',
             OceanHuedClam: 'divine_chorus',
             VermillionHereafter: 'vermillion_hereafter',
-            EchoesOfAnOffering: 'echoes_of_an_offering'
+            EchoesOfAnOffering: 'echoes_of_an_offering',
+            DeepwoodMemories: "deepwood_memories",
+            GildedDreams: "gilded_dreams",
         },
         affix: <{ [key: string]: string }>{
             hp: 'flatHP',
@@ -47,6 +48,7 @@ export default {
             cryoDB: 'cryoDamage',
             geoDB: 'geoDamage',
             physicalDB: 'physicalDamage',
+            dendroDB: 'dendroDamage'
         },
         slot: <{ [key: string]: string }>{
             flower: 'flower',

@@ -28,7 +28,7 @@ const pieceName = computed(() => {
 })
 const pieceImgSrc = computed(() => {
      if (props.artifact.set in chs.set) {
-        return `./assets/artifacts/${props.artifact.set}/${props.artifact.slot}.png`;
+        return `./assets/artifacts/${props.artifact.set}/${props.artifact.slot}.webp`;
     } else {
         return '';
     }
@@ -115,8 +115,8 @@ const affnum = computed(() => {
 });
 const lockImgSrc = computed(() => {
     return props.artifact.lock
-        ? "./assets/game_icons/lock.png"
-        : "./assets/game_icons/unlock.png";
+        ? "./assets/game_icons/lock.webp"
+        : "./assets/game_icons/unlock.webp";
 });
 const artifactCardClass = computed(() => ({
     'artifact-card': true,
@@ -126,10 +126,10 @@ const artifactCardClass = computed(() => ({
 const select = (evt: MouseEvent) => {
     emit('flipSelect', evt.shiftKey);
 };
-const starImgSrc = './assets/stars.png';
+const starImgSrc = './assets/stars.webp';
 const charSrc = computed<string>(() => {
     if (props.artifact.location in chs.character) {
-        return `./assets/char_sides/${props.artifact.location}.png`;
+        return `./assets/char_sides/${props.artifact.location}.webp`;
     } else {
         return '';
     }
@@ -156,7 +156,9 @@ const charScore = computed<string>(() => {
                 <img :src="starImgSrc" />
             </div>
             <div class="picture" v-show='pieceImgSrc'>
-                <img :src="pieceImgSrc" />
+                <div class="piece-img-wrapper">
+                    <img :src="pieceImgSrc" />
+                </div>
             </div> 
         </div>
         <div class="body">
@@ -259,6 +261,18 @@ const charScore = computed<string>(() => {
             width:100px; 
             height:100px;
         } 
+        .piece-img-wrapper {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
     }
     .body {
         display: flex;
@@ -382,11 +396,11 @@ const charScore = computed<string>(() => {
         display: none;
         transition: background-color 100ms ease;
     }
-    &.selected > .select-box {
+    &.selected>.select-box {
         background-color: $primary-color;
     }
-    &:hover > .select-box,
-    &.select-mode > .select-box {
+    &:hover>.select-box,
+    &.select-mode>.select-box {
         display: block;
     }
     .edit-box {
