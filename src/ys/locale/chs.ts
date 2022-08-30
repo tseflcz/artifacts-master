@@ -421,6 +421,7 @@ export default <ITranslation>{
         TravelerAnemo: "风主",
         TravelerGeo: "岩主",
         TravelerElectro: "雷主",
+        TravelerDendro: "草主",
         Venti: "温迪",
         Xiangling: "香菱",
         Xiao: "魈",

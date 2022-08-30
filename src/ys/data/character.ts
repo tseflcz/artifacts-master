@@ -173,6 +173,24 @@ export default <ICharacterData>{
             },
         },
     },
+    Collei:{
+        element: "dendro",
+        rarity: 4,
+        presets: [],
+        build: {
+            set: {
+                2: [''],
+                4: ['DeepwoodMemories', 'EmblemOfSeveredFate', 'GildedDreams', 'NoblesseOblige']
+            },
+            main: {
+                flower: ['hp'],
+                plume: ['atk'],
+                sands: ['atkp','er'],
+                goblet: ['dendroDB'],
+                circlet: ['cr', 'cd']
+            },
+        },
+    },
     Diluc: {
         element: "pyro",
         rarity: 5,
@@ -787,6 +805,24 @@ export default <ICharacterData>{
             },
         },
     },
+    Tighnari:{
+        element: "dendro",
+        rarity: 5,
+        presets: [],
+        build: {
+            set: {
+                2: [''],
+                4: ['DeepwoodMemories', 'WanderersTroupe', 'GildedDreams']
+            },
+            main: {
+                flower: ['hp'],
+                plume: ['atk'],
+                sands: ['em'],
+                goblet: ['dendroDB'],
+                circlet: ['cr', 'cd']
+            },
+        }
+    },
     Traveler: {
         element: "",
         rarity: 5,
@@ -858,6 +894,24 @@ export default <ICharacterData>{
                 sands: ['er'],
                 goblet: ['atkp', 'em'],
                 circlet: ['cr', 'cd', 'em']
+            },
+        }
+    },
+    TravelerDendro:{
+        element: "dendro",
+        rarity: 5,
+        presets: [],
+        build: {
+            set: {
+                2: ['WanderersTroupe', 'GildedDreams'],
+                4: ['DeepwoodMemories', 'EmblemOfSeveredFate', 'NoblesseOblige']
+            },
+            main: {
+                flower: ['hp'],
+                plume: ['atk'],
+                sands: ['em'],
+                goblet: ['dendroDB'],
+                circlet: ['cr', 'cd']
             },
         }
     },
