@@ -77,11 +77,11 @@ export default <IAritfactData>{
         'flower': { 'hp': 1 },
         'plume': { 'atk': 1 },
         'sands': {
-            'hpp': 8 / 30,
-            'atkp': 8 / 30,
-            'defp': 8 / 30,
-            'em': 3 / 30,
-            'er': 3 / 30
+            'hpp': 1334 / 5000,
+            'atkp': 1333 / 5000,
+            'defp': 1333 / 5000,
+            'em': 500 / 5000,
+            'er': 500 / 5000
         },
         'goblet': {
             'hpp': 767 / 4000,
@@ -95,7 +95,7 @@ export default <IAritfactData>{
             'geoDB': 200 / 4000,
             'physicalDB': 200 / 4000,
             'dendroDB': 200 / 4000,
-            'em': 100 / 4000,
+            'em': 100 / 4000
         },
         'circlet': {
             'hpp': 11 / 50,
