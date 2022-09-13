@@ -97,6 +97,29 @@ export default <IAritfactData>{
             'dendroDB': 200 / 4000,
             'em': 100 / 4000
         },
+        /*
+        'sands': {
+            'hpp': 8 / 30,
+            'atkp': 8 / 30,
+            'defp': 8 / 30,
+            'em': 3 / 30,
+            'er': 3 / 30
+        },
+        'goblet': {
+            'hpp': 23 / 120,
+            'atkp': 23 / 120,
+            'defp': 23 / 120,
+            'pyroDB': 6 / 120,
+            'hydroDB': 6 / 120,
+            'electroDB': 6 / 120,
+            'anemoDB': 6 / 120,
+            'cryoDB': 6 / 120,
+            'geoDB': 6 / 120,
+            'physicalDB': 6 / 120,
+            'dendroDB': 6 / 120,
+            'em': 3 / 120
+        },
+        */
         'circlet': {
             'hpp': 11 / 50,
             'atkp': 11 / 50,
