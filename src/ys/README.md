@@ -141,7 +141,7 @@ Distribution of minor affixes is:
 | Crit Rate%        | 3           | 3.89      |
 | Crit DMG%         | 3           | 7.77      |
 
-See more on the [distribution of affixes](https://bbs.nga.cn/read.php?tid=25954661&fav=aebe13b2).
+See more on the [distribution of affixes](https://bbs.nga.cn/read.php?tid=33220261).
 
 ## Artifact potential
 
