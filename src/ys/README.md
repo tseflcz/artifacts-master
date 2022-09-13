@@ -88,32 +88,32 @@ Distribution of main affixes depends on the type of artifacts:
 
 | Artifact Type      | Main affix        | Pick weight | Max value |
 | ------------------ | ----------------- | ----------- | --------- |
-| Flower of Life     | HP                | 100         | 4780      |
-| Plume of Death     | ATK               | 100         | 311       |
-| Sands of Eon       | HP%               | 1334        | 46.6      |
-| Sands of Eon       | ATK%              | 1333        | 46.6      |
-| Sands of Eon       | DEF%              | 1333        | 58.3      |
-| Sands of Eon       | Elemental Mastery | 500         | 186.5     |
-| Sands of Eon       | Energy Recharge%  | 500         | 51.8      |
-| Goblet of Eonothem | HP%               | 767         | 46.6      |
-| Goblet of Eonothem | ATK%              | 767         | 46.6      |
-| Goblet of Eonothem | DEF%              | 766         | 58.3      |
-| Goblet of Eonothem | Pyro DMG%         | 200         | 46.6      |
-| Goblet of Eonothem | Hydro DMG%        | 200         | 46.6      |
-| Goblet of Eonothem | Electro DMG%      | 200         | 46.6      |
-| Goblet of Eonothem | Anemo DMG%        | 200         | 46.6      |
-| Goblet of Eonothem | Cryo DMG%         | 200         | 46.6      |
-| Goblet of Eonothem | Geo DMG%          | 200         | 46.6      |
-| Goblet of Eonothem | Dendro DMG%       | 200         | 46.6      |
-| Goblet of Eonothem | Physical DMG%     | 200         | 58.3      |
-| Goblet of Eonothem | Elemental Mastery | 100         | 186.5     |
-| Circlet of Logos   | HP%               | 1100        | 46.6      |
-| Circlet of Logos   | ATK%              | 1100        | 46.6      |
-| Circlet of Logos   | DEF%              | 1100        | 58.3      |
-| Circlet of Logos   | Crit Rate%        | 500         | 31.1      |
-| Circlet of Logos   | Crit DMG%         | 500         | 62.2      |
-| Circlet of Logos   | Healing Bonus     | 500         | 35.9      |
-| Circlet of Logos   | Elemental Mastery | 200         | 186.5     |
+| Flower of Life     | HP                | 1           | 4780      |
+| Plume of Death     | ATK               | 1           | 311       |
+| Sands of Eon       | HP%               | 8           | 46.6      |
+| Sands of Eon       | ATK%              | 8           | 46.6      |
+| Sands of Eon       | DEF%              | 8           | 58.3      |
+| Sands of Eon       | Elemental Mastery | 3           | 186.5     |
+| Sands of Eon       | Energy Recharge%  | 3           | 51.8      |
+| Goblet of Eonothem | HP%               | 23          | 46.6      |
+| Goblet of Eonothem | ATK%              | 23          | 46.6      |
+| Goblet of Eonothem | DEF%              | 23          | 58.3      |
+| Goblet of Eonothem | Pyro DMG%         | 6           | 46.6      |
+| Goblet of Eonothem | Hydro DMG%        | 6           | 46.6      |
+| Goblet of Eonothem | Electro DMG%      | 6           | 46.6      |
+| Goblet of Eonothem | Anemo DMG%        | 6           | 46.6      |
+| Goblet of Eonothem | Cryo DMG%         | 6           | 46.6      |
+| Goblet of Eonothem | Geo DMG%          | 6           | 46.6      |
+| Goblet of Eonothem | Dendro DMG%       | 6           | 46.6      |
+| Goblet of Eonothem | Physical DMG%     | 6           | 58.3      |
+| Goblet of Eonothem | Elemental Mastery | 3           | 186.5     |
+| Circlet of Logos   | HP%               | 11          | 46.6      |
+| Circlet of Logos   | ATK%              | 11          | 46.6      |
+| Circlet of Logos   | DEF%              | 11          | 58.3      |
+| Circlet of Logos   | Crit Rate%        | 5           | 31.1      |
+| Circlet of Logos   | Crit DMG%         | 5           | 62.2      |
+| Circlet of Logos   | Healing Bonus     | 5           | 35.9      |
+| Circlet of Logos   | Elemental Mastery | 2           | 186.5     |
 
 Distribution of minor affixes does not depend on the type of artifacts.
 Minor affix cannot be the same as the main affix.
