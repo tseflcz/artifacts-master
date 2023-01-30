@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { Edit } from '@element-plus/icons-vue';
+import { Edit, Histogram } from '@element-plus/icons-vue';
 import { Affix, Artifact } from '@/ys/artifact';
 import chs from '@/ys/locale/chs';
 import ArtifactData from "@/ys/data/artifact";
@@ -15,6 +15,7 @@ const emit = defineEmits<{
     (e: 'flipSelect', shiftKey: boolean): void;
     (e: 'flipLock'): void;
     (e: 'edit'): void;
+    (e: "stats"): void;
 }>()
 const store = useStore();
 const pieceName = computed(() => {
@@ -195,6 +196,11 @@ const charScore = computed<string>(() => {
                 <edit />
             </el-icon>
             <span>编辑</span>
+        </div>
+        <div class="stats" @click="emit('stats')" v-show="!readonly">
+            <el-icon>
+                <Histogram />
+            </el-icon>
         </div>
     </div>
 </template>
@@ -425,6 +431,27 @@ const charScore = computed<string>(() => {
     }
     &:hover .edit-box {
         display: flex;
+    }
+    .stats {
+        display: none;
+        position: absolute;
+        right: 10px;
+        bottom: 30px;
+        padding: 10px;
+        line-height: 0;
+        border-radius: 100px;
+        color: white;
+        box-shadow: 0 0 4px 0 gray;
+        background-color: #2a82e4;
+        cursor: pointer;
+
+        &:hover {
+            filter: brightness(1.1);
+        }
+    }
+
+    &:hover .stats {
+        display: block;
     }
 }
 </style>

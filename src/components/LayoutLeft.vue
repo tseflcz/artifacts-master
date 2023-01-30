@@ -1,17 +1,19 @@
 <script lang="ts" setup>
 import ArtifactCard from './ArtifactCard.vue';
 import ArtifactEditor from './ArtifactEditor.vue';
+import ArtifactStats from "./ArtifactStats.vue"
 import ArtifactCreator from './ArtifactCreator.vue';
 import PartialExport from './PartialExport.vue';
 import AlikeLocker from './AlikeLocker.vue';
 import Grid from 'vue-virtual-scroll-grid'
 import { useStore } from '@/store';
 import { computed, ref, watch } from 'vue';
-import type { ElScrollbar } from 'element-plus'
+// import type { ElScrollbar } from 'element-plus'
 import { View, Sort, CirclePlus, Stopwatch } from '@element-plus/icons-vue';
 import { Artifact } from '@/ys/artifact';
 const store = useStore();
 const stat = computed(() => {
+    // console.log(store.state.useFilterBatch,store.state.filteredArtifacts)
     let nAll = store.state.filteredArtifacts.length;
     let nFull = 0, nLock = 0;
     for (let a of store.state.filteredArtifacts) {
@@ -123,6 +125,13 @@ const edit = (index: number) => {
     editorIndex.value = index;
     showEditor.value = true;
 };
+// stats
+const showStats = ref(false)
+const statsArt = ref<Artifact>()
+const stats = (art: Artifact) => {
+    statsArt.value = art
+    showStats.value = true
+}
 // export
 const showExport = ref(false);
 const artifactsToExport = ref<Artifact[]>([]);
@@ -229,7 +238,8 @@ const targetIndex = ref(-1);
                             :show-affnum="showAffnum" 
                             @flip-select="flipSelect(item.data.index, $event)"
                             @flip-lock="flipLock(item.data.index)" 
-                            @edit="edit(item.data.index)" />
+                            @edit="edit(item.data.index)"
+                            @stats="stats(item)" />
                     </div>
                 </template>
             </Grid>
@@ -252,6 +262,7 @@ const targetIndex = ref(-1);
         </el-scrollbar>
     </div>
     <artifact-editor v-model="showEditor" :index="editorIndex" />
+    <artifact-stats v-model="showStats" :art="statsArt" />
     <artifact-creator v-model="showCreator" />
     <partial-export v-model="showExport" :artifacts="artifactsToExport" />
     <alike-locker v-model="showAlike" :index="targetIndex" />

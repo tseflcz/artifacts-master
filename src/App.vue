@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import LayoutLeft from './components/LayoutLeft.vue';
-import LayoutRight from './components/LayoutRight.vue';
-import { useStore } from './store';
+import LayoutLeft from '@/components/LayoutLeft.vue';
+import LayoutRight from '@/components/LayoutRight.vue';
+import { useStore } from '@/store';
 const store = useStore()
 const loadingSrc = './assets/loading.gif'
 </script>

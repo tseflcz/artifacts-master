@@ -2,7 +2,7 @@ import { assert, SimpleCache } from "./utils"
 import ArtifactData from "./data/artifact"
 import CharacterData, { IBuild } from "./data/character"
 import setweight from "./data/artifact_w"
-import { affnumDistr } from "./gacha/artifact"
+import { getAffnumCDF } from "./gacha/artifact"
 import preset from "./data/character_w"
 
 interface IWeight {
@@ -26,7 +26,7 @@ export class ArtifactScoreWeight implements IWeight {
     set = 0.3
 }
 const AffnumDistrCache = new SimpleCache(({ main, weight }: { main: string, weight: IWeight }) => {
-    return affnumDistr(main, weight)
+    return getAffnumCDF(main, weight)
 })
 
 interface IAffix {
