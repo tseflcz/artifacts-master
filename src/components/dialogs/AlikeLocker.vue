@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import { Artifact } from '@/ys/artifact';
 import { useStore } from '@/store';
-import ArtifactCard from './ArtifactCard.vue';
+import ArtifactCard from '@/components/widgets/ArtifactCard.vue';
 const store = useStore()
 const props = defineProps<{
     modelValue: boolean,

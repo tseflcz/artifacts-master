@@ -1,8 +1,12 @@
 import { InjectionKey } from 'vue'
 import { createStore, useStore as baseUseStore, Store } from 'vuex'
-import { ArtifactScoreWeight, Artifact } from '@/ys/artifact'
-import { IState } from './types'
+import { ArtifactScoreWeight, Artifact, Affix} from '@/ys/artifact'
+import { IState, YasConfig, IWeight } from './types'
 import CharacterData from "@/ys/data/character"
+import { ElMessage } from 'element-plus'
+import good from '@/ys/ext/good'
+import storage from './storage'
+import { assign } from './utils'
 
 const LOADING_DELAY = 250
 export const key: InjectionKey<Store<IState>> = Symbol()
@@ -50,6 +54,14 @@ export const store = createStore<IState>({
                 showAffnum: false,
                 useMaxAsUnit: true,
             },
+            ws: {
+                server: undefined,
+                connected: false,
+            },
+            yas: {
+                version: storage.getYasVersion(),
+                config: storage.getYasConfig(),
+            },
             canExport: false,
             nReload: 0,// for UI refreshing
             loading: false,
@@ -63,11 +75,11 @@ export const store = createStore<IState>({
         useWeightJson(state, payload) {
             state.useWeightJson = payload.use
         },
-        setWeight(state, payload) {
-            state.weight[payload.key] = payload.value
+        setWeight(state, { key, value }: { key: string, value: string }) {
+            (state.weight as any)[key] = value
         },
         setFilter(state, payload) {
-            (state.filter as any)[payload.key] = payload.value
+            assign(state.filter, payload)
         },
         usePreset(state, payload) {
             state.weight = payload.weight
@@ -83,8 +95,8 @@ export const store = createStore<IState>({
                 state.sort.build.main.circlet = [...b.main.circlet]
             }
         },
-        setSort(state, payload) {
-            (state.sort as any)[payload.key] = payload.value
+        setSort(state, { key, value }: { key: string, value: string }) {
+            (state.sort as any)[key] = value
         },
         filterBatchIndex(state, payload) {
             state.useFilterBatch = payload
@@ -96,6 +108,14 @@ export const store = createStore<IState>({
                     state.artMode[key] = payload[key]
                 }
             }
+        },
+        setYasConfig(state, { config }: { config: YasConfig }) {
+            state.yas.config = config
+            storage.setYasConfig(config)
+        },
+        setYasVersion(state, { version }: { version: string }) {
+            state.yas.version = version
+            storage.setYasVersion(version)
         }
     },
     actions: {
@@ -107,9 +127,9 @@ export const store = createStore<IState>({
                 state.nReload++
             }, LOADING_DELAY)
         },
-        setArtifacts({ state, dispatch }, payload) {
-            state.canExport = payload.canExport
-            state.artifacts = payload.artifacts
+        setArtifacts({ state, dispatch }, { canExport, artifacts }: { canExport: boolean, artifacts: Artifact[] }) {
+            state.canExport = canExport
+            state.artifacts = artifacts
             state.nResetFilter++
             dispatch('updFilteredArtifacts')
         },
@@ -249,8 +269,8 @@ export const store = createStore<IState>({
             }
             dispatch('updFilteredArtifacts')
         },
-        delArtifacts({ state, dispatch }, payload) {
-            let s: Set<number> = new Set(payload.indices)
+        delArtifacts({ state, dispatch }, { indices }: { indices: number[] }) {
+            let s: Set<number> = new Set(indices)
             let i = 0
             for (let a of state.artifacts) {
                 if (s.has(a.data.index)) {
@@ -260,28 +280,131 @@ export const store = createStore<IState>({
             }
             dispatch('updFilteredArtifacts') // 也许可以改为部分更新
         },
-        addArtifacts({ state, dispatch }, payload) {
+        addArtifacts({ state, dispatch }, { artifacts }: { artifacts: Artifact[] }) {
             // Array.concat貌似不好用，只能一个个push
-            for (let a of payload.artifacts)
+            for (let a of artifacts)
                 state.artifacts.push(a)
             state.nResetFilter++
             dispatch('updFilteredArtifacts') // 也许可以改为部分更新
         },
-        flipLock({ state }, payload) {
+        flipLock({ state }, { index }: { index: number }) {
             for (let a of state.artifacts) {
-                if (a.data.index == payload.index) {
+                if (a.data.index == index) {
                     a.lock = !a.lock
                     return
                 }
             }
         },
-        setLock({ state }, payload) {
-            let s: Set<number> = new Set(payload.indices)
+        setLock({ state }, { indices, lock }: { indices: number[], lock: boolean }) {
+            let s: Set<number> = new Set(indices)
             for (let a of state.artifacts) {
                 if (s.has(a.data.index)) {
-                    a.lock = payload.lock
+                    a.lock = lock
                 }
             }
+        },
+        setWebSocket({ state, dispatch }, { ws }: { ws?: string }) {
+            if (!ws) {
+                state.ws.server = undefined
+                state.ws.connected = false
+                return
+            }
+            console.log(ws)
+            state.ws.server = new WebSocket(ws)
+            state.ws.server.onopen = () => {
+                state.ws.connected = true
+            }
+            state.ws.server.onclose = () => {
+                state.ws.connected = false
+            }
+            state.ws.server.onerror = (ev) => {
+                ElMessage({
+                    message: String(ev),
+                    type: 'error'
+                })
+            }
+            state.ws.server.onmessage = (ev) => {
+                try {
+                    let pkt = JSON.parse(ev.data)
+                    switch (pkt.cmd) {
+                        case 'ScanRsp':
+                            state.loading = false
+                            if (pkt.data.success == true) {
+                                ElMessage({
+                                    message: '扫描成功',
+                                    type: 'success'
+                                })
+                                dispatch('setArtifacts', { canExport: true, artifacts: good.loads(pkt.data.good_json) })
+                            } else {
+                                ElMessage({
+                                    message: '扫描失败：' + pkt.data.message,
+                                    type: 'error'
+                                })
+                            }
+                            break
+                        case 'LockRsp':
+                            state.loading = false
+                            if (pkt.data.success == true) {
+                                ElMessage({
+                                    message: '加解锁成功',
+                                    type: 'success'
+                                })
+                            } else {
+                                ElMessage({
+                                    message: '加解锁失败：' + pkt.data.message,
+                                    type: 'error'
+                                })
+                            }
+                            break
+                        case 'ConfigNotify':
+                            if (!storage.hasYasConfig()) {
+                                state.yas.config = new YasConfig(pkt.data.config)
+                            }
+                            break
+                        default: break;
+                    }
+                } catch (e) {
+                    ElMessage({
+                        message: String(e),
+                        type: 'error'
+                    })
+                }
+            }
+        },
+        sendScanReq({ state }) {
+            if (!state.ws.server) {
+                ElMessage({
+                    message: 'WebSocket未连接',
+                    type: 'error'
+                })
+                return
+            }
+            state.loading = true
+            let pkt = {
+                cmd: 'ScanReq',
+                data: {
+                    argv: state.yas.config.toArgv()
+                }
+            }
+            state.ws.server.send(JSON.stringify(pkt))
+        },
+        sendLockReq({ state }, { indices }: { indices: number[] }) {
+            if (!state.ws.server) {
+                ElMessage({
+                    message: 'WebSocket未连接',
+                    type: 'error'
+                })
+                return
+            }
+            state.loading = true
+            let pkt = {
+                cmd: 'LockReq',
+                data: {
+                    argv: state.yas.config.toArgv(),
+                    indices
+                }
+            }
+            state.ws.server.send(JSON.stringify(pkt))
         },
     }
 })

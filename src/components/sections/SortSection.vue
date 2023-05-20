@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import SectionTitle from './SectionTitle.vue';
-import DropSelect from './DropSelect.vue';
-import DropSelectPlus from './DropSelectPlus.vue';
-import CharSelect from './CharSelect.vue';
-import PresetLoader from './PresetLoader.vue';
+import SectionTitle from '@/components/sections/SectionTitle.vue';
+import SingleSelect from '@/components/widgets/SingleSelect.vue';
+import MultiSelect from '@/components/widgets/MultiSelect.vue';
+import CharSelect from '@/components/widgets/CharSelect.vue';
+import PresetLoader from '@/components/dialogs/PresetLoader.vue';
 import { computed, ref } from 'vue'
 import { useStore } from '@/store';
 import chs from '@/ys/locale/chs';
 import { ArtifactScoreWeight } from "@/ys/artifact"
-import ArtfactData from "@/ys/data/artifact"
+import ArtifactData from "@/ys/data/artifact"
 import CharacterData from '@/ys/data/character';
 const store = useStore()
 // 排序方式
@@ -52,7 +52,7 @@ const sets2 = computed<string[]>({
     get() { return store.state.sort.build.set[2] },
     set(v) { store.commit('setSort', { key: 'sets', value: v }) }
 })
-const sandsOptions = ArtfactData.mainKeys.sands.map(m => ({
+const sandsOptions = ArtifactData.mainKeys.sands.map(m => ({
     key: m,
     label: chs.affix[m]
 }))
@@ -60,7 +60,7 @@ const sands = computed<string[]>({
     get() { return store.state.sort.build.main.sands },
     set(v) { store.commit('setSort', { key: 'sands', value: v }) }
 })
-const gobletOptions = ArtfactData.mainKeys.goblet.map(m => ({
+const gobletOptions = ArtifactData.mainKeys.goblet.map(m => ({
     key: m,
     label: chs.affix[m]
 }))
@@ -68,7 +68,7 @@ const goblet = computed<string[]>({
     get() { return store.state.sort.build.main.goblet },
     set(v) { store.commit('setSort', { key: 'goblet', value: v }) }
 })
-const circletOptions = ArtfactData.mainKeys.circlet.map(m => ({
+const circletOptions = ArtifactData.mainKeys.circlet.map(m => ({
     key: m,
     label: chs.affix[m]
 }))
@@ -100,15 +100,15 @@ const disablePreset = () => {
             <span v-show="store.state.usePreset!=''" @click="disablePreset">当前预设：{{chs.character[store.state.usePreset]}}</span>
          </section-title>
         <div class="content">
-            <drop-select class="row" v-if="!store.state.usePreset" v-model="sortBy" :options="sortByOptions" title="排序方式"/>
-            <drop-select class="row" v-else v-model="sortBy" :options="presetOptions" title="排序方式"/>
+            <single-select class="row" v-if="!store.state.usePreset" v-model="sortBy" :options="sortByOptions" title="排序方式"/>
+            <single-select class="row" v-else v-model="sortBy" :options="presetOptions" title="排序方式"/>
             <div v-if="store.state.usePreset!=''">
                 <p class="row small">圣遗物a对角色c的适配概率定义为，刷100个满级圣遗物，其中和a同部位同主词条的圣遗物得分均不超过a的满级期望得分的概率。如果a对c是散件则是200个。</p>
-                <drop-select-plus class="row" v-model="sets4" :options="setsOptions" title="四件套套装偏好" :use-icon="true" />
-                <drop-select-plus class="row" v-model="sets2" :options="setsOptions" title="二件套套装偏好" :use-icon="true" />
-                <drop-select-plus class="row" v-model="sands" :options="sandsOptions" title="时之沙主词条偏好" />
-                <drop-select-plus class="row" v-model="goblet" :options="gobletOptions" title="空之杯主词条偏好" />
-                <drop-select-plus class="row" v-model="circlet" :options="circletOptions" title="理之冠主词条偏好" />
+                <multi-select class="row" v-model="sets4" :options="setsOptions" title="四件套套装偏好" :use-icon="true" />
+                <multi-select class="row" v-model="sets2" :options="setsOptions" title="二件套套装偏好" :use-icon="true" />
+                <multi-select class="row" v-model="sands" :options="sandsOptions" title="时之沙主词条偏好" />
+                <multi-select class="row" v-model="goblet" :options="gobletOptions" title="空之杯主词条偏好" />
+                <multi-select class="row" v-model="circlet" :options="circletOptions" title="理之冠主词条偏好" />
             </div>
             <div v-else-if="sortBy == 'prop'">
                 <p class="row small">圣遗物a对角色c的适配概率定义为，刷100个满级圣遗物，其中和a同部位同主词条的圣遗物得分均不超过a的满级期望得分的概率。如果a对c是散件则是200个。</p>

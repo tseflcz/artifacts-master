@@ -4,7 +4,7 @@ import { Artifact } from '@/ys/artifact';
 import { download } from '@/store/utils';
 import { useStore } from '@/store';
 import { Download } from '@element-plus/icons-vue'
-import ArtifactCard from './ArtifactCard.vue';
+import ArtifactCard from '@/components/widgets/ArtifactCard.vue';
 import PartialExport from './PartialExport.vue';
 import axios from 'axios'
 
@@ -13,13 +13,18 @@ const showUpdateDialog = ref(false)
 const message = ref('Hello')
 const yasVersion = ref('v0.0.0')
 const yasUpdLog = ref('Fix bugs')
+const claim = () => {
+    store.commit('setYasVersion', { version: yasVersion.value })
+    showUpdateDialog.value = false
+}
 const showExport = ref(false)
+
 try {
     axios.get('https://api.github.com/repos/ideless/yas-lock/releases/latest').then(r => {
         if ('tag_name' in r.data) {
             yasVersion.value = r.data['tag_name']
             yasUpdLog.value = r.data['body']
-            let yas_ver=localStorage.getItem('yas_ver')
+            let yas_ver = store.state.yas.version
             if (!yas_ver) {
                 message.value = '你可能还没有下载yas-lock。yas-lock是一个轻量windows端圣遗物导出和加解锁工具，导出功能需配合该工具使用！'
             } else if (yas_ver != r.data['tag_name']) {
@@ -31,10 +36,6 @@ try {
 }catch (e) {
     message.value = '未能获取当前yas-lock版本号，可能是浏览器版本过低导致的，详细信息请F12打开控制台查看。'
     console.log(e)
-}
-const claim = () => {
-    localStorage.setItem('yas_ver', yasVersion.value)
-    showUpdateDialog.value = false
 }
 const updYas = () => {
     window.open('https://ghproxy.com/https://github.com/ideless/yas-lock/releases/latest/download/yas-lock.exe', '_blank')

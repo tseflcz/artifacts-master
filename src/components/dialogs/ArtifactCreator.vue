@@ -4,7 +4,7 @@ import ArtifactData from "@/ys/data/artifact"
 import chs from '@/ys/locale/chs'
 import { useStore } from '@/store';
 import { Affix, Artifact } from '@/ys/artifact';
-import ArtifactCard from './ArtifactCard.vue';
+import ArtifactCard from '@/components/widgets/ArtifactCard.vue';
 const props = defineProps<{
     modelValue: boolean,
 }>()

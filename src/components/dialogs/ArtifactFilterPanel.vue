@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { DeleteFilled } from '@element-plus/icons-vue'
-import chs from '../ys/locale/chs'
-import { useStore } from '../store';
+import chs from '../../ys/locale/chs'
+import { useStore } from '../../store';
 
 let ArtifactParamTypes : string[] = [];
 let ArtifactSubParamTypes : string[] = [];
@@ -31,7 +31,7 @@ function __ (s: string) {
     return s;
 }
 
-import { scoreFilterNames, SubFilterEquation, SubFilter, ArtifactFilter } from '../ys/artifactFilter'
+import { scoreFilterNames, SubFilterEquation, SubFilter, ArtifactFilter } from '../../ys/artifactFilter'
 export default defineComponent({
     props: {
         filter: {

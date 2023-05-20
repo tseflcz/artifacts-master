@@ -1,9 +1,9 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { CircleCheckFilled, Plus, EditPen, DeleteFilled } from '@element-plus/icons-vue'
-import { SubFilterEquation, SubFilter, ArtifactFilter, FilterBatchOne } from '../ys/artifactFilter'
-import chs from '../ys/locale/chs'
-import { useStore } from '../store';
+import { SubFilterEquation, SubFilter, ArtifactFilter, FilterBatchOne } from '../../ys/artifactFilter'
+import chs from '../../ys/locale/chs'
+import { useStore } from '../../store';
 
 function __ (s: string) {
     return s;

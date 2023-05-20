@@ -5,6 +5,7 @@ import setweight from "./data/artifact_w"
 import { getAffnumCDF } from "./gacha/artifact"
 import preset from "./data/character_w"
 
+
 interface IWeight {
     [key: string]: number
 }
@@ -103,22 +104,20 @@ export class Artifact implements IArtifact {
         score: { 'life':0, 'attack':0, 'defend':0, 'critical':0, 'elementalMastery':0, 'recharge':0 },
         charScores: [] as Array<{ charKey: string, score: number }>,
     }
-    constructor(obj?: any) {
-        if (typeof obj === 'object') {
-            this.set = obj.set || this.set
-            this.slot = obj.slot || this.slot
-            this.rarity = obj.rarity || this.rarity
-            this.level = obj.level || this.level
-            this.lock = obj.lock || this.lock
-            this.location = obj.location || this.location
-            this.mainKey = obj.mainKey || this.mainKey
-            if (obj.minors instanceof Array) {
-                for (let o of obj.minors) {
-                    this.minors.push(new Affix(o))
-                }
+    constructor(o?: any) {
+        if (!o || typeof o != 'object') return
+        Object.keys(o).forEach(key => {
+            if (this.hasOwnProperty(key) && key != 'minors' && key != 'data') {
+                (this as any)[key] = o[key]
             }
-            this.data.lock = this.lock
+        })
+        this.minors = []
+        if (o.minors instanceof Array) {
+            for (let m of o.minors) {
+                this.minors.push(new Affix(m));
+            }
         }
+        this.data.lock = this.lock;
     }
     validate() {
         assert(this.rarity == 5, 'Only 5 star artifacts are supported')

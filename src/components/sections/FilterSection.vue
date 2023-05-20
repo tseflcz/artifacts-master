@@ -1,18 +1,20 @@
 <script lang="ts" setup>
-import SectionTitle from './SectionTitle.vue';
-import DropSelectPlus from './DropSelectPlus.vue';
-import CharSelect from './CharSelect.vue';
-import RangeSlider from './RangeSlider.vue';
+import SectionTitle from '@/components/sections/SectionTitle.vue';
+import MultiSelect from '@/components/widgets/MultiSelect.vue';
+import CharSelect from '@/components/widgets/CharSelect.vue';
+import RangeSlider from '@/components/widgets/RangeSlider.vue';
 import chs from '@/ys/locale/chs';
 import { computed, watch } from 'vue';
 import { useStore } from '@/store';
 import { Artifact } from '@/ys/artifact';
 import ArtfactData from "@/ys/data/artifact"
 import CharacterData from '@/ys/data/character';
+import { IOption } from '@/store/types';
+
 const store = useStore()
 const pro = computed<boolean>({
     get() { return store.state.filter.pro },
-    set(v) { store.commit('setFilter', { key: 'pro', value: v }) }
+    set(v) { store.commit('setFilter', { pro: v }) }
 })
 function countArtifactAttr(key: keyof Artifact) {
     let c: { [key: string]: number } = {}
@@ -36,7 +38,7 @@ const setOptions = computed(() => {
 })
 const set = computed<string[]>({
     get() { return store.state.filter.set },
-    set(v) { store.commit('setFilter', { key: 'set', value: v }) }
+    set(v) { store.commit('setFilter', { set: v }) }
 })
 // 部位
 const slotOptions = computed(() => {
@@ -52,7 +54,7 @@ const slotOptions = computed(() => {
 })
 const slot = computed<string[]>({
     get() { return store.state.filter.slot },
-    set(v) { store.commit('setFilter', { key: 'slot', value: v }) }
+    set(v) { store.commit('setFilter', { slot: v }) }
 })
 // 主词条
 const mainOptions = computed(() => {
@@ -67,7 +69,7 @@ const mainOptions = computed(() => {
 })
 const main = computed<string[]>({
     get() { return store.state.filter.main },
-    set(v) { store.commit('setFilter', { key: 'main', value: v }) }
+    set(v) { store.commit('setFilter', { mian: v }) }
 })
 // 锁
 const lockOptions = computed(() => {
@@ -82,17 +84,17 @@ const lockOptions = computed(() => {
 })
 const lock = computed<string[]>({
     get() { return store.state.filter.lock },
-    set(v) { store.commit('setFilter', { key: 'lock', value: v }) }
+    set(v) { store.commit('setFilter', { lock: v }) }
 })
 // 等级
 const lvRange = computed<number[]>({
     get() { return store.state.filter.lvRange },
-    set(v) { store.commit('setFilter', { key: 'lvRange', value: v }) }
+    set(v) { store.commit('setFilter', { lvRange: v }) }
 })
 // 得分
 const score = computed<number[]>({
     get() { return store.state.filter.score },
-    set(v) { store.commit('setFilter', { key: 'score', value: v }) }
+    set(v) { store.commit('setFilter', { score: v }) }
 })
 // 佩戴角色
 const charOptions = computed(() => {
@@ -106,7 +108,7 @@ const charOptions = computed(() => {
 })
 const char = computed<string[]>({
     get() { return store.state.filter.location },
-    set(v) { store.commit('setFilter', { key: 'location', value: v }) }
+    set(v) { store.commit('setFilter', { location: v }) }
 })
 // 必须包含和不得包含的副词条
 const minorOptions = ArtfactData.minorKeys.map(key => ({
@@ -123,12 +125,14 @@ const minorMustNotHave = computed<string[]>({
 })
 // 更新，填充
 watch(() => store.state.nResetFilter, () => {
-    store.commit('setFilter', { key: 'set', value: setOptions.value.map(o => o.key) })
-    store.commit('setFilter', { key: 'slot', value: slotOptions.value.map(o => o.key) })
-    store.commit('setFilter', { key: 'main', value: mainOptions.value.map(o => o.key) })
-    store.commit('setFilter', { key: 'lock', value: lockOptions.value.map(o => o.key) })
-    store.commit('setFilter', { key: 'lvRange', value: [0, 20] })
-    store.commit('setFilter', { key: 'location', value: charOptions.value.map(o => o.key) })
+    store.commit('setFilter', {
+        set: setOptions.value.map(o => o.key),
+        slot: slotOptions.value.map(o => o.key),
+        main: mainOptions.value.map(o => o.key),
+        lock: lockOptions.value.map(o => o.key),
+        lvRange: [0, 20],
+        location: charOptions.value.map(o => o.key)
+    })
 })
 const disableFilterBatch = () => {
     store.commit('filterBatchIndex', -1)
@@ -150,16 +154,16 @@ const disableFilterBatch = () => {
             {{ store.state.useFilterBatch != -1 ? '当前过滤规则：' + (store.state.filterBatch[store.state.useFilterBatch].comment ? store.state.filterBatch[store.state.useFilterBatch].comment : '无名称注释') : '' }}
         </div>
         <div class="section-content" v-show="store.state.useFilterBatch == -1">
-            <drop-select-plus class="filter" title="套装" :options="setOptions" v-model="set" :use-icon="true" />
-            <drop-select-plus class="filter" title="部位" :options="slotOptions" v-model="slot" :use-icon="true" />
+            <multi-select class="filter" title="套装" :options="setOptions" v-model="set" :use-icon="true" />
+            <multi-select class="filter" title="部位" :options="slotOptions" v-model="slot" :use-icon="true" />
             <range-slider class="filter" title="等级" v-model="lvRange" />
             <div v-show="pro">            
-                <drop-select-plus class="filter" title="主词条" :options="mainOptions" v-model="main" />
+                <multi-select class="filter" title="主词条" :options="mainOptions" v-model="main" />
                 <char-select class="filter" title="角色" :options="charOptions" v-model="char" />
                 <range-slider class="filter" title="当前排序得分" v-model="score" v-show='store.state.sort.by!="index"'/>                    
-                <drop-select-plus class="filter" title="锁" :options="lockOptions" v-model="lock" />
-                <drop-select-plus class="filter" title="必须包含的副词条" :options="minorOptions" v-model="minorMustHave" />
-                <drop-select-plus class="filter" title="不得包含的副词条" :options="minorOptions" v-model="minorMustNotHave" />
+                <multi-select class="filter" title="锁" :options="lockOptions" v-model="lock" />
+                <multi-select class="filter" title="必须包含的副词条" :options="minorOptions" v-model="minorMustHave" />
+                <multi-select class="filter" title="不得包含的副词条" :options="minorOptions" v-model="minorMustNotHave" />
             </div>
         </div>
     </div>

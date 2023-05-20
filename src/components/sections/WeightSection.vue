@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import SectionTitle from './SectionTitle.vue';
-import ValueButton from './ValueButton.vue';
+import SectionTitle from '@/components/sections/SectionTitle.vue';
+import ValueButton from '@/components/widgets/ValueButton.vue';
 import chs from "@/ys/locale/chs"
 import { useStore } from '@/store';
 import { ref, computed } from 'vue';
